@@ -1,11 +1,28 @@
 import { v4 as uuidv4 } from 'uuid'
 
+class UI {
+  static addTodoToContainer = () => {
+    const container = document.querySelector('.main-container')
+    container.innerHTML = ''
+    firstList.list.forEach(todo => {
+      const html = `
+      <div class="card border-gray-200 border-solid p-4 m-4 bg-gray-400 w-64 h-64">
+          <h1>${todo.title}</h1>
+          <p>${todo.description}</p>
+      </div>
+      `
+      container.innerHTML += html
+    })
+  }
+}
+
 class TodoList {
   constructor(list) {
     this.list = list
   }
   add(todo) {
     this.list.push(todo)
+    UI.addTodoToContainer()
   }
   delete(id) {
     this.list = this.list.filter(todo => id !== todo.id)
@@ -13,11 +30,12 @@ class TodoList {
 }
 
 class Todo {
-  constructor(title, description, priority) {
+  constructor(title, description, priority, dueDate) {
     this.title = title
     this.description = description
     this.priority = priority
     this.id = uuidv4()
+    this.dueDate = dueDate || new Date().toLocaleDateString('en-GB')
   }
 
   editTodo(title, description, priority) {
@@ -35,12 +53,9 @@ console.log(firstTodo)
 firstList.add(firstTodo)
 firstList.add(secondTodo)
 console.log(firstList.list)
-setTimeout(() => {
-  firstTodo.editTodo('', 'My first todo', '')
-  console.log(firstList.list)
-}, 2000)
+
+const main = document.querySelector('.main-container')
 
 setTimeout(() => {
-  firstList.delete(secondTodo.id)
-  console.log(firstList.list)
-}, 4000)
+  firstList.add(new Todo('Third', 'The One', 'Urgent'))
+}, 2000)

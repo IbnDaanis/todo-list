@@ -962,11 +962,26 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var _uuid = require("uuid");
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var UI = function UI() {
+  _classCallCheck(this, UI);
+};
+
+_defineProperty(UI, "addTodoToContainer", function () {
+  var container = document.querySelector('.main-container');
+  container.innerHTML = '';
+  firstList.list.forEach(function (todo) {
+    var html = "\n      <div class=\"card border-gray-200 border-solid p-4 m-4 bg-gray-400 w-64 h-64\">\n          <h1>".concat(todo.title, "</h1>\n          <p>").concat(todo.description, "</p>\n      </div>\n      ");
+    container.innerHTML += html;
+  });
+});
 
 var TodoList = /*#__PURE__*/function () {
   function TodoList(list) {
@@ -979,6 +994,7 @@ var TodoList = /*#__PURE__*/function () {
     key: "add",
     value: function add(todo) {
       this.list.push(todo);
+      UI.addTodoToContainer();
     }
   }, {
     key: "delete",
@@ -993,13 +1009,14 @@ var TodoList = /*#__PURE__*/function () {
 }();
 
 var Todo = /*#__PURE__*/function () {
-  function Todo(title, description, priority) {
+  function Todo(title, description, priority, dueDate) {
     _classCallCheck(this, Todo);
 
     this.title = title;
     this.description = description;
     this.priority = priority;
     this.id = (0, _uuid.v4)();
+    this.dueDate = dueDate || new Date().toLocaleDateString('en-GB');
   }
 
   _createClass(Todo, [{
@@ -1021,14 +1038,10 @@ console.log(firstTodo);
 firstList.add(firstTodo);
 firstList.add(secondTodo);
 console.log(firstList.list);
+var main = document.querySelector('.main-container');
 setTimeout(function () {
-  firstTodo.editTodo('', 'My first todo', '');
-  console.log(firstList.list);
+  firstList.add(new Todo('Third', 'The One', 'Urgent'));
 }, 2000);
-setTimeout(function () {
-  firstList.delete(secondTodo.id);
-  console.log(firstList.list);
-}, 4000);
 },{"uuid":"../node_modules/uuid/dist/esm-browser/index.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
