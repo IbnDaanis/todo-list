@@ -4,8 +4,8 @@
   "description": "**Check out** the app [here](https://ibndaanis.github.io/todo-list/)",
   "main": "index.js",
   "scripts": {
-    "dev": "parcel src/index.html -p 3000",
-    "build": "parcel build src/index.html"
+    "dev": "npx parcel src/index.html -p 3000",
+    "build": "npx parcel build src/index.html"
   },
   "repository": {
     "type": "git",
@@ -18,11 +18,12 @@
     "url": "https://github.com/IbnDaanis/todo-list/issues"
   },
   "homepage": "https://github.com/IbnDaanis/todo-list#readme",
-  "dependencies": {
-    "tailwindcss": "^2.0.2"
-  },
+  "dependencies": {},
   "devDependencies": {
+    "autoprefixer": "^9.8.6",
     "parcel-bundler": "^1.12.4",
-    "sass": "^1.32.4"
+    "postcss": "^7.0.35",
+    "postcss-modules": "^4.0.0",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.2"
   }
 }
