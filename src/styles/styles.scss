@@ -134,9 +134,6 @@ main {
     .plus {
       background: #de4c4a;
       color: white;
-      svg {
-        transform: translate(-1px, -1px);
-      }
     }
     p {
       color: #de4c4a;
@@ -149,6 +146,9 @@ main {
     display: grid;
     place-content: center;
     color: #de4c4a;
+    svg {
+      transform: translate(0, -1px);
+    }
   }
   p {
     margin-left: 0.5rem;
@@ -211,6 +211,26 @@ main {
         margin-left: 1.5rem;
         align-items: center;
         input {
+          margin-left: 0.5rem;
+          background: var(--dark-gray);
+          color: var(--text-white);
+          border-radius: 3px;
+          outline: none;
+          border: 1px solid hsla(0, 0%, 100%, 0.1);
+          padding: 2px 3px;
+          transform: translateY(1.8px);
+          &:hover {
+            border: 1px solid #555;
+          }
+          &:focus {
+            border: 1px solid #555;
+          }
+        }
+      }
+      .list {
+        margin-left: 1.5rem;
+        align-items: center;
+        select {
           margin-left: 0.5rem;
           background: var(--dark-gray);
           color: var(--text-white);

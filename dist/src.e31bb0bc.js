@@ -1041,6 +1041,8 @@ _defineProperty(UI, "createTodoListInMenu", function (list) {
 });
 
 _defineProperty(UI, "createTodoListContainer", function (list) {
+  document.querySelector('.add-todo-form').classList.add('hide');
+  document.querySelector('.add-todo-button').classList.remove('hide');
   console.log('createTodoListContainer: ', list);
   var container = document.querySelector('.todo-list-tasks');
   container.innerHTML = '';
@@ -1066,15 +1068,22 @@ _defineProperty(UI, "handleSubmit", function (e) {
   var description = document.querySelector('#description');
   var urgency = document.querySelector('#urgency');
   var date = document.querySelector('#date');
-  firstList.add(new Todo(title.value, description.value, urgency.value, date.value));
+  var listSelection = document.querySelector('#list');
+  var currentList = todoLists.find(function (list) {
+    return list.title === listSelection.value;
+  });
+  currentList.add(new Todo(title.value, description.value, urgency.value, date.value));
   title.value = '';
   description.value = '';
   date.value = '';
+  UI.createTodoListContainer(currentList);
 });
 
 _defineProperty(UI, "removeAddTodoForm", function (name) {
   document.querySelector('#addTodoForm').removeEventListener('submit', name, true);
 });
+
+var todoLists = [];
 
 var TodoList = /*#__PURE__*/function () {
   function TodoList(list, title) {
@@ -1090,6 +1099,7 @@ var TodoList = /*#__PURE__*/function () {
     key: "create",
     value: function create() {
       UI.createTodoListInMenu(this);
+      todoLists.push(this);
     }
   }, {
     key: "add",
@@ -1149,12 +1159,18 @@ document.querySelector('.menu_icon').addEventListener('click', function () {
   document.querySelector('.todo-container').classList.toggle('closed');
 });
 document.querySelector('#addTodoForm').addEventListener('submit', function (e) {
-  UI.handleSubmit(e);
+  UI.handleSubmit(e, list);
 });
 document.querySelector('#cancel').addEventListener('click', function () {
   document.querySelector('.add-todo-form').classList.add('hide');
   document.querySelector('.add-todo-button').classList.remove('hide');
 });
+var listPicker = document.querySelector('#list');
+var html = '';
+todoLists.forEach(function (list) {
+  html += "<option value='".concat(list.title, "'>").concat(list.title, "</option>");
+});
+listPicker.innerHTML += html;
 },{"uuid":"../node_modules/uuid/dist/esm-browser/index.js","./components/addTodoForm":"components/addTodoForm.js","./helpers/stringToHTML":"helpers/stringToHTML.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';

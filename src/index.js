@@ -19,6 +19,8 @@ class UI {
     }
   }
   static createTodoListContainer = list => {
+    document.querySelector('.add-todo-form').classList.add('hide')
+    document.querySelector('.add-todo-button').classList.remove('hide')
     console.log('createTodoListContainer: ', list)
     const container = document.querySelector('.todo-list-tasks')
     container.innerHTML = ''
@@ -45,14 +47,20 @@ class UI {
     const description = document.querySelector('#description')
     const urgency = document.querySelector('#urgency')
     const date = document.querySelector('#date')
+    const listSelection = document.querySelector('#list')
+    const currentList = todoLists.find(
+      list => list.title === listSelection.value
+    )
 
-    firstList.add(
+    currentList.add(
       new Todo(title.value, description.value, urgency.value, date.value)
     )
 
     title.value = ''
     description.value = ''
     date.value = ''
+
+    this.createTodoListContainer(currentList)
   }
   static removeAddTodoForm = name => {
     document
@@ -60,6 +68,8 @@ class UI {
       .removeEventListener('submit', name, true)
   }
 }
+
+const todoLists = []
 
 class TodoList {
   constructor(list, title) {
@@ -70,6 +80,7 @@ class TodoList {
   }
   create() {
     UI.createTodoListInMenu(this)
+    todoLists.push(this)
   }
   add(todo) {
     this.list.push(todo)
@@ -114,9 +125,19 @@ document.querySelector('.menu_icon').addEventListener('click', () => {
 })
 
 document.querySelector('#addTodoForm').addEventListener('submit', e => {
-  UI.handleSubmit(e)
+  UI.handleSubmit(e, list)
 })
 document.querySelector('#cancel').addEventListener('click', () => {
   document.querySelector('.add-todo-form').classList.add('hide')
   document.querySelector('.add-todo-button').classList.remove('hide')
 })
+
+const listPicker = document.querySelector('#list')
+
+let html = ''
+
+todoLists.forEach(list => {
+  html += `<option value='${list.title}'>${list.title}</option>`
+})
+
+listPicker.innerHTML += html

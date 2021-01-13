@@ -131,9 +131,6 @@ main {
   background: #de4c4a;
   color: white;
 }
-.add-todo-button:hover .plus svg {
-  transform: translate(-1px, -1px);
-}
 .add-todo-button:hover p {
   color: #de4c4a;
 }
@@ -144,6 +141,9 @@ main {
   display: grid;
   place-content: center;
   color: #de4c4a;
+}
+.add-todo-button .plus svg {
+  transform: translate(0, -1px);
 }
 .add-todo-button p {
   margin-left: 0.5rem;
@@ -219,6 +219,26 @@ main {
   border: 1px solid #555;
 }
 .add-todo-form .container .sub-options .date input:focus {
+  border: 1px solid #555;
+}
+.add-todo-form .container .sub-options .list {
+  margin-left: 1.5rem;
+  align-items: center;
+}
+.add-todo-form .container .sub-options .list select {
+  margin-left: 0.5rem;
+  background: var(--dark-gray);
+  color: var(--text-white);
+  border-radius: 3px;
+  outline: none;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 2px 3px;
+  transform: translateY(1.8px);
+}
+.add-todo-form .container .sub-options .list select:hover {
+  border: 1px solid #555;
+}
+.add-todo-form .container .sub-options .list select:focus {
   border: 1px solid #555;
 }
 .add-todo-form .add-todo-button {
