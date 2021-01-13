@@ -1,24 +1,31 @@
+import 'bootstrap'
+import 'bootstrap/dist/css/bootstrap.css'
+import '@fortawesome/fontawesome-free/css/all.css'
 import { v4 as uuidv4 } from 'uuid'
 
 class UI {
   static addTodoToContainer = list => {
-    const container = document.querySelector('.main-container')
-    if (!document.querySelector(`.${list.slice(0, 4)}`)) {
-      const newDiv = document.createElement('div')
-      newDiv.classList.add(list.slice(0, 4))
-      container.appendChild(newDiv)
-    }
-    const currContainer = document.querySelector(`.${list.slice(0, 4)}`)
-    currContainer.innerHTML = `<h1 class="p-4 m-1 text-3xl font-semibold">${list}</h1>`
-    firstList.list.forEach(todo => {
-      const html = `
-      <div class="card border-gray-200 border-solid border-2 p-4 m-2 rounded">
-          <h1>${todo.title}</h1>
-          <p>${todo.description}</p>
-      </div>
-      `
-      currContainer.innerHTML += html
-    })
+    // const container = document.querySelector('.todo-list-group')
+    // if (!document.querySelector(`.${list.slice(0, 4)}`)) {
+    //   const newDiv = document.createElement('div')
+    //   newDiv.classList.add(list.slice(0, 4))
+    //   container.appendChild(newDiv)
+    // }
+    // const currContainer = document.querySelector(`.${list.slice(0, 4)}`)
+    // firstList.list.forEach(todo => {
+    //   const html = `
+    //   <li class="list-group-item">
+    //       <input
+    //         class="form-check-input me-1"
+    //         type="checkbox"
+    //         value=""
+    //         aria-label="..."
+    //       />${todo.title}
+    //      ${todo.description}
+    //   </li>
+    //   `
+    //   currContainer.innerHTML += html
+    // })
   }
 }
 
