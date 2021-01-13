@@ -974,27 +974,36 @@ var UI = function UI() {
   _classCallCheck(this, UI);
 };
 
-_defineProperty(UI, "addTodoToContainer", function () {
+_defineProperty(UI, "addTodoToContainer", function (list) {
   var container = document.querySelector('.main-container');
-  container.innerHTML = '';
+
+  if (!document.querySelector(".".concat(list.slice(0, 4)))) {
+    var newDiv = document.createElement('div');
+    newDiv.classList.add(list.slice(0, 4));
+    container.appendChild(newDiv);
+  }
+
+  var currContainer = document.querySelector(".".concat(list.slice(0, 4)));
+  currContainer.innerHTML = "<h1 class=\"p-4 m-1 text-3xl font-semibold\">".concat(list, "</h1>");
   firstList.list.forEach(function (todo) {
-    var html = "\n      <div class=\"card border-gray-200 border-solid p-4 m-4 bg-gray-400 w-64 h-64\">\n          <h1>".concat(todo.title, "</h1>\n          <p>").concat(todo.description, "</p>\n      </div>\n      ");
-    container.innerHTML += html;
+    var html = "\n      <div class=\"card border-gray-200 border-solid border-2 p-4 m-2 rounded\">\n          <h1>".concat(todo.title, "</h1>\n          <p>").concat(todo.description, "</p>\n      </div>\n      ");
+    currContainer.innerHTML += html;
   });
 });
 
 var TodoList = /*#__PURE__*/function () {
-  function TodoList(list) {
+  function TodoList(list, title) {
     _classCallCheck(this, TodoList);
 
     this.list = list;
+    this.title = title;
   }
 
   _createClass(TodoList, [{
     key: "add",
     value: function add(todo) {
       this.list.push(todo);
-      UI.addTodoToContainer();
+      UI.addTodoToContainer(this.title);
     }
   }, {
     key: "delete",
@@ -1031,17 +1040,17 @@ var Todo = /*#__PURE__*/function () {
   return Todo;
 }();
 
-var firstList = new TodoList([]);
+var firstList = new TodoList([], 'First');
 var firstTodo = new Todo('Title', 'Description', 'Urgent');
 var secondTodo = new Todo('Code', 'Write it', 'Ease');
 console.log(firstTodo);
 firstList.add(firstTodo);
 firstList.add(secondTodo);
 console.log(firstList.list);
-var main = document.querySelector('.main-container');
-setTimeout(function () {
-  firstList.add(new Todo('Third', 'The One', 'Urgent'));
-}, 2000);
+var secondList = new TodoList([], 'Second Batch');
+secondList.add(firstTodo);
+secondList.add(secondTodo);
+console.log(secondList.list);
 },{"uuid":"../node_modules/uuid/dist/esm-browser/index.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';

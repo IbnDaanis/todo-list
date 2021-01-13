@@ -1,28 +1,35 @@
 import { v4 as uuidv4 } from 'uuid'
 
 class UI {
-  static addTodoToContainer = () => {
+  static addTodoToContainer = list => {
     const container = document.querySelector('.main-container')
-    container.innerHTML = ''
+    if (!document.querySelector(`.${list.slice(0, 4)}`)) {
+      const newDiv = document.createElement('div')
+      newDiv.classList.add(list.slice(0, 4))
+      container.appendChild(newDiv)
+    }
+    const currContainer = document.querySelector(`.${list.slice(0, 4)}`)
+    currContainer.innerHTML = `<h1 class="p-4 m-1 text-3xl font-semibold">${list}</h1>`
     firstList.list.forEach(todo => {
       const html = `
-      <div class="card border-gray-200 border-solid p-4 m-4 bg-gray-400 w-64 h-64">
+      <div class="card border-gray-200 border-solid border-2 p-4 m-2 rounded">
           <h1>${todo.title}</h1>
           <p>${todo.description}</p>
       </div>
       `
-      container.innerHTML += html
+      currContainer.innerHTML += html
     })
   }
 }
 
 class TodoList {
-  constructor(list) {
+  constructor(list, title) {
     this.list = list
+    this.title = title
   }
   add(todo) {
     this.list.push(todo)
-    UI.addTodoToContainer()
+    UI.addTodoToContainer(this.title)
   }
   delete(id) {
     this.list = this.list.filter(todo => id !== todo.id)
@@ -45,7 +52,7 @@ class Todo {
   }
 }
 
-const firstList = new TodoList([])
+const firstList = new TodoList([], 'First')
 
 const firstTodo = new Todo('Title', 'Description', 'Urgent')
 const secondTodo = new Todo('Code', 'Write it', 'Ease')
@@ -54,8 +61,7 @@ firstList.add(firstTodo)
 firstList.add(secondTodo)
 console.log(firstList.list)
 
-const main = document.querySelector('.main-container')
-
-setTimeout(() => {
-  firstList.add(new Todo('Third', 'The One', 'Urgent'))
-}, 2000)
+const secondList = new TodoList([], 'Second Batch')
+secondList.add(firstTodo)
+secondList.add(secondTodo)
+console.log(secondList.list)
