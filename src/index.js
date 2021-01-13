@@ -1,5 +1,4 @@
 import { v4 as uuidv4 } from 'uuid'
-import { addTodoForm } from './components/addTodoForm'
 import { stringToHTML } from './helpers/stringToHTML'
 
 class UI {
@@ -11,14 +10,20 @@ class UI {
     menuTitle.innerHTML = list.title
     container.appendChild(menuTitle)
     menuTitle.onclick = () => {
-      document.querySelectorAll(`.todo-title`).forEach(li => {
-        li.classList.remove('current')
-      })
-      menuTitle.classList.toggle('current')
+      list.isActive = false
       this.createTodoListContainer(list)
     }
   }
   static createTodoListContainer = list => {
+    document
+      .querySelectorAll(`.todo-title`)
+      .forEach(todo => todo.classList.remove('current'))
+    list.isActive = true
+    if (list.isActive) {
+      ;[...document.querySelectorAll(`.todo-title`)][list.index].classList.add(
+        'current'
+      )
+    }
     document.querySelector('.add-todo-form').classList.add('hide')
     document.querySelector('.add-todo-button').classList.remove('hide')
     console.log('createTodoListContainer: ', list)
@@ -70,6 +75,7 @@ class UI {
 }
 
 const todoLists = []
+let index = 0
 
 class TodoList {
   constructor(list, title) {
@@ -77,9 +83,13 @@ class TodoList {
     this.title = title
     this.id = uuidv4()
     this.isDelete = false
+    this.isActive = false
+    this.index = index
   }
+
   create() {
     UI.createTodoListInMenu(this)
+    index++
     todoLists.push(this)
   }
   add(todo) {
