@@ -21,6 +21,7 @@ class UI {
       <h1>${list.title}</h1>`
 
     list.list.forEach(todo => (html += `<p>${todo.title}</p>`))
+    html += ``
 
     container.innerHTML = html
   }

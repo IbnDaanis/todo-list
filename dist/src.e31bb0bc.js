@@ -996,6 +996,7 @@ _defineProperty(UI, "createTodoListContainer", function (list) {
   list.list.forEach(function (todo) {
     return html += "<p>".concat(todo.title, "</p>");
   });
+  html += "";
   container.innerHTML = html;
 });
 
