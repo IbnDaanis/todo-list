@@ -29,7 +29,60 @@
     </div>
     <main>
       <div class="todo-container">
-        <div class="todo-container-screen"></div>
+        <div class="todo-container-screen">
+          <div class="todo-list-tasks"></div>
+          <div class="add-todo-button">
+            <div class="plus">
+              <svg width="13" height="13">
+                <path
+                  d="M6 6V.5a.5.5 0 0 1 1 0V6h5.5a.5.5 0 1 1 0 1H7v5.5a.5.5 0 1 1-1 0V7H.5a.5.5 0 0 1 0-1H6z"
+                  fill="currentColor"
+                  fill-rule="evenodd"
+                ></path>
+              </svg>
+            </div>
+            <p>Add task</p>
+          </div>
+          <div class="add-todo-form hide">
+            <form id="addTodoForm">
+              <div class="container">
+                <div class="title">
+                  <label for="title">Title: </label>
+                  <textarea
+                    name="title"
+                    id="title"
+                    placeholder="Enter the title"
+                    required
+                  ></textarea>
+                </div>
+                <div class="description">
+                  <label for="description">Description: </label>
+                  <textarea
+                    name="description"
+                    id="description"
+                    placeholder="Enter the description"
+                  ></textarea>
+                </div>
+                <div class="sub-options">
+                  <div class="urgency">
+                    <label for="urgency">Urgency: </label>
+                    <select name="urgency" id="urgency">
+                      <option value="none">None</option>
+                      <option value="important">Important</option>
+                      <option value="urgent">Urgent</option>
+                    </select>
+                  </div>
+                  <div class="date">
+                    <label for="date">Pick a date: </label>
+                    <input type="date" name="date" id="date" />
+                  </div>
+                </div>
+              </div>
+              <button class="add-todo-button" type="submit">Add Task</button>
+              <button type="button" class="cancel" id="cancel">Cancel</button>
+            </form>
+          </div>
+        </div>
       </div>
     </main>
     <script src="./index.js"></script>

@@ -1,7 +1,7 @@
 import { stringToHTML } from '../helpers/stringToHTML'
 
 export const addTodoForm = stringToHTML(
-  `       <div class="add-todo-form">
+  `       <div class="add-todo-form hide">
             <form id="addTodoForm">
               <div class="container">
                 <div class="title">
@@ -10,6 +10,7 @@ export const addTodoForm = stringToHTML(
                     name="title"
                     id="title"
                     placeholder="Enter the title"
+                    required
                   ></textarea>
                 </div>
                 <div class="description">
@@ -36,7 +37,7 @@ export const addTodoForm = stringToHTML(
                 </div>
               </div>
               <button class="add-todo-button" type="submit">Add Task</button>
-              <button class="cancel" id="cancel">Cancel</button>
+              <button type="button" class="cancel" id="cancel">Cancel</button>
             </form>
           </div>
 `,

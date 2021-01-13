@@ -1000,7 +1000,7 @@ exports.addTodoForm = void 0;
 
 var _stringToHTML = require("../helpers/stringToHTML");
 
-var addTodoForm = (0, _stringToHTML.stringToHTML)("       <div class=\"add-todo-form\">\n            <form id=\"addTodoForm\">\n              <div class=\"container\">\n                <div class=\"title\">\n                  <label for=\"title\">Title: </label>\n                  <textarea\n                    name=\"title\"\n                    id=\"title\"\n                    placeholder=\"Enter the title\"\n                  ></textarea>\n                </div>\n                <div class=\"description\">\n                  <label for=\"description\">Description: </label>\n                  <textarea\n                    name=\"description\"\n                    id=\"description\"\n                    placeholder=\"Enter the description\"\n                  ></textarea>\n                </div>\n                <div class=\"sub-options\">\n                  <div class=\"urgency\">\n                    <label for=\"urgency\">Urgency: </label>\n                    <select name=\"urgency\" id=\"urgency\">\n                      <option value=\"none\">None</option>\n                      <option value=\"important\">Important</option>\n                      <option value=\"urgent\">Urgent</option>\n                    </select>\n                  </div>\n                  <div class=\"date\">\n                    <label for=\"date\">Pick a date: </label>\n                    <input type=\"date\" name=\"date\" id=\"date\" />\n                  </div>\n                </div>\n              </div>\n              <button class=\"add-todo-button\" type=\"submit\">Add Task</button>\n              <button class=\"cancel\" id=\"cancel\">Cancel</button>\n            </form>\n          </div>\n", 'div');
+var addTodoForm = (0, _stringToHTML.stringToHTML)("       <div class=\"add-todo-form hide\">\n            <form id=\"addTodoForm\">\n              <div class=\"container\">\n                <div class=\"title\">\n                  <label for=\"title\">Title: </label>\n                  <textarea\n                    name=\"title\"\n                    id=\"title\"\n                    placeholder=\"Enter the title\"\n                    required\n                  ></textarea>\n                </div>\n                <div class=\"description\">\n                  <label for=\"description\">Description: </label>\n                  <textarea\n                    name=\"description\"\n                    id=\"description\"\n                    placeholder=\"Enter the description\"\n                  ></textarea>\n                </div>\n                <div class=\"sub-options\">\n                  <div class=\"urgency\">\n                    <label for=\"urgency\">Urgency: </label>\n                    <select name=\"urgency\" id=\"urgency\">\n                      <option value=\"none\">None</option>\n                      <option value=\"important\">Important</option>\n                      <option value=\"urgent\">Urgent</option>\n                    </select>\n                  </div>\n                  <div class=\"date\">\n                    <label for=\"date\">Pick a date: </label>\n                    <input type=\"date\" name=\"date\" id=\"date\" />\n                  </div>\n                </div>\n              </div>\n              <button class=\"add-todo-button\" type=\"submit\">Add Task</button>\n              <button type=\"button\" class=\"cancel\" id=\"cancel\">Cancel</button>\n            </form>\n          </div>\n", 'div');
 exports.addTodoForm = addTodoForm;
 },{"../helpers/stringToHTML":"helpers/stringToHTML.js"}],"index.js":[function(require,module,exports) {
 "use strict";
@@ -1024,6 +1024,7 @@ var UI = function UI() {
 };
 
 _defineProperty(UI, "createTodoListInMenu", function (list) {
+  console.log('createTodoListInMenu: ', list);
   var container = document.querySelector('.todo-list-titles');
   var menuTitle = document.createElement('li');
   menuTitle.classList.add(list.id, 'todo-title');
@@ -1040,41 +1041,39 @@ _defineProperty(UI, "createTodoListInMenu", function (list) {
 });
 
 _defineProperty(UI, "createTodoListContainer", function (list) {
-  var container = document.querySelector('.todo-container-screen');
-  var html = "\n      <h1>".concat(list.title, "</h1>");
-  container.innerHTML = html;
+  console.log('createTodoListContainer: ', list);
+  var container = document.querySelector('.todo-list-tasks');
+  container.innerHTML = '';
+  console.log('Text content: ', container.textContent);
+  var html = "<h1>".concat(list.title, "</h1>");
+  container.innerHTML += html;
+  console.log('List: ', list.list);
   list.list.forEach(function (todo) {
     var element = (0, _stringToHTML.stringToHTML)("<p>".concat(todo.title, "</p>"), 'div');
     container.appendChild(element);
   });
-  var addTodoButton = (0, _stringToHTML.stringToHTML)("<div class='plus'>\n        <svg width=\"13\" height=\"13\"><path d=\"M6 6V.5a.5.5 0 0 1 1 0V6h5.5a.5.5 0 1 1 0 1H7v5.5a.5.5 0 1 1-1 0V7H.5a.5.5 0 0 1 0-1H6z\" fill=\"currentColor\" fill-rule=\"evenodd\"></path></svg>\n      </div>\n      <p>Add task</p>", 'div');
-  addTodoButton.classList.add('add-todo-button');
 
-  addTodoButton.onclick = function () {
-    UI.createAddTodoForm();
+  document.querySelector('.add-todo-button').onclick = function () {
     document.querySelector('.add-todo-button').classList.add('hide');
+    document.querySelector('.add-todo-form').classList.remove('hide');
   };
-
-  container.appendChild(addTodoButton);
 });
 
-_defineProperty(UI, "createAddTodoForm", function () {
-  var container = document.querySelector('.todo-container-screen');
-  container.appendChild(_addTodoForm.addTodoForm);
-  document.querySelector('.add-todo-form').classList.remove('hide');
-  document.querySelector('#addTodoForm').addEventListener('submit', function (e) {
-    e.preventDefault();
-    var title = document.querySelector('#title');
-    var description = document.querySelector('#description');
-    var urgency = document.querySelector('#urgency');
-    var date = document.querySelector('#date');
-    firstList.add(new Todo(title.value, description.value, urgency.value, date.value));
-    UI.createTodoListContainer(firstList); // console.log(title.value, description.value, urgency.value, date.value)
-  });
-  document.querySelector('#cancel').addEventListener('click', function () {
-    document.querySelector('.add-todo-form').classList.add('hide');
-    document.querySelector('.add-todo-button').classList.remove('hide');
-  });
+_defineProperty(UI, "handleSubmit", function (e) {
+  e.preventDefault();
+  console.log('SUBMITTED! -----------------');
+  var title = document.querySelector('#title');
+  var description = document.querySelector('#description');
+  var urgency = document.querySelector('#urgency');
+  var date = document.querySelector('#date');
+  firstList.add(new Todo(title.value, description.value, urgency.value, date.value));
+  title.value = '';
+  description.value = '';
+  date.value = '';
+});
+
+_defineProperty(UI, "removeAddTodoForm", function (name) {
+  document.querySelector('#addTodoForm').removeEventListener('submit', name, true);
 });
 
 var TodoList = /*#__PURE__*/function () {
@@ -1141,15 +1140,20 @@ var firstList = new TodoList([], 'First');
 firstList.create();
 firstList.add(new Todo('First 1', 'Description', 'Urgent'));
 firstList.add(new Todo('First 2', 'Write it', 'Ease'));
-var secondList = new TodoList([], 'Second Batch');
+var secondList = new TodoList([], 'Second');
 secondList.create();
 secondList.add(new Todo('Second 1', 'Description', 'Urgent'));
 secondList.add(new Todo('Second 2', 'Description', 'Urgent'));
-console.log('Second List: ', secondList.list);
-console.log('First List: ', firstList.list);
 document.querySelector('.menu_icon').addEventListener('click', function () {
   document.querySelector('.sidebar').classList.toggle('closed');
   document.querySelector('.todo-container').classList.toggle('closed');
+});
+document.querySelector('#addTodoForm').addEventListener('submit', function (e) {
+  UI.handleSubmit(e);
+});
+document.querySelector('#cancel').addEventListener('click', function () {
+  document.querySelector('.add-todo-form').classList.add('hide');
+  document.querySelector('.add-todo-button').classList.remove('hide');
 });
 },{"uuid":"../node_modules/uuid/dist/esm-browser/index.js","./components/addTodoForm":"components/addTodoForm.js","./helpers/stringToHTML":"helpers/stringToHTML.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
