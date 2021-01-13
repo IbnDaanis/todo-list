@@ -22,9 +22,9 @@ class UI {
 
     list.list.forEach(todo => (html += `<p>${todo.title}</p>`))
     html += ``
-
     container.innerHTML = html
   }
+  static createAddTodoForm = () => {}
 }
 
 class TodoList {
@@ -80,4 +80,16 @@ console.log('First List: ', firstList.list)
 document.querySelector('.menu_icon').addEventListener('click', () => {
   document.querySelector('.sidebar').classList.toggle('closed')
   document.querySelector('.todo-container').classList.toggle('closed')
+})
+
+document.querySelector('#addTodoFrom').addEventListener('submit', e => {
+  e.preventDefault()
+  const title = document.querySelector('#title')
+  const description = document.querySelector('#description')
+  const urgency = document.querySelector('#urgency')
+  const date = document.querySelector('#date')
+  firstList.add(
+    new Todo(title.value, description.value, urgency.value, date.value)
+  )
+  console.log(title.value, description.value, urgency.value, date.value)
 })

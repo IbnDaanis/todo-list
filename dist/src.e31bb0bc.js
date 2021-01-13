@@ -1000,6 +1000,8 @@ _defineProperty(UI, "createTodoListContainer", function (list) {
   container.innerHTML = html;
 });
 
+_defineProperty(UI, "createAddTodoForm", function () {});
+
 var TodoList = /*#__PURE__*/function () {
   function TodoList(list, title) {
     _classCallCheck(this, TodoList);
@@ -1073,6 +1075,15 @@ console.log('First List: ', firstList.list);
 document.querySelector('.menu_icon').addEventListener('click', function () {
   document.querySelector('.sidebar').classList.toggle('closed');
   document.querySelector('.todo-container').classList.toggle('closed');
+});
+document.querySelector('#addTodoFrom').addEventListener('submit', function (e) {
+  e.preventDefault();
+  var title = document.querySelector('#title');
+  var description = document.querySelector('#description');
+  var urgency = document.querySelector('#urgency');
+  var date = document.querySelector('#date');
+  firstList.add(new Todo(title.value, description.value, urgency.value, date.value));
+  console.log(title.value, description.value, urgency.value, date.value);
 });
 },{"uuid":"../node_modules/uuid/dist/esm-browser/index.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];

@@ -120,11 +120,10 @@ main {
 
 .add-todo-input .container {
   background: var(--light-black);
-  height: 100px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 3px;
   cursor: text;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 1rem 0.8rem;
 }
 .add-todo-input .container:hover {
   border: 1px solid #555;
@@ -136,7 +135,7 @@ main {
   font-size: 14px;
 }
 .add-todo-input .container div textarea {
-  transform: translateY(1.8px);
+  transform: translateY(0.8px);
   margin-left: 0.5rem;
   background: none;
   width: 100%;
@@ -146,27 +145,7 @@ main {
   resize: none;
   height: 24px;
 }
-.add-todo-input .container .sub-options .date {
-  align-items: center;
-}
-.add-todo-input .container .sub-options .date input {
-  margin-left: 0.5rem;
-  background: var(--dark-gray);
-  color: var(--text-white);
-  border-radius: 3px;
-  outline: none;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 2px 3px;
-  transform: translateY(1.8px);
-}
-.add-todo-input .container .sub-options .date input:hover {
-  border: 1px solid #555;
-}
-.add-todo-input .container .sub-options .date input:focus {
-  border: 1px solid #555;
-}
 .add-todo-input .container .sub-options .urgency {
-  margin-left: 1.5rem;
   align-items: center;
 }
 .add-todo-input .container .sub-options .urgency select {
@@ -183,6 +162,26 @@ main {
   border: 1px solid #555;
 }
 .add-todo-input .container .sub-options .urgency select:focus {
+  border: 1px solid #555;
+}
+.add-todo-input .container .sub-options .date {
+  margin-left: 1.5rem;
+  align-items: center;
+}
+.add-todo-input .container .sub-options .date input {
+  margin-left: 0.5rem;
+  background: var(--dark-gray);
+  color: var(--text-white);
+  border-radius: 3px;
+  outline: none;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 2px 3px;
+  transform: translateY(1.8px);
+}
+.add-todo-input .container .sub-options .date input:hover {
+  border: 1px solid #555;
+}
+.add-todo-input .container .sub-options .date input:focus {
   border: 1px solid #555;
 }
 .add-todo-input .add-todo-button {

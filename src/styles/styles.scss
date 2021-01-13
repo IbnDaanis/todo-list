@@ -124,11 +124,10 @@ main {
 .add-todo-input {
   .container {
     background: var(--light-black);
-    height: 100px;
     border: 1px solid hsla(0, 0%, 100%, 0.1);
     border-radius: 3px;
     cursor: text;
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 1rem 0.8rem;
     &:hover {
       border: 1px solid #555;
     }
@@ -138,7 +137,7 @@ main {
         font-size: 14px;
       }
       textarea {
-        transform: translateY(1.8px);
+        transform: translateY(0.8px);
         margin-left: 0.5rem;
         background: none;
         width: 100%;
@@ -150,9 +149,9 @@ main {
       }
     }
     .sub-options {
-      .date {
+      .urgency {
         align-items: center;
-        input {
+        select {
           margin-left: 0.5rem;
           background: var(--dark-gray);
           color: var(--text-white);
@@ -169,10 +168,10 @@ main {
           }
         }
       }
-      .urgency {
+      .date {
         margin-left: 1.5rem;
         align-items: center;
-        select {
+        input {
           margin-left: 0.5rem;
           background: var(--dark-gray);
           color: var(--text-white);
