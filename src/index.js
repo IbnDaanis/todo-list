@@ -15,6 +15,13 @@ class UI {
     }
   }
   static createTodoListContainer = list => {
+    const listPicker = document.querySelector('#list')
+    let el = ''
+    console.log(todoLists)
+    todoLists.forEach(list => {
+      el += `<option value='${list.title}'>${list.title}</option>`
+    })
+    listPicker.innerHTML = el
     document
       .querySelectorAll(`.todo-title`)
       .forEach(todo => todo.classList.remove('current'))
@@ -29,8 +36,6 @@ class UI {
     console.log('createTodoListContainer: ', list)
     const container = document.querySelector('.todo-list-tasks')
     container.innerHTML = ''
-
-    console.log('Text content: ', container.textContent)
     let html = `<h1>${list.title}</h1>`
     container.innerHTML += html
     console.log('List: ', list.list)
@@ -38,7 +43,7 @@ class UI {
       const element = stringToHTML(`<p>${todo.title}</p>`, 'div')
       container.appendChild(element)
     })
-
+    document.querySelector('#list').value = list.title
     document.querySelector('.add-todo-button').onclick = () => {
       document.querySelector('.add-todo-button').classList.add('hide')
       document.querySelector('.add-todo-form').classList.remove('hide')
@@ -57,6 +62,7 @@ class UI {
       list => list.title === listSelection.value
     )
 
+    console.log(title.value, description.value, urgency.value, date.value)
     currentList.add(
       new Todo(title.value, description.value, urgency.value, date.value)
     )
@@ -91,6 +97,7 @@ class TodoList {
     UI.createTodoListInMenu(this)
     index++
     todoLists.push(this)
+    console.log('This:', this)
   }
   add(todo) {
     this.list.push(todo)
@@ -135,19 +142,20 @@ document.querySelector('.menu_icon').addEventListener('click', () => {
 })
 
 document.querySelector('#addTodoForm').addEventListener('submit', e => {
-  UI.handleSubmit(e, list)
+  UI.handleSubmit(e)
 })
+
 document.querySelector('#cancel').addEventListener('click', () => {
   document.querySelector('.add-todo-form').classList.add('hide')
   document.querySelector('.add-todo-button').classList.remove('hide')
 })
 
-const listPicker = document.querySelector('#list')
+document.querySelector('#addNewList').addEventListener('submit', e => {
+  e.preventDefault()
+  const listName = document.querySelector('#listTitle')
+  console.log(listName.value)
+  const newList = new TodoList([], listName.value)
+  newList.create()
 
-let html = ''
-
-todoLists.forEach(list => {
-  html += `<option value='${list.title}'>${list.title}</option>`
+  listName.value = ''
 })
-
-listPicker.innerHTML += html

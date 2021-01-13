@@ -1036,6 +1036,13 @@ _defineProperty(UI, "createTodoListInMenu", function (list) {
 });
 
 _defineProperty(UI, "createTodoListContainer", function (list) {
+  var listPicker = document.querySelector('#list');
+  var el = '';
+  console.log(todoLists);
+  todoLists.forEach(function (list) {
+    el += "<option value='".concat(list.title, "'>").concat(list.title, "</option>");
+  });
+  listPicker.innerHTML = el;
   document.querySelectorAll(".todo-title").forEach(function (todo) {
     return todo.classList.remove('current');
   });
@@ -1052,7 +1059,6 @@ _defineProperty(UI, "createTodoListContainer", function (list) {
   console.log('createTodoListContainer: ', list);
   var container = document.querySelector('.todo-list-tasks');
   container.innerHTML = '';
-  console.log('Text content: ', container.textContent);
   var html = "<h1>".concat(list.title, "</h1>");
   container.innerHTML += html;
   console.log('List: ', list.list);
@@ -1060,6 +1066,7 @@ _defineProperty(UI, "createTodoListContainer", function (list) {
     var element = (0, _stringToHTML.stringToHTML)("<p>".concat(todo.title, "</p>"), 'div');
     container.appendChild(element);
   });
+  document.querySelector('#list').value = list.title;
 
   document.querySelector('.add-todo-button').onclick = function () {
     document.querySelector('.add-todo-button').classList.add('hide');
@@ -1078,6 +1085,7 @@ _defineProperty(UI, "handleSubmit", function (e) {
   var currentList = todoLists.find(function (list) {
     return list.title === listSelection.value;
   });
+  console.log(title.value, description.value, urgency.value, date.value);
   currentList.add(new Todo(title.value, description.value, urgency.value, date.value));
   title.value = '';
   description.value = '';
@@ -1110,6 +1118,7 @@ var TodoList = /*#__PURE__*/function () {
       UI.createTodoListInMenu(this);
       index++;
       todoLists.push(this);
+      console.log('This:', this);
     }
   }, {
     key: "add",
@@ -1169,18 +1178,20 @@ document.querySelector('.menu_icon').addEventListener('click', function () {
   document.querySelector('.todo-container').classList.toggle('closed');
 });
 document.querySelector('#addTodoForm').addEventListener('submit', function (e) {
-  UI.handleSubmit(e, list);
+  UI.handleSubmit(e);
 });
 document.querySelector('#cancel').addEventListener('click', function () {
   document.querySelector('.add-todo-form').classList.add('hide');
   document.querySelector('.add-todo-button').classList.remove('hide');
 });
-var listPicker = document.querySelector('#list');
-var html = '';
-todoLists.forEach(function (list) {
-  html += "<option value='".concat(list.title, "'>").concat(list.title, "</option>");
+document.querySelector('#addNewList').addEventListener('submit', function (e) {
+  e.preventDefault();
+  var listName = document.querySelector('#listTitle');
+  console.log(listName.value);
+  var newList = new TodoList([], listName.value);
+  newList.create();
+  listName.value = '';
 });
-listPicker.innerHTML += html;
 },{"uuid":"../node_modules/uuid/dist/esm-browser/index.js","./helpers/stringToHTML":"helpers/stringToHTML.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
