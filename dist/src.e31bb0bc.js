@@ -974,19 +974,29 @@ var UI = function UI() {
   _classCallCheck(this, UI);
 };
 
-_defineProperty(UI, "createTodoList", function (list) {
+_defineProperty(UI, "createTodoListInMenu", function (list) {
   var container = document.querySelector('.todo-list-titles');
-  var newDiv = document.createElement('li');
-  newDiv.classList.add(list.id, 'todo-title');
-  newDiv.innerHTML = list.title;
-  container.appendChild(newDiv);
+  var menuTitle = document.createElement('li');
+  menuTitle.classList.add(list.id, 'todo-title');
+  menuTitle.innerHTML = list.title;
+  container.appendChild(menuTitle);
 
-  newDiv.onclick = function () {
+  menuTitle.onclick = function () {
     document.querySelectorAll(".todo-title").forEach(function (li) {
       li.classList.remove('current');
     });
-    newDiv.classList.toggle('current');
+    menuTitle.classList.toggle('current');
+    UI.createTodoListContainer(list);
   };
+});
+
+_defineProperty(UI, "createTodoListContainer", function (list) {
+  var container = document.querySelector('.todo-container-screen');
+  var html = "\n      <h1>".concat(list.title, "</h1>");
+  list.list.forEach(function (todo) {
+    return html += "<p>".concat(todo.title, "</p>");
+  });
+  container.innerHTML = html;
 });
 
 var TodoList = /*#__PURE__*/function () {
@@ -1002,12 +1012,17 @@ var TodoList = /*#__PURE__*/function () {
   _createClass(TodoList, [{
     key: "create",
     value: function create() {
-      UI.createTodoList(this);
+      UI.createTodoListInMenu(this);
     }
   }, {
     key: "add",
     value: function add(todo) {
       this.list.push(todo);
+    }
+  }, {
+    key: "view",
+    value: function view() {
+      UI.createTodoListInMenu(this);
     }
   }, {
     key: "delete",
@@ -1046,8 +1061,8 @@ var Todo = /*#__PURE__*/function () {
 
 var firstList = new TodoList([], 'First');
 firstList.create();
-firstList.add(new Todo('Title', 'Description', 'Urgent'));
-firstList.add(new Todo('Code', 'Write it', 'Ease'));
+firstList.add(new Todo('First 1', 'Description', 'Urgent'));
+firstList.add(new Todo('First 2', 'Write it', 'Ease'));
 var secondList = new TodoList([], 'Second Batch');
 secondList.create();
 secondList.add(new Todo('Second 1', 'Description', 'Urgent'));

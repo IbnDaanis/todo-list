@@ -1,18 +1,28 @@
 import { v4 as uuidv4 } from 'uuid'
 
 class UI {
-  static createTodoList = list => {
+  static createTodoListInMenu = list => {
     const container = document.querySelector('.todo-list-titles')
-    const newDiv = document.createElement('li')
-    newDiv.classList.add(list.id, 'todo-title')
-    newDiv.innerHTML = list.title
-    container.appendChild(newDiv)
-    newDiv.onclick = () => {
+    const menuTitle = document.createElement('li')
+    menuTitle.classList.add(list.id, 'todo-title')
+    menuTitle.innerHTML = list.title
+    container.appendChild(menuTitle)
+    menuTitle.onclick = () => {
       document.querySelectorAll(`.todo-title`).forEach(li => {
         li.classList.remove('current')
       })
-      newDiv.classList.toggle('current')
+      menuTitle.classList.toggle('current')
+      this.createTodoListContainer(list)
     }
+  }
+  static createTodoListContainer = list => {
+    const container = document.querySelector('.todo-container-screen')
+    let html = `
+      <h1>${list.title}</h1>`
+
+    list.list.forEach(todo => (html += `<p>${todo.title}</p>`))
+
+    container.innerHTML = html
   }
 }
 
@@ -24,10 +34,13 @@ class TodoList {
     this.isDelete = false
   }
   create() {
-    UI.createTodoList(this)
+    UI.createTodoListInMenu(this)
   }
   add(todo) {
     this.list.push(todo)
+  }
+  view() {
+    UI.createTodoListInMenu(this)
   }
   delete(id) {
     this.list = this.list.filter(todo => id !== todo.id)
@@ -52,8 +65,8 @@ class Todo {
 
 const firstList = new TodoList([], 'First')
 firstList.create()
-firstList.add(new Todo('Title', 'Description', 'Urgent'))
-firstList.add(new Todo('Code', 'Write it', 'Ease'))
+firstList.add(new Todo('First 1', 'Description', 'Urgent'))
+firstList.add(new Todo('First 2', 'Write it', 'Ease'))
 
 const secondList = new TodoList([], 'Second Batch')
 secondList.create()
