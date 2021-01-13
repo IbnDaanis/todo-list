@@ -957,10 +957,59 @@ var _stringify = _interopRequireDefault(require("./stringify.js"));
 var _parse = _interopRequireDefault(require("./parse.js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-},{"./v1.js":"../node_modules/uuid/dist/esm-browser/v1.js","./v3.js":"../node_modules/uuid/dist/esm-browser/v3.js","./v4.js":"../node_modules/uuid/dist/esm-browser/v4.js","./v5.js":"../node_modules/uuid/dist/esm-browser/v5.js","./nil.js":"../node_modules/uuid/dist/esm-browser/nil.js","./version.js":"../node_modules/uuid/dist/esm-browser/version.js","./validate.js":"../node_modules/uuid/dist/esm-browser/validate.js","./stringify.js":"../node_modules/uuid/dist/esm-browser/stringify.js","./parse.js":"../node_modules/uuid/dist/esm-browser/parse.js"}],"index.js":[function(require,module,exports) {
+},{"./v1.js":"../node_modules/uuid/dist/esm-browser/v1.js","./v3.js":"../node_modules/uuid/dist/esm-browser/v3.js","./v4.js":"../node_modules/uuid/dist/esm-browser/v4.js","./v5.js":"../node_modules/uuid/dist/esm-browser/v5.js","./nil.js":"../node_modules/uuid/dist/esm-browser/nil.js","./version.js":"../node_modules/uuid/dist/esm-browser/version.js","./validate.js":"../node_modules/uuid/dist/esm-browser/validate.js","./stringify.js":"../node_modules/uuid/dist/esm-browser/stringify.js","./parse.js":"../node_modules/uuid/dist/esm-browser/parse.js"}],"helpers/stringToHTML.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.stringToHTML = void 0;
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+var stringToHTML = function stringToHTML(str, elementType) {
+  var fragment = elementType ? document.createElement(elementType) : document.createDocumentFragment();
+  var parser = new DOMParser();
+  var doc = parser.parseFromString(str, 'text/html');
+
+  _toConsumableArray(doc.body.children).forEach(function (element) {
+    return fragment.appendChild(element);
+  });
+
+  return fragment;
+};
+
+exports.stringToHTML = stringToHTML;
+},{}],"components/addTodoForm.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.addTodoForm = void 0;
+
+var _stringToHTML = require("../helpers/stringToHTML");
+
+var addTodoForm = (0, _stringToHTML.stringToHTML)("       <div class=\"add-todo-form\">\n            <form id=\"addTodoForm\">\n              <div class=\"container\">\n                <div class=\"title\">\n                  <label for=\"title\">Title: </label>\n                  <textarea\n                    name=\"title\"\n                    id=\"title\"\n                    placeholder=\"Enter the title\"\n                  ></textarea>\n                </div>\n                <div class=\"description\">\n                  <label for=\"description\">Description: </label>\n                  <textarea\n                    name=\"description\"\n                    id=\"description\"\n                    placeholder=\"Enter the description\"\n                  ></textarea>\n                </div>\n                <div class=\"sub-options\">\n                  <div class=\"urgency\">\n                    <label for=\"urgency\">Urgency: </label>\n                    <select name=\"urgency\" id=\"urgency\">\n                      <option value=\"none\">None</option>\n                      <option value=\"important\">Important</option>\n                      <option value=\"urgent\">Urgent</option>\n                    </select>\n                  </div>\n                  <div class=\"date\">\n                    <label for=\"date\">Pick a date: </label>\n                    <input type=\"date\" name=\"date\" id=\"date\" />\n                  </div>\n                </div>\n              </div>\n              <button class=\"add-todo-button\" type=\"submit\">Add Task</button>\n              <button class=\"cancel\" id=\"cancel\">Cancel</button>\n            </form>\n          </div>\n", 'div');
+exports.addTodoForm = addTodoForm;
+},{"../helpers/stringToHTML":"helpers/stringToHTML.js"}],"index.js":[function(require,module,exports) {
 "use strict";
 
 var _uuid = require("uuid");
+
+var _addTodoForm = require("./components/addTodoForm");
+
+var _stringToHTML = require("./helpers/stringToHTML");
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
@@ -993,14 +1042,40 @@ _defineProperty(UI, "createTodoListInMenu", function (list) {
 _defineProperty(UI, "createTodoListContainer", function (list) {
   var container = document.querySelector('.todo-container-screen');
   var html = "\n      <h1>".concat(list.title, "</h1>");
-  list.list.forEach(function (todo) {
-    return html += "<p>".concat(todo.title, "</p>");
-  });
-  html += "";
   container.innerHTML = html;
+  list.list.forEach(function (todo) {
+    var element = (0, _stringToHTML.stringToHTML)("<p>".concat(todo.title, "</p>"), 'div');
+    container.appendChild(element);
+  });
+  var addTodoButton = (0, _stringToHTML.stringToHTML)("<div class='plus'>\n        <svg width=\"13\" height=\"13\"><path d=\"M6 6V.5a.5.5 0 0 1 1 0V6h5.5a.5.5 0 1 1 0 1H7v5.5a.5.5 0 1 1-1 0V7H.5a.5.5 0 0 1 0-1H6z\" fill=\"currentColor\" fill-rule=\"evenodd\"></path></svg>\n      </div>\n      <p>Add task</p>", 'div');
+  addTodoButton.classList.add('add-todo-button');
+
+  addTodoButton.onclick = function () {
+    UI.createAddTodoForm();
+    document.querySelector('.add-todo-button').classList.add('hide');
+  };
+
+  container.appendChild(addTodoButton);
 });
 
-_defineProperty(UI, "createAddTodoForm", function () {});
+_defineProperty(UI, "createAddTodoForm", function () {
+  var container = document.querySelector('.todo-container-screen');
+  container.appendChild(_addTodoForm.addTodoForm);
+  document.querySelector('.add-todo-form').classList.remove('hide');
+  document.querySelector('#addTodoForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var title = document.querySelector('#title');
+    var description = document.querySelector('#description');
+    var urgency = document.querySelector('#urgency');
+    var date = document.querySelector('#date');
+    firstList.add(new Todo(title.value, description.value, urgency.value, date.value));
+    UI.createTodoListContainer(firstList); // console.log(title.value, description.value, urgency.value, date.value)
+  });
+  document.querySelector('#cancel').addEventListener('click', function () {
+    document.querySelector('.add-todo-form').classList.add('hide');
+    document.querySelector('.add-todo-button').classList.remove('hide');
+  });
+});
 
 var TodoList = /*#__PURE__*/function () {
   function TodoList(list, title) {
@@ -1076,16 +1151,7 @@ document.querySelector('.menu_icon').addEventListener('click', function () {
   document.querySelector('.sidebar').classList.toggle('closed');
   document.querySelector('.todo-container').classList.toggle('closed');
 });
-document.querySelector('#addTodoFrom').addEventListener('submit', function (e) {
-  e.preventDefault();
-  var title = document.querySelector('#title');
-  var description = document.querySelector('#description');
-  var urgency = document.querySelector('#urgency');
-  var date = document.querySelector('#date');
-  firstList.add(new Todo(title.value, description.value, urgency.value, date.value));
-  console.log(title.value, description.value, urgency.value, date.value);
-});
-},{"uuid":"../node_modules/uuid/dist/esm-browser/index.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"uuid":"../node_modules/uuid/dist/esm-browser/index.js","./components/addTodoForm":"components/addTodoForm.js","./helpers/stringToHTML":"helpers/stringToHTML.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
