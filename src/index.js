@@ -1,28 +1,18 @@
 import { v4 as uuidv4 } from 'uuid'
 
 class UI {
-  static addTodoToContainer = list => {
-    // const container = document.querySelector('.todo-list-group')
-    // if (!document.querySelector(`.${list.slice(0, 4)}`)) {
-    //   const newDiv = document.createElement('div')
-    //   newDiv.classList.add(list.slice(0, 4))
-    //   container.appendChild(newDiv)
-    // }
-    // const currContainer = document.querySelector(`.${list.slice(0, 4)}`)
-    // firstList.list.forEach(todo => {
-    //   const html = `
-    //   <li class="list-group-item">
-    //       <input
-    //         class="form-check-input me-1"
-    //         type="checkbox"
-    //         value=""
-    //         aria-label="..."
-    //       />${todo.title}
-    //      ${todo.description}
-    //   </li>
-    //   `
-    //   currContainer.innerHTML += html
-    // })
+  static createTodoList = list => {
+    const container = document.querySelector('.todo-list-titles')
+    const newDiv = document.createElement('li')
+    newDiv.classList.add(list.id, 'todo-title')
+    newDiv.innerHTML = list.title
+    container.appendChild(newDiv)
+    newDiv.onclick = () => {
+      document.querySelectorAll(`.todo-title`).forEach(li => {
+        li.classList.remove('current')
+      })
+      newDiv.classList.toggle('current')
+    }
   }
 }
 
@@ -30,10 +20,14 @@ class TodoList {
   constructor(list, title) {
     this.list = list
     this.title = title
+    this.id = uuidv4()
+    this.isDelete = false
+  }
+  create() {
+    UI.createTodoList(this)
   }
   add(todo) {
     this.list.push(todo)
-    UI.addTodoToContainer(this.title)
   }
   delete(id) {
     this.list = this.list.filter(todo => id !== todo.id)
@@ -57,15 +51,14 @@ class Todo {
 }
 
 const firstList = new TodoList([], 'First')
-
-const firstTodo = new Todo('Title', 'Description', 'Urgent')
-const secondTodo = new Todo('Code', 'Write it', 'Ease')
-console.log(firstTodo)
-firstList.add(firstTodo)
-firstList.add(secondTodo)
-console.log(firstList.list)
+firstList.create()
+firstList.add(new Todo('Title', 'Description', 'Urgent'))
+firstList.add(new Todo('Code', 'Write it', 'Ease'))
 
 const secondList = new TodoList([], 'Second Batch')
-secondList.add(firstTodo)
-secondList.add(secondTodo)
-console.log(secondList.list)
+secondList.create()
+secondList.add(new Todo('Second 1', 'Description', 'Urgent'))
+secondList.add(new Todo('Second 2', 'Description', 'Urgent'))
+
+console.log('Second List: ', secondList.list)
+console.log('First List: ', firstList.list)
