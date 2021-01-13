@@ -1,6 +1,3 @@
-import 'bootstrap'
-import 'bootstrap/dist/css/bootstrap.css'
-import '@fortawesome/fontawesome-free/css/all.css'
 import { v4 as uuidv4 } from 'uuid'
 
 class UI {
