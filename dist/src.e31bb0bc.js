@@ -1054,6 +1054,10 @@ secondList.add(new Todo('Second 1', 'Description', 'Urgent'));
 secondList.add(new Todo('Second 2', 'Description', 'Urgent'));
 console.log('Second List: ', secondList.list);
 console.log('First List: ', firstList.list);
+document.querySelector('.menu_icon').addEventListener('click', function () {
+  document.querySelector('.sidebar').classList.toggle('closed');
+  document.querySelector('.todo-container').classList.toggle('closed');
+});
 },{"uuid":"../node_modules/uuid/dist/esm-browser/index.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';

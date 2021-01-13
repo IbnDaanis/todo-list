@@ -62,3 +62,8 @@ secondList.add(new Todo('Second 2', 'Description', 'Urgent'))
 
 console.log('Second List: ', secondList.list)
 console.log('First List: ', firstList.list)
+
+document.querySelector('.menu_icon').addEventListener('click', () => {
+  document.querySelector('.sidebar').classList.toggle('closed')
+  document.querySelector('.todo-container').classList.toggle('closed')
+})
