@@ -10,6 +10,7 @@
   --very-dark-gray: #1f1f1f;
   --light-black: #171717;
   --text-white: #ffffffde;
+  --light-red: #de4c4a;
 }
 
 html {
@@ -36,29 +37,6 @@ h2,
 h3,
 h4 {
   font-weight: 500;
-}
-
-.navbar {
-  background: var(--dark-gray);
-  height: 44px;
-  border-bottom: 1px solid transparent;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.15);
-  position: relative;
-  z-index: 1000;
-}
-.navbar .container {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  padding: 0 42px 0;
-}
-.navbar .container .menu_icon {
-  cursor: pointer;
-}
-
-main {
-  display: flex;
 }
 
 .sidebar {
@@ -97,8 +75,59 @@ main {
   background-color: #363636;
   font-weight: 500;
 }
+.sidebar .container .add-new-list-form input {
+  background: none;
+  outline: 0;
+  border: 0;
+  border-bottom: 2px solid grey;
+  padding: 5px 16px 5px 5px;
+  color: var(--text-white);
+  transition: 0.2s ease-in-out;
+}
+.sidebar .container .add-new-list-form input:focus {
+  border-bottom: 2px solid var(--light-red);
+}
+.sidebar .container .add-new-list-form input:hover {
+  border-bottom: 2px solid var(--light-red);
+}
+.sidebar .container .add-new-list-form button {
+  background: none;
+  color: white;
+  border: none;
+  outline: 0;
+  cursor: pointer;
+  font-size: 1.3rem;
+  transform: translateY(2px);
+  transition: 0.2s ease-in-out;
+}
+.sidebar .container .add-new-list-form button:hover {
+  color: var(--light-red);
+}
 .sidebar.closed {
   transform: translateX(-310px);
+}
+
+.navbar {
+  background: var(--dark-gray);
+  height: 44px;
+  border-bottom: 1px solid transparent;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.15);
+  position: relative;
+  z-index: 1000;
+}
+.navbar .container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 0 42px 0;
+}
+.navbar .container .menu_icon {
+  cursor: pointer;
+}
+
+main {
+  display: flex;
 }
 
 .todo-container {
