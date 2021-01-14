@@ -5,8 +5,8 @@ import {
   header,
   sidebar,
   dashboard,
-  addNewList,
-  addTodoForm,
+  addProjectForm,
+  addTaskForm,
 } from './helpers/domNodes'
 
 const DOM = () => {
@@ -31,6 +31,30 @@ const DOM = () => {
 }
 
 const AppDOM = DOM()
+
+const Forms = () => {
+  const createProjectForm = () => {
+    addProjectForm.form.onsubmit = e => {
+      e.preventDefault()
+      console.log('Form createProjectForm')
+    }
+  }
+  const createTaskForm = () => {
+    addTaskForm.form.onsubmit = e => {
+      e.preventDefault()
+      console.log('Form createTaskForm')
+    }
+  }
+
+  return {
+    createProjectForm,
+    createTaskForm,
+  }
+}
+
+const AppForms = Forms()
+AppForms.createProjectForm()
+AppForms.createTaskForm()
 
 const Data = () => {
   let projects = []

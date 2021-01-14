@@ -1035,12 +1035,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.header = exports.dashboard = exports.sidebar = exports.addTaskForm = exports.addNewProject = void 0;
-var addNewProject = {
+exports.header = exports.dashboard = exports.sidebar = exports.addTaskForm = exports.addProjectForm = void 0;
+var addProjectForm = {
   form: document.querySelector('#addProject'),
   input: document.querySelector('#projectTitle')
 };
-exports.addNewProject = addNewProject;
+exports.addProjectForm = addProjectForm;
 var addTaskForm = {
   toggler: document.querySelector('#addTaskFormToggler'),
   container: document.querySelector('#addTaskFormContainer'),
@@ -1105,6 +1105,31 @@ var DOM = function DOM() {
 };
 
 var AppDOM = DOM();
+
+var Forms = function Forms() {
+  var createProjectForm = function createProjectForm() {
+    _domNodes.addProjectForm.form.onsubmit = function (e) {
+      e.preventDefault();
+      console.log('Form createProjectForm');
+    };
+  };
+
+  var createTaskForm = function createTaskForm() {
+    _domNodes.addTaskForm.form.onsubmit = function (e) {
+      e.preventDefault();
+      console.log('Form createTaskForm');
+    };
+  };
+
+  return {
+    createProjectForm: createProjectForm,
+    createTaskForm: createTaskForm
+  };
+};
+
+var AppForms = Forms();
+AppForms.createProjectForm();
+AppForms.createTaskForm();
 
 var Data = function Data() {
   var projects = [];

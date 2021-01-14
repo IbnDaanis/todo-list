@@ -1,4 +1,4 @@
-export const addNewProject = {
+export const addProjectForm = {
   form: document.querySelector('#addProject'),
   input: document.querySelector('#projectTitle'),
 }
