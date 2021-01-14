@@ -1006,7 +1006,12 @@ var addTodoForm = {
   toggler: document.querySelector('#addTodoFormToggler'),
   container: document.querySelector('#addTodoFormContainer'),
   form: document.querySelector('#addTodoForm'),
-  cancel: document.querySelector('#cancelAddTodo')
+  cancel: document.querySelector('#cancelAddTodo'),
+  title: document.querySelector('#title'),
+  description: document.querySelector('#description'),
+  urgency: document.querySelector('#urgency'),
+  date: document.querySelector('#date'),
+  listSelection: document.querySelector('#list')
 };
 exports.addTodoForm = addTodoForm;
 var sidebar = document.querySelector('#sidebar');
@@ -1105,20 +1110,19 @@ _defineProperty(UI, "createTodoListContainer", function (list) {
 
 _defineProperty(UI, "handleSubmit", function (e) {
   e.preventDefault();
-  console.log('SUBMITTED! -----------------');
-  var title = document.querySelector('#title');
-  var description = document.querySelector('#description');
-  var urgency = document.querySelector('#urgency');
-  var date = document.querySelector('#date');
-  var listSelection = document.querySelector('#list');
+  var title = _domNodes.addTodoForm.title,
+      description = _domNodes.addTodoForm.description,
+      urgency = _domNodes.addTodoForm.urgency,
+      date = _domNodes.addTodoForm.date,
+      listSelection = _domNodes.addTodoForm.listSelection;
   var currentList = todoLists.find(function (list) {
     return list.title === listSelection.value;
   });
-  console.log(title.value, description.value, urgency.value, date.value);
   currentList.add(new Todo(title.value, description.value, urgency.value, date.value));
   title.value = '';
   description.value = '';
   date.value = '';
+  urgency.getElementsByTagName('option')[0].selected = 'selected';
   UI.createTodoListContainer(currentList);
 });
 

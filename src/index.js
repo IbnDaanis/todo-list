@@ -52,25 +52,17 @@ class UI {
 
   static handleSubmit = e => {
     e.preventDefault()
-    console.log('SUBMITTED! -----------------')
-    const title = document.querySelector('#title')
-    const description = document.querySelector('#description')
-    const urgency = document.querySelector('#urgency')
-    const date = document.querySelector('#date')
-    const listSelection = document.querySelector('#list')
+    const { title, description, urgency, date, listSelection } = addTodoForm
     const currentList = todoLists.find(
       list => list.title === listSelection.value
     )
-
-    console.log(title.value, description.value, urgency.value, date.value)
     currentList.add(
       new Todo(title.value, description.value, urgency.value, date.value)
     )
-
     title.value = ''
     description.value = ''
     date.value = ''
-
+    urgency.getElementsByTagName('option')[0].selected = 'selected'
     this.createTodoListContainer(currentList)
   }
   static removeAddTodoForm = name => {
