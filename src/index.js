@@ -1,6 +1,5 @@
 import './styles/styles.scss'
 import { v4 as uuidv4 } from 'uuid'
-import { stringToHTML } from './helpers/stringToHTML'
 
 import {
   header,
@@ -13,7 +12,7 @@ import {
 const todoLists = []
 let index = 0
 
-class TodoList {
+class Project {
   constructor(list, title) {
     this.list = list
     this.title = title
@@ -35,12 +34,13 @@ class TodoList {
   }
 }
 
-class Todo {
+class Task {
   constructor(title, description, priority, dueDate) {
     this.title = title
     this.description = description
     this.priority = priority
     this.id = uuidv4()
+    this.completed = false
     this.dueDate = dueDate || new Date().toLocaleDateString('en-GB')
   }
 
@@ -51,12 +51,12 @@ class Todo {
   }
 }
 
-const firstList = new TodoList([], 'First')
+const firstList = new Project([], 'First')
 firstList.create()
-firstList.add(new Todo('First 1', 'Description', 'Urgent'))
-firstList.add(new Todo('First 2', 'Write it', 'Ease'))
+firstList.add(new Task('First 1', 'Description', 'Urgent'))
+firstList.add(new Task('First 2', 'Write it', 'Ease'))
 
-const secondList = new TodoList([], 'Second')
+const secondList = new Project([], 'Second')
 secondList.create()
-secondList.add(new Todo('Second 1', 'Description', 'Urgent'))
-secondList.add(new Todo('Second 2', 'Description', 'Urgent'))
+secondList.add(new Task('Second 1', 'Description', 'Urgent'))
+secondList.add(new Task('Second 2', 'Description', 'Urgent'))

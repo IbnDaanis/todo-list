@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./styles/styles.scss" />
     <link rel="shortcut icon" href="./images/favicon.png" />
-    <title>Todo List</title>
+    <title>Task Doer</title>
   </head>
   <body>
     <header>
@@ -42,13 +42,13 @@
 
     <div class="sidebar" id="sidebar">
       <div class="container" id="sidebarContainer">
-        <ul class="todo-list-titles" id="todoListTitles"></ul>
-        <form id="addNewList" class="add-new-list-form" autocomplete="off">
+        <ul class="project-titles" id="projectTitles"></ul>
+        <form id="addProject" class="add-new-project-form" autocomplete="off">
           <input
             type="text"
-            id="listTitle"
+            id="projectTitle"
             required
-            placeholder="Add new List"
+            placeholder="Add new Project"
           />
           <button type="submit">+</button>
         </form>
@@ -56,9 +56,9 @@
     </div>
     <main>
       <div class="dashboard" id="dashboard">
-        <div class="todo-container">
-          <div class="todo-list-tasks"></div>
-          <div class="add-todo-button" id="addTodoFormToggler">
+        <div class="project-container">
+          <div class="task-list-tasks"></div>
+          <div class="add-task-button" id="addTaskFormToggler">
             <div class="plus">
               <svg width="13" height="13">
                 <path
@@ -70,8 +70,8 @@
             </div>
             <p>Add task</p>
           </div>
-          <div class="add-todo-form" id="addTodoFormContainer">
-            <form id="addTodoForm">
+          <div class="add-task-form" id="addTaskFormContainer">
+            <form id="addTaskForm">
               <div class="container">
                 <div class="title">
                   <label for="title">Title: </label>
@@ -91,9 +91,13 @@
                   />
                 </div>
                 <div class="sub-options">
-                  <div class="urgency">
-                    <label for="urgency">Urgency: </label>
-                    <select name="urgency" id="urgency">
+                  <div class="priority">
+                    <label for="priority">Priority: </label>
+                    <select
+                      name="priority"
+                      id="priority"
+                      class="priority-select"
+                    >
                       <option value="none">None</option>
                       <option value="important">Important</option>
                       <option value="urgent">Urgent</option>
@@ -109,8 +113,8 @@
                   </div>
                 </div>
               </div>
-              <button class="add-todo-button" type="submit">Add Task</button>
-              <button type="button" class="cancel" id="cancelAddTodo">
+              <button class="add-task-button" type="submit">Add Task</button>
+              <button type="button" class="cancel" id="cancelAddTask">
                 Cancel
               </button>
             </form>

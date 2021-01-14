@@ -1029,67 +1029,34 @@ var _stringify = _interopRequireDefault(require("./stringify.js"));
 var _parse = _interopRequireDefault(require("./parse.js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-},{"./v1.js":"../node_modules/uuid/dist/esm-browser/v1.js","./v3.js":"../node_modules/uuid/dist/esm-browser/v3.js","./v4.js":"../node_modules/uuid/dist/esm-browser/v4.js","./v5.js":"../node_modules/uuid/dist/esm-browser/v5.js","./nil.js":"../node_modules/uuid/dist/esm-browser/nil.js","./version.js":"../node_modules/uuid/dist/esm-browser/version.js","./validate.js":"../node_modules/uuid/dist/esm-browser/validate.js","./stringify.js":"../node_modules/uuid/dist/esm-browser/stringify.js","./parse.js":"../node_modules/uuid/dist/esm-browser/parse.js"}],"helpers/stringToHTML.js":[function(require,module,exports) {
+},{"./v1.js":"../node_modules/uuid/dist/esm-browser/v1.js","./v3.js":"../node_modules/uuid/dist/esm-browser/v3.js","./v4.js":"../node_modules/uuid/dist/esm-browser/v4.js","./v5.js":"../node_modules/uuid/dist/esm-browser/v5.js","./nil.js":"../node_modules/uuid/dist/esm-browser/nil.js","./version.js":"../node_modules/uuid/dist/esm-browser/version.js","./validate.js":"../node_modules/uuid/dist/esm-browser/validate.js","./stringify.js":"../node_modules/uuid/dist/esm-browser/stringify.js","./parse.js":"../node_modules/uuid/dist/esm-browser/parse.js"}],"helpers/domNodes.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.stringToHTML = void 0;
-
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-var stringToHTML = function stringToHTML(str, elementType) {
-  var fragment = elementType ? document.createElement(elementType) : document.createDocumentFragment();
-  var parser = new DOMParser();
-  var doc = parser.parseFromString(str, 'text/html');
-
-  _toConsumableArray(doc.body.children).forEach(function (element) {
-    return fragment.appendChild(element);
-  });
-
-  return fragment;
+exports.header = exports.dashboard = exports.sidebar = exports.addTaskForm = exports.addNewProject = void 0;
+var addNewProject = {
+  form: document.querySelector('#addProject'),
+  input: document.querySelector('#projectTitle')
 };
-
-exports.stringToHTML = stringToHTML;
-},{}],"helpers/domNodes.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.todo = exports.header = exports.dashboard = exports.sidebar = exports.addTodoForm = exports.addNewList = void 0;
-var addNewList = {
-  form: document.querySelector('#addNewList'),
-  input: document.querySelector('#listTitle')
-};
-exports.addNewList = addNewList;
-var addTodoForm = {
-  toggler: document.querySelector('#addTodoFormToggler'),
-  container: document.querySelector('#addTodoFormContainer'),
-  form: document.querySelector('#addTodoForm'),
-  cancel: document.querySelector('#cancelAddTodo'),
+exports.addNewProject = addNewProject;
+var addTaskForm = {
+  toggler: document.querySelector('#addTaskFormToggler'),
+  container: document.querySelector('#addTaskFormContainer'),
+  form: document.querySelector('#addTaskForm'),
+  cancel: document.querySelector('#cancelAddTask'),
   title: document.querySelector('#title'),
   description: document.querySelector('#description'),
   urgency: document.querySelector('#urgency'),
   date: document.querySelector('#date'),
   listSelection: document.querySelector('#list')
 };
-exports.addTodoForm = addTodoForm;
+exports.addTaskForm = addTaskForm;
 var sidebar = {
   sidebar: document.querySelector('#sidebar'),
   container: document.querySelector('#sidebarContainer'),
-  todoLists: document.querySelector('#todoListTitles')
+  projectTitles: document.querySelector('#projectTitles')
 };
 exports.sidebar = sidebar;
 var dashboard = document.querySelector('#dashboard');
@@ -1099,18 +1066,12 @@ var header = {
   home: document.querySelector('#home')
 };
 exports.header = header;
-var todo = {
-  delete: document.querySelectorAll('[data-action=delete]')
-};
-exports.todo = todo;
 },{}],"index.js":[function(require,module,exports) {
 "use strict";
 
 require("./styles/styles.scss");
 
 var _uuid = require("uuid");
-
-var _stringToHTML = require("./helpers/stringToHTML");
 
 var _domNodes = require("./helpers/domNodes");
 
@@ -1123,9 +1084,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 var todoLists = [];
 var index = 0;
 
-var TodoList = /*#__PURE__*/function () {
-  function TodoList(list, title) {
-    _classCallCheck(this, TodoList);
+var Project = /*#__PURE__*/function () {
+  function Project(list, title) {
+    _classCallCheck(this, Project);
 
     this.list = list;
     this.title = title;
@@ -1135,7 +1096,7 @@ var TodoList = /*#__PURE__*/function () {
     this.index = index;
   }
 
-  _createClass(TodoList, [{
+  _createClass(Project, [{
     key: "create",
     value: function create() {
       index++;
@@ -1156,21 +1117,22 @@ var TodoList = /*#__PURE__*/function () {
     }
   }]);
 
-  return TodoList;
+  return Project;
 }();
 
-var Todo = /*#__PURE__*/function () {
-  function Todo(title, description, priority, dueDate) {
-    _classCallCheck(this, Todo);
+var Task = /*#__PURE__*/function () {
+  function Task(title, description, priority, dueDate) {
+    _classCallCheck(this, Task);
 
     this.title = title;
     this.description = description;
     this.priority = priority;
     this.id = (0, _uuid.v4)();
+    this.completed = false;
     this.dueDate = dueDate || new Date().toLocaleDateString('en-GB');
   }
 
-  _createClass(Todo, [{
+  _createClass(Task, [{
     key: "edit",
     value: function edit(title, description, priority) {
       title && (this.title = title);
@@ -1179,18 +1141,18 @@ var Todo = /*#__PURE__*/function () {
     }
   }]);
 
-  return Todo;
+  return Task;
 }();
 
-var firstList = new TodoList([], 'First');
+var firstList = new Project([], 'First');
 firstList.create();
-firstList.add(new Todo('First 1', 'Description', 'Urgent'));
-firstList.add(new Todo('First 2', 'Write it', 'Ease'));
-var secondList = new TodoList([], 'Second');
+firstList.add(new Task('First 1', 'Description', 'Urgent'));
+firstList.add(new Task('First 2', 'Write it', 'Ease'));
+var secondList = new Project([], 'Second');
 secondList.create();
-secondList.add(new Todo('Second 1', 'Description', 'Urgent'));
-secondList.add(new Todo('Second 2', 'Description', 'Urgent'));
-},{"./styles/styles.scss":"styles/styles.scss","uuid":"../node_modules/uuid/dist/esm-browser/index.js","./helpers/stringToHTML":"helpers/stringToHTML.js","./helpers/domNodes":"helpers/domNodes.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+secondList.add(new Task('Second 1', 'Description', 'Urgent'));
+secondList.add(new Task('Second 2', 'Description', 'Urgent'));
+},{"./styles/styles.scss":"styles/styles.scss","uuid":"../node_modules/uuid/dist/esm-browser/index.js","./helpers/domNodes":"helpers/domNodes.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -1218,7 +1180,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65340" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51186" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

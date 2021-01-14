@@ -1,13 +1,13 @@
-export const addNewList = {
-  form: document.querySelector('#addNewList'),
-  input: document.querySelector('#listTitle'),
+export const addNewProject = {
+  form: document.querySelector('#addProject'),
+  input: document.querySelector('#projectTitle'),
 }
 
-export const addTodoForm = {
-  toggler: document.querySelector('#addTodoFormToggler'),
-  container: document.querySelector('#addTodoFormContainer'),
-  form: document.querySelector('#addTodoForm'),
-  cancel: document.querySelector('#cancelAddTodo'),
+export const addTaskForm = {
+  toggler: document.querySelector('#addTaskFormToggler'),
+  container: document.querySelector('#addTaskFormContainer'),
+  form: document.querySelector('#addTaskForm'),
+  cancel: document.querySelector('#cancelAddTask'),
   title: document.querySelector('#title'),
   description: document.querySelector('#description'),
   urgency: document.querySelector('#urgency'),
@@ -18,15 +18,11 @@ export const addTodoForm = {
 export const sidebar = {
   sidebar: document.querySelector('#sidebar'),
   container: document.querySelector('#sidebarContainer'),
-  todoLists: document.querySelector('#todoListTitles'),
+  projectTitles: document.querySelector('#projectTitles'),
 }
 export const dashboard = document.querySelector('#dashboard')
 
 export const header = {
   toggler: document.querySelector('#menuToggler'),
   home: document.querySelector('#home'),
-}
-
-export const todo = {
-  delete: document.querySelectorAll('[data-action=delete]'),
 }
