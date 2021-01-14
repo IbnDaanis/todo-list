@@ -1019,7 +1019,8 @@ exports.sidebar = sidebar;
 var dashboard = document.querySelector('#dashboard');
 exports.dashboard = dashboard;
 var header = {
-  toggler: document.querySelector('#menuToggler')
+  toggler: document.querySelector('#menuToggler'),
+  home: document.querySelector('#home')
 };
 exports.header = header;
 },{}],"index.js":[function(require,module,exports) {
@@ -1106,6 +1107,26 @@ _defineProperty(UI, "createTodoListContainer", function (list) {
     document.querySelector('.add-todo-button').classList.add('hide');
     document.querySelector('.add-todo-form').classList.remove('hide');
   };
+});
+
+_defineProperty(UI, "displayAllTodos", function () {
+  document.querySelectorAll(".todo-title").forEach(function (todo) {
+    return todo.classList.remove('current');
+  });
+  document.querySelector('.add-todo-form').classList.add('hide');
+  document.querySelector('.add-todo-button').classList.add('hide');
+  var container = document.querySelector('.todo-list-tasks');
+  container.innerHTML = '';
+  var html = "<h1>All Todo Lists</h1>";
+  container.innerHTML += html;
+  todoLists.forEach(function (todoList) {
+    var element = (0, _stringToHTML.stringToHTML)("<h2>".concat(todoList.title, "</h2>"), 'div');
+    todoList.list.forEach(function (todo) {
+      var todoEl = (0, _stringToHTML.stringToHTML)("<p>".concat(todo.title, "</p>"));
+      element.appendChild(todoEl);
+    });
+    container.appendChild(element);
+  });
 });
 
 _defineProperty(UI, "handleSubmit", function (e) {
@@ -1213,6 +1234,10 @@ _domNodes.header.toggler.addEventListener('click', function () {
   _domNodes.dashboard.classList.toggle('closed');
 });
 
+_domNodes.header.home.addEventListener('click', function () {
+  UI.displayAllTodos();
+});
+
 _domNodes.addNewList.form.addEventListener('submit', function (e) {
   e.preventDefault();
   var newList = new TodoList([], _domNodes.addNewList.input.value);
@@ -1230,6 +1255,8 @@ _domNodes.addTodoForm.cancel.addEventListener('click', function () {
 
   _domNodes.addTodoForm.toggler.classList.remove('hide');
 });
+
+UI.displayAllTodos();
 },{"uuid":"../node_modules/uuid/dist/esm-browser/index.js","./helpers/stringToHTML":"helpers/stringToHTML.js","./scripts/domNodes":"scripts/domNodes.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';

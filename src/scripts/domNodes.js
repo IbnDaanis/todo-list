@@ -20,4 +20,5 @@ export const dashboard = document.querySelector('#dashboard')
 
 export const header = {
   toggler: document.querySelector('#menuToggler'),
+  home: document.querySelector('#home'),
 }

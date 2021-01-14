@@ -50,6 +50,27 @@ class UI {
     }
   }
 
+  static displayAllTodos = () => {
+    document
+      .querySelectorAll(`.todo-title`)
+      .forEach(todo => todo.classList.remove('current'))
+
+    document.querySelector('.add-todo-form').classList.add('hide')
+    document.querySelector('.add-todo-button').classList.add('hide')
+    const container = document.querySelector('.todo-list-tasks')
+    container.innerHTML = ''
+    let html = `<h1>All Todo Lists</h1>`
+    container.innerHTML += html
+    todoLists.forEach(todoList => {
+      const element = stringToHTML(`<h2>${todoList.title}</h2>`, 'div')
+      todoList.list.forEach(todo => {
+        const todoEl = stringToHTML(`<p>${todo.title}</p>`)
+        element.appendChild(todoEl)
+      })
+      container.appendChild(element)
+    })
+  }
+
   static handleSubmit = e => {
     e.preventDefault()
     const { title, description, urgency, date, listSelection } = addTodoForm
@@ -141,6 +162,10 @@ header.toggler.addEventListener('click', () => {
   dashboard.classList.toggle('closed')
 })
 
+header.home.addEventListener('click', () => {
+  UI.displayAllTodos()
+})
+
 addNewList.form.addEventListener('submit', e => {
   e.preventDefault()
   const newList = new TodoList([], addNewList.input.value)
@@ -156,3 +181,5 @@ addTodoForm.cancel.addEventListener('click', () => {
   addTodoForm.container.classList.add('hide')
   addTodoForm.toggler.classList.remove('hide')
 })
+
+UI.displayAllTodos()
