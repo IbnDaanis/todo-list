@@ -9,9 +9,32 @@ import {
   addTodoForm,
 } from './helpers/domNodes'
 
+const DOM = () => {
+  const hide = (element, closed) => {
+    console.log('Element Hidden: ', element)
+    element.classList.add(closed ? closed : 'hide')
+  }
+  const unhide = (element, closed) => {
+    console.log('Element Unhidden: ', element)
+    element.classList.remove(closed ? closed : 'hide')
+  }
+  const toggleHide = (element, closed) => {
+    console.log('Element Unhidden: ', element)
+    element.classList.toggle(closed ? closed : 'hide')
+  }
+
+  return {
+    hide,
+    unhide,
+    toggleHide,
+  }
+}
+
+const AppDOM = DOM()
+
 const Data = () => {
   let projects = []
-  const addProject = project => {
+  const storeProject = project => {
     projects.push(project)
     console.log('Projects: + ', projects)
   }
@@ -20,7 +43,7 @@ const Data = () => {
     console.log('Projects: - ', projects)
   }
   return {
-    addProject,
+    storeProject,
     removeProject,
     projects,
   }
@@ -38,7 +61,7 @@ class Project {
   }
   create() {
     console.log('This:', this)
-    AppData.addProject(this)
+    AppData.storeProject(this)
   }
   addTask(task) {
     this.tasks.push(task)
@@ -83,3 +106,8 @@ setTimeout(() => {
 setTimeout(() => {
   firstList.removeTask(AppData.projects[0].tasks[0])
 }, 3000)
+
+header.toggler.onclick = () => {
+  AppDOM.toggleHide(sidebar.sidebar, 'closed')
+  AppDOM.toggleHide(dashboard, 'closed')
+}

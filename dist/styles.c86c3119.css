@@ -271,11 +271,11 @@ main .dashboard .project-container h1 {
 .add-task-form .container .sub-options .date input:focus {
   border: 1px solid #555;
 }
-.add-task-form .container .sub-options .list {
+.add-task-form .container .sub-options .project-selection {
   margin-left: 1.5rem;
   align-items: center;
 }
-.add-task-form .container .sub-options .list select {
+.add-task-form .container .sub-options .project-selection select {
   margin-left: 0.5rem;
   background: var(--dark-gray);
   color: var(--text-white);
@@ -286,10 +286,10 @@ main .dashboard .project-container h1 {
   transform: translateY(1.8px);
   height: 32px;
 }
-.add-task-form .container .sub-options .list select:hover {
+.add-task-form .container .sub-options .project-selection select:hover {
   border: 1px solid #555;
 }
-.add-task-form .container .sub-options .list select:focus {
+.add-task-form .container .sub-options .project-selection select:focus {
   border: 1px solid #555;
 }
 .add-task-form .add-task-button {

@@ -1050,7 +1050,7 @@ var addTaskForm = {
   description: document.querySelector('#description'),
   urgency: document.querySelector('#urgency'),
   date: document.querySelector('#date'),
-  listSelection: document.querySelector('#list')
+  project: document.querySelector('#project')
 };
 exports.addTaskForm = addTaskForm;
 var sidebar = {
@@ -1081,10 +1081,35 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
+var DOM = function DOM() {
+  var hide = function hide(element, closed) {
+    console.log('Element Hidden: ', element);
+    element.classList.add(closed ? closed : 'hide');
+  };
+
+  var unhide = function unhide(element, closed) {
+    console.log('Element Unhidden: ', element);
+    element.classList.remove(closed ? closed : 'hide');
+  };
+
+  var toggleHide = function toggleHide(element, closed) {
+    console.log('Element Unhidden: ', element);
+    element.classList.toggle(closed ? closed : 'hide');
+  };
+
+  return {
+    hide: hide,
+    unhide: unhide,
+    toggleHide: toggleHide
+  };
+};
+
+var AppDOM = DOM();
+
 var Data = function Data() {
   var projects = [];
 
-  var addProject = function addProject(project) {
+  var storeProject = function storeProject(project) {
     projects.push(project);
     console.log('Projects: + ', projects);
   };
@@ -1097,7 +1122,7 @@ var Data = function Data() {
   };
 
   return {
-    addProject: addProject,
+    storeProject: storeProject,
     removeProject: removeProject,
     projects: projects
   };
@@ -1120,7 +1145,7 @@ var Project = /*#__PURE__*/function () {
     key: "create",
     value: function create() {
       console.log('This:', this);
-      AppData.addProject(this);
+      AppData.storeProject(this);
     }
   }, {
     key: "addTask",
@@ -1178,6 +1203,11 @@ setTimeout(function () {
 setTimeout(function () {
   firstList.removeTask(AppData.projects[0].tasks[0]);
 }, 3000);
+
+_domNodes.header.toggler.onclick = function () {
+  AppDOM.toggleHide(_domNodes.sidebar.sidebar, 'closed');
+  AppDOM.toggleHide(_domNodes.dashboard, 'closed');
+};
 },{"./styles/styles.scss":"styles/styles.scss","uuid":"../node_modules/uuid/dist/esm-browser/index.js","./helpers/domNodes":"helpers/domNodes.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';

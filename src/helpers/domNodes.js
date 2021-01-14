@@ -12,7 +12,7 @@ export const addTaskForm = {
   description: document.querySelector('#description'),
   urgency: document.querySelector('#urgency'),
   date: document.querySelector('#date'),
-  listSelection: document.querySelector('#list'),
+  project: document.querySelector('#project'),
 }
 
 export const sidebar = {
