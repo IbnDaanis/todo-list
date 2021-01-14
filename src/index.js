@@ -23,21 +23,26 @@ const DOM = () => {
     console.log('Element Unhidden: ', element)
     element.classList.toggle(closed ? closed : 'hide')
   }
-  const addProjectToDOM = () => {
+  const addProjectToSidebar = () => {
     sidebar.projectTitles.innerHTML = ''
     console.log('App: ', AppData.projects)
     AppData.projects.forEach(project => {
-      let html = ''
-      html += `<div>${project.title}</div>`
+      let html = `<div>${project.title}</div>`
       const projectEl = stringToHTML(`${html}`, 'li')
       sidebar.projectTitles.appendChild(projectEl)
     })
+  }
+  const addTaskToDashboard = curr => {
+    dashboard.project.innerHTML = ''
+    const projectEl = stringToHTML(`<h1>${curr.title}</h1>`, 'div')
+    dashboard.project.appendChild(projectEl)
   }
   return {
     hide,
     unhide,
     toggleHide,
-    addProjectToDOM,
+    addProjectToSidebar,
+    addTaskToDashboard,
   }
 }
 
@@ -49,7 +54,8 @@ const Forms = () => {
       e.preventDefault()
       const newProject = new Project(addProjectForm.input.value)
       newProject.create()
-      AppDOM.addProjectToDOM()
+      AppDOM.addProjectToSidebar()
+      AppDOM.addTaskToDashboard(newProject)
       addProjectForm.input.value = ''
       console.log('Form createProjectForm')
     }
@@ -148,7 +154,7 @@ secondList.addTask(new Task('Second 2', 'Description', 'Urgent'))
 
 header.toggler.onclick = () => {
   AppDOM.toggleHide(sidebar.sidebar, 'closed')
-  AppDOM.toggleHide(dashboard, 'closed')
+  AppDOM.toggleHide(dashboard.dashboard, 'closed')
 }
 
-AppDOM.addProjectToDOM()
+AppDOM.addProjectToSidebar()

@@ -1,6 +1,22 @@
+export const header = {
+  toggler: document.querySelector('#menuToggler'),
+  home: document.querySelector('#home'),
+}
+
+export const sidebar = {
+  sidebar: document.querySelector('#sidebar'),
+  container: document.querySelector('#sidebarContainer'),
+  projectTitles: document.querySelector('#projectTitles'),
+}
+
 export const addProjectForm = {
   form: document.querySelector('#addProject'),
   input: document.querySelector('#projectTitle'),
+}
+
+export const dashboard = {
+  dashboard: document.querySelector('#dashboard'),
+  project: document.querySelector('#projectTasks'),
 }
 
 export const addTaskForm = {
@@ -13,16 +29,4 @@ export const addTaskForm = {
   urgency: document.querySelector('#urgency'),
   date: document.querySelector('#date'),
   project: document.querySelector('#project'),
-}
-
-export const sidebar = {
-  sidebar: document.querySelector('#sidebar'),
-  container: document.querySelector('#sidebarContainer'),
-  projectTitles: document.querySelector('#projectTitles'),
-}
-export const dashboard = document.querySelector('#dashboard')
-
-export const header = {
-  toggler: document.querySelector('#menuToggler'),
-  home: document.querySelector('#home'),
 }

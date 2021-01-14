@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./styles/styles.scss" />
     <link rel="shortcut icon" href="./images/favicon.png" />
-    <title>Tasky</title>
+    <title>ProjectTasks</title>
   </head>
   <body>
+    <!-- Navbar -->
     <header>
       <nav class="navbar">
         <div class="container">
@@ -39,25 +40,26 @@
         </div>
       </nav>
     </header>
-
-    <div class="sidebar" id="sidebar">
-      <div class="container" id="sidebarContainer">
-        <ul class="project-titles" id="projectTitles"></ul>
-        <form id="addProject" class="add-new-project-form" autocomplete="off">
-          <input
-            type="text"
-            id="projectTitle"
-            required
-            placeholder="Add new Project"
-          />
-          <button type="submit">+</button>
-        </form>
-      </div>
-    </div>
     <main>
+      <!-- Sidebar -->
+      <div class="sidebar" id="sidebar">
+        <div class="container" id="sidebarContainer">
+          <ul class="project-titles" id="projectTitles"></ul>
+          <form id="addProject" class="add-new-project-form" autocomplete="off">
+            <input
+              type="text"
+              id="projectTitle"
+              required
+              placeholder="Add new Project"
+            />
+            <button type="submit">+</button>
+          </form>
+        </div>
+      </div>
+      <!-- Dashboard -->
       <div class="dashboard" id="dashboard">
         <div class="project-container">
-          <div class="project-tasks"></div>
+          <div class="project-tasks" id="projectTasks"></div>
           <div class="add-task-button" id="addTaskFormToggler">
             <div class="plus">
               <svg width="13" height="13">

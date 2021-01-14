@@ -1068,12 +1068,28 @@ exports.stringToHTML = stringToHTML;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.header = exports.dashboard = exports.sidebar = exports.addTaskForm = exports.addProjectForm = void 0;
+exports.addTaskForm = exports.dashboard = exports.addProjectForm = exports.sidebar = exports.header = void 0;
+var header = {
+  toggler: document.querySelector('#menuToggler'),
+  home: document.querySelector('#home')
+};
+exports.header = header;
+var sidebar = {
+  sidebar: document.querySelector('#sidebar'),
+  container: document.querySelector('#sidebarContainer'),
+  projectTitles: document.querySelector('#projectTitles')
+};
+exports.sidebar = sidebar;
 var addProjectForm = {
   form: document.querySelector('#addProject'),
   input: document.querySelector('#projectTitle')
 };
 exports.addProjectForm = addProjectForm;
+var dashboard = {
+  dashboard: document.querySelector('#dashboard'),
+  project: document.querySelector('#projectTasks')
+};
+exports.dashboard = dashboard;
 var addTaskForm = {
   toggler: document.querySelector('#addTaskFormToggler'),
   container: document.querySelector('#addTaskFormContainer'),
@@ -1086,19 +1102,6 @@ var addTaskForm = {
   project: document.querySelector('#project')
 };
 exports.addTaskForm = addTaskForm;
-var sidebar = {
-  sidebar: document.querySelector('#sidebar'),
-  container: document.querySelector('#sidebarContainer'),
-  projectTitles: document.querySelector('#projectTitles')
-};
-exports.sidebar = sidebar;
-var dashboard = document.querySelector('#dashboard');
-exports.dashboard = dashboard;
-var header = {
-  toggler: document.querySelector('#menuToggler'),
-  home: document.querySelector('#home')
-};
-exports.header = header;
 },{}],"index.js":[function(require,module,exports) {
 "use strict";
 
@@ -1132,23 +1135,30 @@ var DOM = function DOM() {
     element.classList.toggle(closed ? closed : 'hide');
   };
 
-  var addProjectToDOM = function addProjectToDOM() {
+  var addProjectToSidebar = function addProjectToSidebar() {
     _domNodes.sidebar.projectTitles.innerHTML = '';
     console.log('App: ', AppData.projects);
     AppData.projects.forEach(function (project) {
-      var html = '';
-      html += "<div>".concat(project.title, "</div>");
+      var html = "<div>".concat(project.title, "</div>");
       var projectEl = (0, _stringToHTML.stringToHTML)("".concat(html), 'li');
 
       _domNodes.sidebar.projectTitles.appendChild(projectEl);
     });
   };
 
+  var addTaskToDashboard = function addTaskToDashboard(curr) {
+    _domNodes.dashboard.project.innerHTML = '';
+    var projectEl = (0, _stringToHTML.stringToHTML)("<h1>".concat(curr.title, "</h1>"), 'div');
+
+    _domNodes.dashboard.project.appendChild(projectEl);
+  };
+
   return {
     hide: hide,
     unhide: unhide,
     toggleHide: toggleHide,
-    addProjectToDOM: addProjectToDOM
+    addProjectToSidebar: addProjectToSidebar,
+    addTaskToDashboard: addTaskToDashboard
   };
 };
 
@@ -1160,7 +1170,8 @@ var Forms = function Forms() {
       e.preventDefault();
       var newProject = new Project(_domNodes.addProjectForm.input.value);
       newProject.create();
-      AppDOM.addProjectToDOM();
+      AppDOM.addProjectToSidebar();
+      AppDOM.addTaskToDashboard(newProject);
       _domNodes.addProjectForm.input.value = '';
       console.log('Form createProjectForm');
     };
@@ -1282,10 +1293,10 @@ secondList.addTask(new Task('Second 2', 'Description', 'Urgent')); // setTimeout
 
 _domNodes.header.toggler.onclick = function () {
   AppDOM.toggleHide(_domNodes.sidebar.sidebar, 'closed');
-  AppDOM.toggleHide(_domNodes.dashboard, 'closed');
+  AppDOM.toggleHide(_domNodes.dashboard.dashboard, 'closed');
 };
 
-AppDOM.addProjectToDOM();
+AppDOM.addProjectToSidebar();
 },{"./styles/styles.scss":"styles/styles.scss","uuid":"../node_modules/uuid/dist/esm-browser/index.js","./helpers/stringToHTML":"helpers/stringToHTML.js","./helpers/domNodes":"helpers/domNodes.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
