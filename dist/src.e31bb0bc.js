@@ -1081,39 +1081,59 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-var todoLists = [];
-var index = 0;
+var Data = function Data() {
+  var projects = [];
+
+  var addProject = function addProject(project) {
+    projects.push(project);
+    console.log('Projects: + ', projects);
+  };
+
+  var removeProject = function removeProject(project) {
+    projects = projects.filter(function (item) {
+      return item.id !== project.id;
+    });
+    console.log('Projects: - ', projects);
+  };
+
+  return {
+    addProject: addProject,
+    removeProject: removeProject,
+    projects: projects
+  };
+};
+
+var AppData = Data();
 
 var Project = /*#__PURE__*/function () {
-  function Project(list, title) {
+  function Project(title) {
     _classCallCheck(this, Project);
 
-    this.list = list;
+    this.tasks = [];
     this.title = title;
     this.id = (0, _uuid.v4)();
     this.isDelete = false;
     this.isActive = false;
-    this.index = index;
   }
 
   _createClass(Project, [{
     key: "create",
     value: function create() {
-      index++;
-      todoLists.push(this);
       console.log('This:', this);
+      AppData.addProject(this);
     }
   }, {
-    key: "add",
-    value: function add(todo) {
-      this.list.push(todo);
+    key: "addTask",
+    value: function addTask(task) {
+      this.tasks.push(task);
     }
   }, {
-    key: "delete",
-    value: function _delete(id) {
-      this.list = this.list.filter(function (todo) {
-        return id !== todo.id;
+    key: "removeTask",
+    value: function removeTask(task) {
+      this.tasks = this.tasks.filter(function (item) {
+        return item.id !== task.id;
       });
+      console.log('Tasks: - ', this.tasks);
     }
   }]);
 
@@ -1144,14 +1164,20 @@ var Task = /*#__PURE__*/function () {
   return Task;
 }();
 
-var firstList = new Project([], 'First');
+var firstList = new Project('First');
 firstList.create();
-firstList.add(new Task('First 1', 'Description', 'Urgent'));
-firstList.add(new Task('First 2', 'Write it', 'Ease'));
-var secondList = new Project([], 'Second');
+firstList.addTask(new Task('First 1', 'Description', 'Urgent'));
+firstList.addTask(new Task('First 2', 'Write it', 'Ease'));
+var secondList = new Project('Second');
 secondList.create();
-secondList.add(new Task('Second 1', 'Description', 'Urgent'));
-secondList.add(new Task('Second 2', 'Description', 'Urgent'));
+secondList.addTask(new Task('Second 1', 'Description', 'Urgent'));
+secondList.addTask(new Task('Second 2', 'Description', 'Urgent'));
+setTimeout(function () {
+  AppData.removeProject(secondList);
+}, 2000);
+setTimeout(function () {
+  firstList.removeTask(AppData.projects[0].tasks[0]);
+}, 3000);
 },{"./styles/styles.scss":"styles/styles.scss","uuid":"../node_modules/uuid/dist/esm-browser/index.js","./helpers/domNodes":"helpers/domNodes.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';

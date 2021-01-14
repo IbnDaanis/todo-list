@@ -9,28 +9,43 @@ import {
   addTodoForm,
 } from './helpers/domNodes'
 
-const todoLists = []
-let index = 0
+const Data = () => {
+  let projects = []
+  const addProject = project => {
+    projects.push(project)
+    console.log('Projects: + ', projects)
+  }
+  const removeProject = project => {
+    projects = projects.filter(item => item.id !== project.id)
+    console.log('Projects: - ', projects)
+  }
+  return {
+    addProject,
+    removeProject,
+    projects,
+  }
+}
+
+const AppData = Data()
 
 class Project {
-  constructor(list, title) {
-    this.list = list
+  constructor(title) {
+    this.tasks = []
     this.title = title
     this.id = uuidv4()
     this.isDelete = false
     this.isActive = false
-    this.index = index
   }
   create() {
-    index++
-    todoLists.push(this)
     console.log('This:', this)
+    AppData.addProject(this)
   }
-  add(todo) {
-    this.list.push(todo)
+  addTask(task) {
+    this.tasks.push(task)
   }
-  delete(id) {
-    this.list = this.list.filter(todo => id !== todo.id)
+  removeTask(task) {
+    this.tasks = this.tasks.filter(item => item.id !== task.id)
+    console.log('Tasks: - ', this.tasks)
   }
 }
 
@@ -51,12 +66,20 @@ class Task {
   }
 }
 
-const firstList = new Project([], 'First')
+const firstList = new Project('First')
 firstList.create()
-firstList.add(new Task('First 1', 'Description', 'Urgent'))
-firstList.add(new Task('First 2', 'Write it', 'Ease'))
+firstList.addTask(new Task('First 1', 'Description', 'Urgent'))
+firstList.addTask(new Task('First 2', 'Write it', 'Ease'))
 
-const secondList = new Project([], 'Second')
+const secondList = new Project('Second')
 secondList.create()
-secondList.add(new Task('Second 1', 'Description', 'Urgent'))
-secondList.add(new Task('Second 2', 'Description', 'Urgent'))
+secondList.addTask(new Task('Second 1', 'Description', 'Urgent'))
+secondList.addTask(new Task('Second 2', 'Description', 'Urgent'))
+
+setTimeout(() => {
+  AppData.removeProject(secondList)
+}, 2000)
+
+setTimeout(() => {
+  firstList.removeTask(AppData.projects[0].tasks[0])
+}, 3000)
