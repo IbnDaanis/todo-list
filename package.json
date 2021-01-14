@@ -19,10 +19,10 @@
   },
   "homepage": "https://github.com/IbnDaanis/todo-list#readme",
   "dependencies": {
+    "parcel-bundler": "^1.12.4",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "parcel-bundler": "^1.12.4",
     "sass": "^1.32.4"
   }
 }

@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="/styles.c86c3119.css">
     <link rel="shortcut icon" href="/favicon.8003f84c.png">
     <title>Todo List</title>
-  <script src="/styles.c86c3119.js"></script></head>
+  <script src="/styles.c86c3119.js"></script><link rel="stylesheet" href="/src.e31bb0bc.css"></head>
   <body>
     <header>
       <nav class="navbar">
@@ -34,7 +34,7 @@
       <div class="dashboard" id="dashboard">
         <div class="todo-container">
           <div class="todo-list-tasks"></div>
-          <div class="add-todo-button hide" id="addTodoFormToggler">
+          <div class="add-todo-button" id="addTodoFormToggler">
             <div class="plus">
               <svg width="13" height="13">
                 <path d="M6 6V.5a.5.5 0 0 1 1 0V6h5.5a.5.5 0 1 1 0 1H7v5.5a.5.5 0 1 1-1 0V7H.5a.5.5 0 0 1 0-1H6z" fill="currentColor" fill-rule="evenodd"></path>
@@ -42,16 +42,16 @@
             </div>
             <p>Add task</p>
           </div>
-          <div class="add-todo-form hide" id="addTodoFormContainer">
+          <div class="add-todo-form" id="addTodoFormContainer">
             <form id="addTodoForm">
               <div class="container">
                 <div class="title">
                   <label for="title">Title: </label>
-                  <textarea name="title" id="title" placeholder="Enter the title" required=""></textarea>
+                  <input name="title" id="title" placeholder="Enter the title" required="">
                 </div>
                 <div class="description">
                   <label for="description">Description: </label>
-                  <textarea name="description" id="description" placeholder="Enter the description"></textarea>
+                  <input name="description" id="description" placeholder="Enter the description">
                 </div>
                 <div class="sub-options">
                   <div class="urgency">

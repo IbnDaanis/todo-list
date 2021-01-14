@@ -117,7 +117,79 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"../node_modules/uuid/dist/esm-browser/rng.js":[function(require,module,exports) {
+})({"../node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
+var bundleURL = null;
+
+function getBundleURLCached() {
+  if (!bundleURL) {
+    bundleURL = getBundleURL();
+  }
+
+  return bundleURL;
+}
+
+function getBundleURL() {
+  // Attempt to find the URL of the current script and use that as the base URL
+  try {
+    throw new Error();
+  } catch (err) {
+    var matches = ('' + err.stack).match(/(https?|file|ftp|chrome-extension|moz-extension):\/\/[^)\n]+/g);
+
+    if (matches) {
+      return getBaseURL(matches[0]);
+    }
+  }
+
+  return '/';
+}
+
+function getBaseURL(url) {
+  return ('' + url).replace(/^((?:https?|file|ftp|chrome-extension|moz-extension):\/\/.+)\/[^/]+$/, '$1') + '/';
+}
+
+exports.getBundleURL = getBundleURLCached;
+exports.getBaseURL = getBaseURL;
+},{}],"../node_modules/parcel-bundler/src/builtins/css-loader.js":[function(require,module,exports) {
+var bundle = require('./bundle-url');
+
+function updateLink(link) {
+  var newLink = link.cloneNode();
+
+  newLink.onload = function () {
+    link.remove();
+  };
+
+  newLink.href = link.href.split('?')[0] + '?' + Date.now();
+  link.parentNode.insertBefore(newLink, link.nextSibling);
+}
+
+var cssTimeout = null;
+
+function reloadCSS() {
+  if (cssTimeout) {
+    return;
+  }
+
+  cssTimeout = setTimeout(function () {
+    var links = document.querySelectorAll('link[rel="stylesheet"]');
+
+    for (var i = 0; i < links.length; i++) {
+      if (bundle.getBaseURL(links[i].href) === bundle.getBundleURL()) {
+        updateLink(links[i]);
+      }
+    }
+
+    cssTimeout = null;
+  }, 50);
+}
+
+module.exports = reloadCSS;
+},{"./bundle-url":"../node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"styles/styles.scss":[function(require,module,exports) {
+var reloadCSS = require('_css_loader');
+
+module.hot.dispose(reloadCSS);
+module.hot.accept(reloadCSS);
+},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"../node_modules/uuid/dist/esm-browser/rng.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -990,7 +1062,7 @@ var stringToHTML = function stringToHTML(str, elementType) {
 };
 
 exports.stringToHTML = stringToHTML;
-},{}],"scripts/domNodes.js":[function(require,module,exports) {
+},{}],"helpers/domNodes.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1031,157 +1103,22 @@ var todo = {
   delete: document.querySelectorAll('[data-action=delete]')
 };
 exports.todo = todo;
-},{}],"components/todoItem.js":[function(require,module,exports) {
+},{}],"index.js":[function(require,module,exports) {
 "use strict";
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.todoItem = void 0;
-
-var _stringToHTML = require("../helpers/stringToHTML");
-
-var todoItem = function todoItem(todo) {
-  return (0, _stringToHTML.stringToHTML)("\n  <p>".concat(todo.title, "</p>\n  <button data-action=delete data-id='").concat(todo.id, "'>X</button>\n  <button data-action=edit data-id='").concat(todo.id, "'>Edit</button>\n"), 'div');
-};
-
-exports.todoItem = todoItem;
-},{"../helpers/stringToHTML":"helpers/stringToHTML.js"}],"index.js":[function(require,module,exports) {
-"use strict";
+require("./styles/styles.scss");
 
 var _uuid = require("uuid");
 
 var _stringToHTML = require("./helpers/stringToHTML");
 
-var _domNodes = require("./scripts/domNodes");
+var _domNodes = require("./helpers/domNodes");
 
-var _todoItem = require("./components/todoItem");
-
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-var UI = function UI() {
-  _classCallCheck(this, UI);
-};
-
-_defineProperty(UI, "createTodoListInMenu", function (list) {
-  console.log('createTodoListInMenu: ', list);
-  var menuTitle = document.createElement('li');
-  menuTitle.classList.add(list.id, 'todo-title');
-  menuTitle.innerHTML = list.title;
-
-  _domNodes.sidebar.todoLists.appendChild(menuTitle);
-
-  menuTitle.onclick = function () {
-    list.isActive = false;
-    UI.createTodoListContainer(list);
-  };
-});
-
-_defineProperty(UI, "createTodoListContainer", function (list) {
-  var listPicker = document.querySelector('#list');
-  var el = '';
-  console.log(todoLists);
-  todoLists.forEach(function (list) {
-    el += "<option value='".concat(list.title, "'>").concat(list.title, "</option>");
-  });
-  listPicker.innerHTML = el;
-  document.querySelectorAll(".todo-title").forEach(function (todo) {
-    return todo.classList.remove('current');
-  });
-  list.isActive = true;
-
-  if (list.isActive) {
-    ;
-
-    _toConsumableArray(document.querySelectorAll(".todo-title"))[list.index].classList.add('current');
-  }
-
-  _domNodes.addTodoForm.container.classList.add('hide');
-
-  _domNodes.addTodoForm.toggler.classList.remove('hide');
-
-  console.log('createTodoListContainer: ', list);
-  var container = document.querySelector('.todo-list-tasks');
-  container.innerHTML = '';
-  var html = "<h1>".concat(list.title, "</h1>");
-  container.innerHTML += html;
-  console.log('List: ', list.list);
-  list.list.forEach(function (todo) {
-    var element = (0, _todoItem.todoItem)(todo);
-    container.appendChild(element);
-    document.querySelector("[data-id='".concat(todo.id, "']")).addEventListener('click', function () {
-      list.delete(todo.id);
-      UI.createTodoListContainer(list);
-    });
-  });
-  document.querySelector('#list').value = list.title;
-
-  _domNodes.addTodoForm.toggler.onclick = function () {
-    _domNodes.addTodoForm.toggler.classList.add('hide');
-
-    _domNodes.addTodoForm.container.classList.remove('hide');
-  };
-});
-
-_defineProperty(UI, "displayAllTodos", function () {
-  document.querySelectorAll(".todo-title").forEach(function (todo) {
-    return todo.classList.remove('current');
-  });
-  document.querySelector('.add-todo-form').classList.add('hide');
-  document.querySelector('.add-todo-button').classList.add('hide');
-  var container = document.querySelector('.todo-list-tasks');
-  container.innerHTML = '';
-  var html = "<h1>All Todo Lists</h1>";
-  container.innerHTML += html;
-  todoLists.forEach(function (todoList) {
-    var element = (0, _stringToHTML.stringToHTML)("<h2>".concat(todoList.title, "</h2>"), 'div');
-    todoList.list.forEach(function (todo) {
-      var todoEl = (0, _stringToHTML.stringToHTML)("<p>".concat(todo.title, "</p>"));
-      element.appendChild(todoEl);
-    });
-    container.appendChild(element);
-  });
-});
-
-_defineProperty(UI, "handleSubmit", function (e) {
-  e.preventDefault();
-  var title = _domNodes.addTodoForm.title,
-      description = _domNodes.addTodoForm.description,
-      urgency = _domNodes.addTodoForm.urgency,
-      date = _domNodes.addTodoForm.date,
-      listSelection = _domNodes.addTodoForm.listSelection;
-  var currentList = todoLists.find(function (list) {
-    return list.title === listSelection.value;
-  });
-  currentList.add(new Todo(title.value, description.value, urgency.value, date.value));
-  title.value = '';
-  description.value = '';
-  date.value = '';
-  urgency.getElementsByTagName('option')[0].selected = 'selected';
-  UI.createTodoListContainer(currentList);
-});
-
-_defineProperty(UI, "removeAddTodoForm", function (name) {
-  document.querySelector('#addTodoForm').removeEventListener('submit', name, true);
-});
 
 var todoLists = [];
 var index = 0;
@@ -1201,7 +1138,6 @@ var TodoList = /*#__PURE__*/function () {
   _createClass(TodoList, [{
     key: "create",
     value: function create() {
-      UI.createTodoListInMenu(this);
       index++;
       todoLists.push(this);
       console.log('This:', this);
@@ -1210,11 +1146,6 @@ var TodoList = /*#__PURE__*/function () {
     key: "add",
     value: function add(todo) {
       this.list.push(todo);
-    }
-  }, {
-    key: "view",
-    value: function view() {
-      UI.createTodoListInMenu(this);
     }
   }, {
     key: "delete",
@@ -1240,8 +1171,8 @@ var Todo = /*#__PURE__*/function () {
   }
 
   _createClass(Todo, [{
-    key: "editTodo",
-    value: function editTodo(title, description, priority) {
+    key: "edit",
+    value: function edit(title, description, priority) {
       title && (this.title = title);
       description && (this.description = description);
       priority && (this.priority = priority);
@@ -1259,37 +1190,7 @@ var secondList = new TodoList([], 'Second');
 secondList.create();
 secondList.add(new Todo('Second 1', 'Description', 'Urgent'));
 secondList.add(new Todo('Second 2', 'Description', 'Urgent'));
-
-_domNodes.header.toggler.addEventListener('click', function () {
-  _domNodes.sidebar.element.classList.toggle('closed');
-
-  _domNodes.dashboard.classList.toggle('closed');
-});
-
-_domNodes.header.home.addEventListener('click', function () {
-  UI.displayAllTodos();
-});
-
-_domNodes.addNewList.form.addEventListener('submit', function (e) {
-  e.preventDefault();
-  var newList = new TodoList([], _domNodes.addNewList.input.value);
-  newList.create();
-  UI.createTodoListContainer(newList);
-  _domNodes.addNewList.input.value = '';
-});
-
-_domNodes.addTodoForm.form.addEventListener('submit', function (e) {
-  UI.handleSubmit(e);
-});
-
-_domNodes.addTodoForm.cancel.addEventListener('click', function () {
-  _domNodes.addTodoForm.container.classList.add('hide');
-
-  _domNodes.addTodoForm.toggler.classList.remove('hide');
-});
-
-UI.displayAllTodos();
-},{"uuid":"../node_modules/uuid/dist/esm-browser/index.js","./helpers/stringToHTML":"helpers/stringToHTML.js","./scripts/domNodes":"scripts/domNodes.js","./components/todoItem":"components/todoItem.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./styles/styles.scss":"styles/styles.scss","uuid":"../node_modules/uuid/dist/esm-browser/index.js","./helpers/stringToHTML":"helpers/stringToHTML.js","./helpers/domNodes":"helpers/domNodes.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -1317,7 +1218,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54841" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65340" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

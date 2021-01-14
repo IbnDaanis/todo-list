@@ -133,11 +133,17 @@ main {
     }
     div {
       display: flex;
+      // margin-bottom: 0.3rem;
       label {
         font-size: 14px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        width: fit-content;
       }
-      textarea {
-        transform: translateY(0.8px);
+      input {
+        display: flex;
+        align-items: center;
         margin-left: 0.5rem;
         background: none;
         width: 100%;
@@ -145,7 +151,8 @@ main {
         border: none;
         color: var(--text-white);
         resize: none;
-        height: 24px;
+        height: 32px;
+        transform: translateY(1.3px);
       }
     }
     .sub-options {
@@ -158,6 +165,7 @@ main {
           border-radius: 3px;
           outline: none;
           border: 1px solid hsla(0, 0%, 100%, 0.1);
+          height: 32px;
           padding: 2px 3px;
           transform: translateY(1.8px);
           &:hover {
@@ -171,6 +179,9 @@ main {
       .date {
         margin-left: 1.5rem;
         align-items: center;
+        label {
+          width: 110px;
+        }
         input {
           margin-left: 0.5rem;
           background: var(--dark-gray);
@@ -200,6 +211,7 @@ main {
           border: 1px solid hsla(0, 0%, 100%, 0.1);
           padding: 2px 3px;
           transform: translateY(1.8px);
+          height: 32px;
           &:hover {
             border: 1px solid #555;
           }

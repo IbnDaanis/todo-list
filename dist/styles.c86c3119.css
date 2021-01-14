@@ -199,9 +199,14 @@ main {
 }
 .add-todo-form .container div label {
   font-size: 14px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  width: fit-content;
 }
-.add-todo-form .container div textarea {
-  transform: translateY(0.8px);
+.add-todo-form .container div input {
+  display: flex;
+  align-items: center;
   margin-left: 0.5rem;
   background: none;
   width: 100%;
@@ -209,7 +214,8 @@ main {
   border: none;
   color: var(--text-white);
   resize: none;
-  height: 24px;
+  height: 32px;
+  transform: translateY(1.3px);
 }
 .add-todo-form .container .sub-options .urgency {
   align-items: center;
@@ -221,6 +227,7 @@ main {
   border-radius: 3px;
   outline: none;
   border: 1px solid rgba(255, 255, 255, 0.1);
+  height: 32px;
   padding: 2px 3px;
   transform: translateY(1.8px);
 }
@@ -233,6 +240,9 @@ main {
 .add-todo-form .container .sub-options .date {
   margin-left: 1.5rem;
   align-items: center;
+}
+.add-todo-form .container .sub-options .date label {
+  width: 110px;
 }
 .add-todo-form .container .sub-options .date input {
   margin-left: 0.5rem;
@@ -263,6 +273,7 @@ main {
   border: 1px solid rgba(255, 255, 255, 0.1);
   padding: 2px 3px;
   transform: translateY(1.8px);
+  height: 32px;
 }
 .add-todo-form .container .sub-options .list select:hover {
   border: 1px solid #555;

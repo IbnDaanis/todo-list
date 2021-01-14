@@ -58,7 +58,7 @@
       <div class="dashboard" id="dashboard">
         <div class="todo-container">
           <div class="todo-list-tasks"></div>
-          <div class="add-todo-button hide" id="addTodoFormToggler">
+          <div class="add-todo-button" id="addTodoFormToggler">
             <div class="plus">
               <svg width="13" height="13">
                 <path
@@ -70,25 +70,25 @@
             </div>
             <p>Add task</p>
           </div>
-          <div class="add-todo-form hide" id="addTodoFormContainer">
+          <div class="add-todo-form" id="addTodoFormContainer">
             <form id="addTodoForm">
               <div class="container">
                 <div class="title">
                   <label for="title">Title: </label>
-                  <textarea
+                  <input
                     name="title"
                     id="title"
                     placeholder="Enter the title"
                     required
-                  ></textarea>
+                  />
                 </div>
                 <div class="description">
                   <label for="description">Description: </label>
-                  <textarea
+                  <input
                     name="description"
                     id="description"
                     placeholder="Enter the description"
-                  ></textarea>
+                  />
                 </div>
                 <div class="sub-options">
                   <div class="urgency">
