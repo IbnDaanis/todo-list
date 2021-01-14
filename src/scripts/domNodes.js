@@ -15,10 +15,18 @@ export const addTodoForm = {
   listSelection: document.querySelector('#list'),
 }
 
-export const sidebar = document.querySelector('#sidebar')
+export const sidebar = {
+  sidebar: document.querySelector('#sidebar'),
+  container: document.querySelector('#sidebarContainer'),
+  todoLists: document.querySelector('#todoListTitles'),
+}
 export const dashboard = document.querySelector('#dashboard')
 
 export const header = {
   toggler: document.querySelector('#menuToggler'),
   home: document.querySelector('#home'),
+}
+
+export const todo = {
+  delete: document.querySelectorAll('[data-action=delete]'),
 }

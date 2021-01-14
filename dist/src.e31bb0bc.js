@@ -996,7 +996,7 @@ exports.stringToHTML = stringToHTML;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.header = exports.dashboard = exports.sidebar = exports.addTodoForm = exports.addNewList = void 0;
+exports.todo = exports.header = exports.dashboard = exports.sidebar = exports.addTodoForm = exports.addNewList = void 0;
 var addNewList = {
   form: document.querySelector('#addNewList'),
   input: document.querySelector('#listTitle')
@@ -1014,7 +1014,11 @@ var addTodoForm = {
   listSelection: document.querySelector('#list')
 };
 exports.addTodoForm = addTodoForm;
-var sidebar = document.querySelector('#sidebar');
+var sidebar = {
+  sidebar: document.querySelector('#sidebar'),
+  container: document.querySelector('#sidebarContainer'),
+  todoLists: document.querySelector('#todoListTitles')
+};
 exports.sidebar = sidebar;
 var dashboard = document.querySelector('#dashboard');
 exports.dashboard = dashboard;
@@ -1023,7 +1027,26 @@ var header = {
   home: document.querySelector('#home')
 };
 exports.header = header;
-},{}],"index.js":[function(require,module,exports) {
+var todo = {
+  delete: document.querySelectorAll('[data-action=delete]')
+};
+exports.todo = todo;
+},{}],"components/todoItem.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.todoItem = void 0;
+
+var _stringToHTML = require("../helpers/stringToHTML");
+
+var todoItem = function todoItem(todo) {
+  return (0, _stringToHTML.stringToHTML)("\n  <p>".concat(todo.title, "</p>\n  <button data-action=delete data-id='").concat(todo.id, "'>X</button>\n  <button data-action=edit data-id='").concat(todo.id, "'>Edit</button>\n"), 'div');
+};
+
+exports.todoItem = todoItem;
+},{"../helpers/stringToHTML":"helpers/stringToHTML.js"}],"index.js":[function(require,module,exports) {
 "use strict";
 
 var _uuid = require("uuid");
@@ -1031,6 +1054,8 @@ var _uuid = require("uuid");
 var _stringToHTML = require("./helpers/stringToHTML");
 
 var _domNodes = require("./scripts/domNodes");
+
+var _todoItem = require("./components/todoItem");
 
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
@@ -1058,11 +1083,11 @@ var UI = function UI() {
 
 _defineProperty(UI, "createTodoListInMenu", function (list) {
   console.log('createTodoListInMenu: ', list);
-  var container = document.querySelector('.todo-list-titles');
   var menuTitle = document.createElement('li');
   menuTitle.classList.add(list.id, 'todo-title');
   menuTitle.innerHTML = list.title;
-  container.appendChild(menuTitle);
+
+  _domNodes.sidebar.todoLists.appendChild(menuTitle);
 
   menuTitle.onclick = function () {
     list.isActive = false;
@@ -1089,8 +1114,10 @@ _defineProperty(UI, "createTodoListContainer", function (list) {
     _toConsumableArray(document.querySelectorAll(".todo-title"))[list.index].classList.add('current');
   }
 
-  document.querySelector('.add-todo-form').classList.add('hide');
-  document.querySelector('.add-todo-button').classList.remove('hide');
+  _domNodes.addTodoForm.container.classList.add('hide');
+
+  _domNodes.addTodoForm.toggler.classList.remove('hide');
+
   console.log('createTodoListContainer: ', list);
   var container = document.querySelector('.todo-list-tasks');
   container.innerHTML = '';
@@ -1098,14 +1125,19 @@ _defineProperty(UI, "createTodoListContainer", function (list) {
   container.innerHTML += html;
   console.log('List: ', list.list);
   list.list.forEach(function (todo) {
-    var element = (0, _stringToHTML.stringToHTML)("<p>".concat(todo.title, "</p>"), 'div');
+    var element = (0, _todoItem.todoItem)(todo);
     container.appendChild(element);
+    document.querySelector("[data-id='".concat(todo.id, "']")).addEventListener('click', function () {
+      list.delete(todo.id);
+      UI.createTodoListContainer(list);
+    });
   });
   document.querySelector('#list').value = list.title;
 
-  document.querySelector('.add-todo-button').onclick = function () {
-    document.querySelector('.add-todo-button').classList.add('hide');
-    document.querySelector('.add-todo-form').classList.remove('hide');
+  _domNodes.addTodoForm.toggler.onclick = function () {
+    _domNodes.addTodoForm.toggler.classList.add('hide');
+
+    _domNodes.addTodoForm.container.classList.remove('hide');
   };
 });
 
@@ -1229,7 +1261,7 @@ secondList.add(new Todo('Second 1', 'Description', 'Urgent'));
 secondList.add(new Todo('Second 2', 'Description', 'Urgent'));
 
 _domNodes.header.toggler.addEventListener('click', function () {
-  _domNodes.sidebar.classList.toggle('closed');
+  _domNodes.sidebar.element.classList.toggle('closed');
 
   _domNodes.dashboard.classList.toggle('closed');
 });
@@ -1257,7 +1289,7 @@ _domNodes.addTodoForm.cancel.addEventListener('click', function () {
 });
 
 UI.displayAllTodos();
-},{"uuid":"../node_modules/uuid/dist/esm-browser/index.js","./helpers/stringToHTML":"helpers/stringToHTML.js","./scripts/domNodes":"scripts/domNodes.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"uuid":"../node_modules/uuid/dist/esm-browser/index.js","./helpers/stringToHTML":"helpers/stringToHTML.js","./scripts/domNodes":"scripts/domNodes.js","./components/todoItem":"components/todoItem.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
