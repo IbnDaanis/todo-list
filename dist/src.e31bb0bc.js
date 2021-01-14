@@ -990,12 +990,41 @@ var stringToHTML = function stringToHTML(str, elementType) {
 };
 
 exports.stringToHTML = stringToHTML;
+},{}],"scripts/domNodes.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.header = exports.dashboard = exports.sidebar = exports.addTodoForm = exports.addNewList = void 0;
+var addNewList = {
+  form: document.querySelector('#addNewList'),
+  input: document.querySelector('#listTitle')
+};
+exports.addNewList = addNewList;
+var addTodoForm = {
+  toggler: document.querySelector('#addTodoFormToggler'),
+  container: document.querySelector('#addTodoFormContainer'),
+  form: document.querySelector('#addTodoForm'),
+  cancel: document.querySelector('#cancelAddTodo')
+};
+exports.addTodoForm = addTodoForm;
+var sidebar = document.querySelector('#sidebar');
+exports.sidebar = sidebar;
+var dashboard = document.querySelector('#dashboard');
+exports.dashboard = dashboard;
+var header = {
+  toggler: document.querySelector('#menuToggler')
+};
+exports.header = header;
 },{}],"index.js":[function(require,module,exports) {
 "use strict";
 
 var _uuid = require("uuid");
 
 var _stringToHTML = require("./helpers/stringToHTML");
+
+var _domNodes = require("./scripts/domNodes");
 
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
@@ -1173,26 +1202,31 @@ var secondList = new TodoList([], 'Second');
 secondList.create();
 secondList.add(new Todo('Second 1', 'Description', 'Urgent'));
 secondList.add(new Todo('Second 2', 'Description', 'Urgent'));
-document.querySelector('.menu_icon').addEventListener('click', function () {
-  document.querySelector('.sidebar').classList.toggle('closed');
-  document.querySelector('.todo-container').classList.toggle('closed');
+
+_domNodes.header.toggler.addEventListener('click', function () {
+  _domNodes.sidebar.classList.toggle('closed');
+
+  _domNodes.dashboard.classList.toggle('closed');
 });
-document.querySelector('#addTodoForm').addEventListener('submit', function (e) {
+
+_domNodes.addNewList.form.addEventListener('submit', function (e) {
+  e.preventDefault();
+  var newList = new TodoList([], _domNodes.addNewList.input.value);
+  newList.create();
+  UI.createTodoListContainer(newList);
+  _domNodes.addNewList.input.value = '';
+});
+
+_domNodes.addTodoForm.form.addEventListener('submit', function (e) {
   UI.handleSubmit(e);
 });
-document.querySelector('#cancel').addEventListener('click', function () {
-  document.querySelector('.add-todo-form').classList.add('hide');
-  document.querySelector('.add-todo-button').classList.remove('hide');
+
+_domNodes.addTodoForm.cancel.addEventListener('click', function () {
+  _domNodes.addTodoForm.container.classList.add('hide');
+
+  _domNodes.addTodoForm.toggler.classList.remove('hide');
 });
-document.querySelector('#addNewList').addEventListener('submit', function (e) {
-  e.preventDefault();
-  var listName = document.querySelector('#listTitle');
-  console.log(listName.value);
-  var newList = new TodoList([], listName.value);
-  newList.create();
-  listName.value = '';
-});
-},{"uuid":"../node_modules/uuid/dist/esm-browser/index.js","./helpers/stringToHTML":"helpers/stringToHTML.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"uuid":"../node_modules/uuid/dist/esm-browser/index.js","./helpers/stringToHTML":"helpers/stringToHTML.js","./scripts/domNodes":"scripts/domNodes.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;

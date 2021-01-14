@@ -136,26 +136,31 @@ secondList.create()
 secondList.add(new Todo('Second 1', 'Description', 'Urgent'))
 secondList.add(new Todo('Second 2', 'Description', 'Urgent'))
 
-document.querySelector('.menu_icon').addEventListener('click', () => {
-  document.querySelector('.sidebar').classList.toggle('closed')
-  document.querySelector('.todo-container').classList.toggle('closed')
+import {
+  header,
+  sidebar,
+  dashboard,
+  addNewList,
+  addTodoForm,
+} from './scripts/domNodes'
+
+header.toggler.addEventListener('click', () => {
+  sidebar.classList.toggle('closed')
+  dashboard.classList.toggle('closed')
 })
 
-document.querySelector('#addTodoForm').addEventListener('submit', e => {
+addNewList.form.addEventListener('submit', e => {
+  e.preventDefault()
+  const newList = new TodoList([], addNewList.input.value)
+  newList.create()
+  UI.createTodoListContainer(newList)
+  addNewList.input.value = ''
+})
+
+addTodoForm.form.addEventListener('submit', e => {
   UI.handleSubmit(e)
 })
-
-document.querySelector('#cancel').addEventListener('click', () => {
-  document.querySelector('.add-todo-form').classList.add('hide')
-  document.querySelector('.add-todo-button').classList.remove('hide')
-})
-
-document.querySelector('#addNewList').addEventListener('submit', e => {
-  e.preventDefault()
-  const listName = document.querySelector('#listTitle')
-  console.log(listName.value)
-  const newList = new TodoList([], listName.value)
-  newList.create()
-
-  listName.value = ''
+addTodoForm.cancel.addEventListener('click', () => {
+  addTodoForm.container.classList.add('hide')
+  addTodoForm.toggler.classList.remove('hide')
 })

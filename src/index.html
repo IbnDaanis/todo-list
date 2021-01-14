@@ -11,7 +11,13 @@
     <header>
       <nav class="navbar">
         <div class="container">
-          <svg class="menu_icon" width="24" height="24" viewBox="0 0 24 24">
+          <svg
+            class="menu-toggler"
+            id="menuToggler"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+          >
             <path
               fill="currentColor"
               fill-rule="evenodd"
@@ -22,7 +28,7 @@
       </nav>
     </header>
 
-    <div class="sidebar">
+    <div class="sidebar" id="sidebar">
       <div class="container">
         <ul class="todo-list-titles"></ul>
         <form id="addNewList" class="add-new-list-form" autocomplete="off">
@@ -37,10 +43,10 @@
       </div>
     </div>
     <main>
-      <div class="todo-container">
-        <div class="todo-container-screen">
+      <div class="dashboard" id="dashboard">
+        <div class="todo-container">
           <div class="todo-list-tasks"></div>
-          <div class="add-todo-button">
+          <div class="add-todo-button hide" id="addTodoFormToggler">
             <div class="plus">
               <svg width="13" height="13">
                 <path
@@ -52,7 +58,7 @@
             </div>
             <p>Add task</p>
           </div>
-          <div class="add-todo-form hide">
+          <div class="add-todo-form hide" id="addTodoFormContainer">
             <form id="addTodoForm">
               <div class="container">
                 <div class="title">
@@ -92,7 +98,9 @@
                 </div>
               </div>
               <button class="add-todo-button" type="submit">Add Task</button>
-              <button type="button" class="cancel" id="cancel">Cancel</button>
+              <button type="button" class="cancel" id="cancelAddTodo">
+                Cancel
+              </button>
             </form>
           </div>
         </div>
