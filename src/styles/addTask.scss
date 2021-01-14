@@ -23,7 +23,7 @@
       transform: translate(0, -1px);
     }
   }
-  p {
+  .add-task-text {
     margin-left: 0.5rem;
     color: grey;
     font-size: 14px;
@@ -63,6 +63,7 @@
         color: var(--text-white);
         resize: none;
         height: 32px;
+        margin-bottom: 0.2rem;
         transform: translateY(1.3px);
       }
     }
@@ -139,7 +140,7 @@
     font-weight: 600;
     font-size: 14px;
     line-height: 17px;
-    padding: 6px 12px 6px;
+    padding: 6px 14px 7px 12px;
     position: relative;
     display: inline-block;
     white-space: nowrap;
@@ -163,7 +164,7 @@
     font-weight: 600;
     font-size: 14px;
     line-height: 17px;
-    padding: 6px 12px 6px;
+    padding: 6px 14px 7px 12px;
     position: relative;
     display: inline-block;
     white-space: nowrap;

@@ -56,6 +56,17 @@ h4 {
 }
 .navbar .container .menu-toggler {
   cursor: pointer;
+  transition: 0.2s ease-in-out;
+}
+.navbar .container .menu-toggler:hover {
+  color: var(--light-red);
+}
+.navbar .container .home {
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+}
+.navbar .container .home:hover {
+  color: var(--light-red);
 }
 
 .sidebar {
@@ -126,23 +137,26 @@ h4 {
   transform: translateX(-310px);
 }
 
-.dashboard {
+main {
+  display: flex;
+}
+main .dashboard {
   margin-left: 305px;
   display: flex;
   flex-grow: 1;
   flex-direction: column;
   transition: 0.3s ease-in-out;
 }
-.dashboard.closed {
+main .dashboard.closed {
   margin-left: 0;
 }
-.dashboard .project-container {
+main .dashboard .project-container {
   padding: 30px 55px 0;
   width: 100%;
   max-width: 800px;
   margin: 0 auto;
 }
-.dashboard .project-container h1 {
+main .dashboard .project-container h1 {
   margin-bottom: 2rem;
 }
 
@@ -170,7 +184,7 @@ h4 {
 .add-task-button .plus svg {
   transform: translate(0, -1px);
 }
-.add-task-button p {
+.add-task-button .add-task-text {
   margin-left: 0.5rem;
   color: grey;
   font-size: 14px;
@@ -211,6 +225,7 @@ h4 {
   color: var(--text-white);
   resize: none;
   height: 32px;
+  margin-bottom: 0.2rem;
   transform: translateY(1.3px);
 }
 .add-task-form .container .sub-options .priority {
@@ -283,7 +298,7 @@ h4 {
   font-weight: 600;
   font-size: 14px;
   line-height: 17px;
-  padding: 6px 12px 6px;
+  padding: 6px 14px 7px 12px;
   position: relative;
   display: inline-block;
   white-space: nowrap;
@@ -306,7 +321,7 @@ h4 {
   font-weight: 600;
   font-size: 14px;
   line-height: 17px;
-  padding: 6px 12px 6px;
+  padding: 6px 14px 7px 12px;
   position: relative;
   display: inline-block;
   white-space: nowrap;
@@ -322,10 +337,6 @@ h4 {
 .add-task-form .cancel:hover {
   filter: brightness(1.1);
   background: #303030;
-}
-
-main {
-  display: flex;
 }
 
 .no-select {

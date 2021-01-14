@@ -1,22 +1,25 @@
-.dashboard {
-  margin-left: 305px;
+main {
   display: flex;
-  flex-grow: 1;
-  flex-direction: column;
-  transition: 0.3s ease-in-out;
+  .dashboard {
+    margin-left: 305px;
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    transition: 0.3s ease-in-out;
 
-  &.closed {
-    margin-left: 0;
-  }
+    &.closed {
+      margin-left: 0;
+    }
 
-  .project-container {
-    padding: 30px 55px 0;
-    width: 100%;
-    max-width: 800px;
-    margin: 0 auto;
+    .project-container {
+      padding: 30px 55px 0;
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
 
-    h1 {
-      margin-bottom: 2rem;
+      h1 {
+        margin-bottom: 2rem;
+      }
     }
   }
 }
