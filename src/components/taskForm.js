@@ -1,13 +1,20 @@
 import { stringToHTML } from '../helpers/stringToHTML'
 
 export const taskForm = data => {
-  const { add, hide, id, currentProject, projects } = data
+  const { add, hide, task, id, currentProject, projects } = data
   console.log({ projects })
   let projectSelection = ``
   projects.forEach(project => {
     projectSelection += `<option value="${project.title}" ${
       currentProject.title === project.title && 'selected="selected"'
     }>${project.title}</option>`
+  })
+
+  let prioritySelection = ``
+  ;['None', 'Important', 'Urgent'].forEach(priority => {
+    prioritySelection += `<option value="${priority}" ${
+      task.priority === priority && `selected="selected"`
+    }>${priority}</option>`
   })
 
   const form = stringToHTML(` <div
@@ -22,6 +29,7 @@ export const taskForm = data => {
             name="title"
             id="title"
             placeholder="Enter the title"
+            value="${task.title}"
             required
           />
         </div>
@@ -31,20 +39,21 @@ export const taskForm = data => {
             name="description"
             id="description"
             placeholder="Enter the description"
+            value="${task.description}"
           />
         </div>
         <div class="sub-options">
           <div class="priority">
             <label for="priority">Priority: </label>
-            <select name="priority" id="priority" class="priority-select">
-              <option value="none">None</option>
-              <option value="important">Important</option>
-              <option value="urgent">Urgent</option>
+            <select name="priority" id="priority" class="priority-select" selected="${
+              task.priority
+            }">
+            ${prioritySelection}
             </select>
           </div>
           <div class="date">
             <label for="date">Pick a date: </label>
-            <input type="date" name="date" id="date" />
+            <input type="date" name="date" id="date" value="${task.dueDate}"/>
           </div>
           <div class="project-selection">
             <label for="project">Project: </label>

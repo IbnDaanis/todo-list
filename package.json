@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/IbnDaanis/todo-list#readme",
   "dependencies": {
+    "date-fns": "^2.16.1",
     "parcel-bundler": "^1.12.4",
     "uuid": "^8.3.2"
   },

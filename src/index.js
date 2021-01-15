@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { stringToHTML } from './helpers/stringToHTML'
 import { taskForm } from './components/taskForm'
 import { taskItem } from './components/taskItem'
+import { format } from 'date-fns'
 
 import {
   header,
@@ -154,7 +155,7 @@ class Task {
     this.priority = priority
     this.id = uuidv4()
     this.completed = false
-    this.dueDate = dueDate || new Date().toLocaleDateString('en-GB')
+    this.dueDate = dueDate || format(new Date(), 'yyyy-MM-dd')
   }
 
   edit(title, description, priority) {
@@ -166,13 +167,13 @@ class Task {
 
 const firstList = new Project('First')
 firstList.create()
-firstList.addTask(new Task('First 1', 'Description', 'Urgent'))
-firstList.addTask(new Task('First 2', 'Write it', 'Ease'))
+firstList.addTask(new Task('First 1', 'Description', 'Important'))
+firstList.addTask(new Task('First 2', 'Write it', 'None'))
 
 const secondList = new Project('Second')
 secondList.create()
 secondList.addTask(new Task('Second 1', 'Description', 'Urgent'))
-secondList.addTask(new Task('Second 2', 'Description', 'Urgent'))
+secondList.addTask(new Task('Second 2', 'Description', 'Important'))
 
 // setTimeout(() => {
 //   AppData.removeProject(secondList)

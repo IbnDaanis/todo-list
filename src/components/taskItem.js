@@ -5,7 +5,14 @@ export const taskItem = (data, DOM, currentProject, projects) => {
   const task = data
   const element = stringToHTML(` <div><h3>${task.title}</h3></div>`, 'li')
   element.appendChild(
-    taskForm({ add: false, hide: true, id: data.id, currentProject, projects })
+    taskForm({
+      add: false,
+      hide: true,
+      task,
+      id: data.id,
+      currentProject,
+      projects,
+    })
   )
   element.querySelector('h3').onclick = () => {
     DOM.unhide(element.querySelector(`#addTaskFormContainer${data.id}`), 'hide')
