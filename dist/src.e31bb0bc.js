@@ -1108,8 +1108,13 @@ var _stringToHTML = require("../helpers/stringToHTML");
 var _taskForm = require("./taskForm");
 
 var taskItem = function taskItem(data, DOM, currentProject, projects) {
+  console.log({
+    data: data,
+    currentProject: currentProject
+  });
   var task = data;
   var element = (0, _stringToHTML.stringToHTML)(" <div><h3>".concat(task.title, "</h3><button id=\"toggleCompleted\">Toggle</button><button id=\"deleteTask\">Delete</button></div>"), 'li');
+  data.isComplete && element.classList.add('completed');
   element.appendChild((0, _taskForm.taskForm)({
     add: false,
     hide: true,
@@ -19495,39 +19500,15 @@ var AppForms = function () {
 
 AppForms.createProjectForm();
 
-var Data = function Data() {
-  var projects = [];
-
-  var storeProject = function storeProject(project) {
-    projects.push(project);
-    console.log('Projects: + ', projects);
-  };
-
-  var removeProject = function removeProject(project) {
-    projects = projects.filter(function (item) {
-      return item.id !== project.id;
-    });
-    console.log('Projects: - ', projects);
-  };
-
-  return {
-    storeProject: storeProject,
-    removeProject: removeProject,
-    projects: projects
-  };
-};
-
-var AppData = Data();
-
 var Project = /*#__PURE__*/function () {
-  function Project(title) {
+  function Project(title, tasks, id, isDeleted, isActive) {
     _classCallCheck(this, Project);
 
-    this.tasks = [];
     this.title = title;
-    this.id = (0, _uuid.v4)();
-    this.isDelete = false;
-    this.isActive = false;
+    this.tasks = tasks || [];
+    this.id = id || (0, _uuid.v4)();
+    this.isDeleted = isDeleted || false;
+    this.isActive = isActive || false;
   }
 
   _createClass(Project, [{
@@ -19540,6 +19521,7 @@ var Project = /*#__PURE__*/function () {
     key: "addTask",
     value: function addTask(task) {
       this.tasks.push(task);
+      AppData.save();
     }
   }, {
     key: "removeTask",
@@ -19548,6 +19530,7 @@ var Project = /*#__PURE__*/function () {
         return item.id !== task.id;
       });
       console.log('Tasks: - ', this.tasks);
+      AppData.save();
     }
   }]);
 
@@ -19555,15 +19538,15 @@ var Project = /*#__PURE__*/function () {
 }();
 
 var Task = /*#__PURE__*/function () {
-  function Task(title, description, priority, dueDate) {
+  function Task(title, description, priority, dueDate, isComplete, id) {
     _classCallCheck(this, Task);
 
     this.title = title;
     this.description = description;
     this.priority = priority;
-    this.id = (0, _uuid.v4)();
-    this.completed = false;
     this.dueDate = dueDate || (0, _dateFns.format)(new Date(), 'yyyy-MM-dd');
+    this.isComplete = isComplete || false;
+    this.id = id || (0, _uuid.v4)();
   }
 
   _createClass(Task, [{
@@ -19573,25 +19556,76 @@ var Task = /*#__PURE__*/function () {
       description && (this.description = description);
       priority && (this.priority = priority);
       dueDate && (this.dueDate = dueDate);
+      AppData.save();
     }
   }, {
     key: "toggleComplete",
     value: function toggleComplete() {
-      this.completed = !this.completed;
+      this.isComplete = !this.isComplete;
+      AppData.save();
+      console.log(AppData.projects);
     }
   }]);
 
   return Task;
 }();
 
-var firstList = new Project('First');
-firstList.create();
-firstList.addTask(new Task('First 1', 'Description', 'Important'));
-firstList.addTask(new Task('First 2', 'Write it', 'None'));
-var secondList = new Project('Second');
-secondList.create();
-secondList.addTask(new Task('Second 1', 'Description', 'Urgent'));
-secondList.addTask(new Task('Second 2', 'Description', 'Important')); // setTimeout(() => {
+var AppData = function () {
+  var projects = JSONtoClasses() || [];
+
+  function JSONtoClasses() {
+    var local = JSON.parse(localStorage.getItem('AppData'));
+    console.log('Classes ', JSON.parse(localStorage.getItem('AppData')));
+    var projects = [];
+    local.forEach(function (project) {
+      var tasks = [];
+      project.tasks.forEach(function (task) {
+        var newTask = new Task(task.title, task.description, task.priority, task.dueDate, task.isComplete, task.id);
+        tasks.push(newTask);
+      });
+      var newProject = new Project(project.title, tasks, project.id, project.isDeleted, project.isActive);
+      projects.push(newProject);
+    });
+    return projects;
+  }
+
+  var save = function save() {
+    localStorage.setItem('AppData', JSON.stringify(projects));
+    console.log('SAVE ', JSON.parse(localStorage.getItem('AppData')));
+  };
+
+  var storeProject = function storeProject(project) {
+    projects.push(project);
+    console.log('Projects: + ', projects);
+    save();
+  };
+
+  var removeProject = function removeProject(project) {
+    save();
+    projects = projects.filter(function (item) {
+      return item.id !== project.id;
+    });
+    console.log('Projects: - ', projects);
+  };
+
+  return {
+    JSONtoClasses: JSONtoClasses,
+    storeProject: storeProject,
+    removeProject: removeProject,
+    projects: projects,
+    save: save
+  };
+}();
+
+AppData.JSONtoClasses(); // const firstList = new Project('First')
+// firstList.create()
+// firstList.addTask(new Task('First 1', 'Description', 'Important'))
+// firstList.addTask(new Task('First 2', 'Write it', 'None'))
+// const secondList = new Project('Second')
+// secondList.create()
+// secondList.addTask(new Task('Second 1', 'Description', 'Urgent'))
+// secondList.addTask(new Task('Second 2', 'Description', 'Important'))
+// setTimeout(() => {
 //   AppData.removeProject(secondList)
 // }, 2000)
 // setTimeout(() => {
@@ -19603,6 +19637,7 @@ _domNodes.header.toggler.onclick = function () {
   AppDOM.toggleHide(_domNodes.dashboard.dashboard, 'closed');
 };
 
+console.log(AppData.projects);
 AppDOM.addProjectToSidebar();
 },{"./styles/styles.scss":"styles/styles.scss","uuid":"../node_modules/uuid/dist/esm-browser/index.js","./helpers/stringToHTML":"helpers/stringToHTML.js","./components/taskForm":"components/taskForm.js","./components/taskItem":"components/taskItem.js","date-fns":"../node_modules/date-fns/esm/index.js","./helpers/domNodes":"helpers/domNodes.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];

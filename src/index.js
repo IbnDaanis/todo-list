@@ -123,32 +123,13 @@ const AppForms = (() => {
 
 AppForms.createProjectForm()
 
-const Data = () => {
-  let projects = []
-  const storeProject = project => {
-    projects.push(project)
-    console.log('Projects: + ', projects)
-  }
-  const removeProject = project => {
-    projects = projects.filter(item => item.id !== project.id)
-    console.log('Projects: - ', projects)
-  }
-  return {
-    storeProject,
-    removeProject,
-    projects,
-  }
-}
-
-const AppData = Data()
-
 class Project {
-  constructor(title) {
-    this.tasks = []
+  constructor(title, tasks, id, isDeleted, isActive) {
     this.title = title
-    this.id = uuidv4()
-    this.isDelete = false
-    this.isActive = false
+    this.tasks = tasks || []
+    this.id = id || uuidv4()
+    this.isDeleted = isDeleted || false
+    this.isActive = isActive || false
   }
   create() {
     console.log('This:', this)
@@ -156,21 +137,23 @@ class Project {
   }
   addTask(task) {
     this.tasks.push(task)
+    AppData.save()
   }
   removeTask(task) {
     this.tasks = this.tasks.filter(item => item.id !== task.id)
     console.log('Tasks: - ', this.tasks)
+    AppData.save()
   }
 }
 
 class Task {
-  constructor(title, description, priority, dueDate) {
+  constructor(title, description, priority, dueDate, isComplete, id) {
     this.title = title
     this.description = description
     this.priority = priority
-    this.id = uuidv4()
-    this.completed = false
     this.dueDate = dueDate || format(new Date(), 'yyyy-MM-dd')
+    this.isComplete = isComplete || false
+    this.id = id || uuidv4()
   }
 
   edit(title, description, priority, dueDate) {
@@ -178,21 +161,81 @@ class Task {
     description && (this.description = description)
     priority && (this.priority = priority)
     dueDate && (this.dueDate = dueDate)
+    AppData.save()
   }
   toggleComplete() {
-    this.completed = !this.completed
+    this.isComplete = !this.isComplete
+    AppData.save()
+    console.log(AppData.projects)
   }
 }
 
-const firstList = new Project('First')
-firstList.create()
-firstList.addTask(new Task('First 1', 'Description', 'Important'))
-firstList.addTask(new Task('First 2', 'Write it', 'None'))
+const AppData = (() => {
+  let projects = JSONtoClasses() || []
 
-const secondList = new Project('Second')
-secondList.create()
-secondList.addTask(new Task('Second 1', 'Description', 'Urgent'))
-secondList.addTask(new Task('Second 2', 'Description', 'Important'))
+  function JSONtoClasses() {
+    const local = JSON.parse(localStorage.getItem('AppData'))
+    console.log('Classes ', JSON.parse(localStorage.getItem('AppData')))
+    const projects = []
+    local.forEach(project => {
+      const tasks = []
+      project.tasks.forEach(task => {
+        const newTask = new Task(
+          task.title,
+          task.description,
+          task.priority,
+          task.dueDate,
+          task.isComplete,
+          task.id
+        )
+        tasks.push(newTask)
+      })
+      const newProject = new Project(
+        project.title,
+        tasks,
+        project.id,
+        project.isDeleted,
+        project.isActive
+      )
+      projects.push(newProject)
+    })
+
+    return projects
+  }
+
+  const save = () => {
+    localStorage.setItem('AppData', JSON.stringify(projects))
+    console.log('SAVE ', JSON.parse(localStorage.getItem('AppData')))
+  }
+  const storeProject = project => {
+    projects.push(project)
+    console.log('Projects: + ', projects)
+    save()
+  }
+  const removeProject = project => {
+    save()
+    projects = projects.filter(item => item.id !== project.id)
+    console.log('Projects: - ', projects)
+  }
+  return {
+    JSONtoClasses,
+    storeProject,
+    removeProject,
+    projects,
+    save,
+  }
+})()
+AppData.JSONtoClasses()
+
+// const firstList = new Project('First')
+// firstList.create()
+// firstList.addTask(new Task('First 1', 'Description', 'Important'))
+// firstList.addTask(new Task('First 2', 'Write it', 'None'))
+
+// const secondList = new Project('Second')
+// secondList.create()
+// secondList.addTask(new Task('Second 1', 'Description', 'Urgent'))
+// secondList.addTask(new Task('Second 2', 'Description', 'Important'))
 
 // setTimeout(() => {
 //   AppData.removeProject(secondList)
@@ -207,4 +250,5 @@ header.toggler.onclick = () => {
   AppDOM.toggleHide(dashboard.dashboard, 'closed')
 }
 
+console.log(AppData.projects)
 AppDOM.addProjectToSidebar()
