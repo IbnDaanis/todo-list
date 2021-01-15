@@ -1162,7 +1162,7 @@ var AppDOM = function () {
 
       projectEl.onclick = function () {
         onclick = function onclick() {
-          return AppDOM.addTaskToDashboard(project);
+          return AppDOM.addProjectToDashboard(project);
         };
 
         console.log('Sidebar: ', project);
@@ -1182,13 +1182,24 @@ var AppDOM = function () {
     });
   };
 
-  var addTaskToDashboard = function addTaskToDashboard(current) {
+  var addProjectToDashboard = function addProjectToDashboard(current) {
     _domNodes.dashboard.project.innerHTML = '';
     var projectEl = (0, _stringToHTML.stringToHTML)("<h1>".concat(current.title, "</h1>"), 'div');
+    projectEl.classList.add("".concat(current.id));
 
     _domNodes.dashboard.project.appendChild(projectEl);
 
+    _domNodes.dashboard.project.appendChild(addTaskToDashboard(current));
+
     activeProject(current);
+  };
+
+  var addTaskToDashboard = function addTaskToDashboard(current) {
+    var currentTask = (0, _stringToHTML.stringToHTML)("<ul></ul>");
+    current.tasks.forEach(function (task) {
+      currentTask.appendChild((0, _stringToHTML.stringToHTML)("<li>".concat(task.title, "</li>"), 'div'));
+    });
+    return currentTask;
   };
 
   return {
@@ -1196,7 +1207,7 @@ var AppDOM = function () {
     unhide: unhide,
     toggleHide: toggleHide,
     addProjectToSidebar: addProjectToSidebar,
-    addTaskToDashboard: addTaskToDashboard
+    addProjectToDashboard: addProjectToDashboard
   };
 }();
 
@@ -1207,7 +1218,7 @@ var AppForms = function () {
       var newProject = new Project(_domNodes.addProjectForm.input.value);
       newProject.create();
       AppDOM.addProjectToSidebar();
-      AppDOM.addTaskToDashboard(newProject);
+      AppDOM.addProjectToDashboard(newProject);
       _domNodes.addProjectForm.input.value = '';
       console.log('Form createProjectForm');
     };
@@ -1218,7 +1229,6 @@ var AppForms = function () {
       e.preventDefault();
       console.log('Form createTaskForm');
       var newTask = new Task();
-      AppDOM.addTaskToDashboard(newTask);
     };
   };
 

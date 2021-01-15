@@ -31,7 +31,7 @@ const AppDOM = (() => {
       let html = `<div>${project.title}</div>`
       const projectEl = stringToHTML(`${html}`, 'li')
       projectEl.onclick = () => {
-        onclick = () => AppDOM.addTaskToDashboard(project)
+        onclick = () => AppDOM.addProjectToDashboard(project)
         console.log('Sidebar: ', project)
       }
       sidebar.projectTitles.appendChild(projectEl)
@@ -47,18 +47,29 @@ const AppDOM = (() => {
       }
     })
   }
-  const addTaskToDashboard = current => {
+  const addProjectToDashboard = current => {
     dashboard.project.innerHTML = ''
     const projectEl = stringToHTML(`<h1>${current.title}</h1>`, 'div')
+    projectEl.classList.add(`${current.id}`)
     dashboard.project.appendChild(projectEl)
+    dashboard.project.appendChild(addTaskToDashboard(current))
     activeProject(current)
   }
+
+  const addTaskToDashboard = current => {
+    const currentTask = stringToHTML(`<ul></ul>`)
+    current.tasks.forEach(task => {
+      currentTask.appendChild(stringToHTML(`<li>${task.title}</li>`, 'div'))
+    })
+    return currentTask
+  }
+
   return {
     hide,
     unhide,
     toggleHide,
     addProjectToSidebar,
-    addTaskToDashboard,
+    addProjectToDashboard,
   }
 })()
 
@@ -69,7 +80,7 @@ const AppForms = (() => {
       const newProject = new Project(addProjectForm.input.value)
       newProject.create()
       AppDOM.addProjectToSidebar()
-      AppDOM.addTaskToDashboard(newProject)
+      AppDOM.addProjectToDashboard(newProject)
       addProjectForm.input.value = ''
       console.log('Form createProjectForm')
     }
@@ -79,7 +90,6 @@ const AppForms = (() => {
       e.preventDefault()
       console.log('Form createTaskForm')
       const newTask = new Task()
-      AppDOM.addTaskToDashboard(newTask)
     }
   }
 
