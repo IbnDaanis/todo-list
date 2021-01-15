@@ -101,7 +101,7 @@ h4 {
 .sidebar .container .project-titles li:hover {
   background-color: #363636;
 }
-.sidebar .container .project-titles li.current {
+.sidebar .container .project-titles li.active {
   background-color: #363636;
   font-weight: 500;
 }

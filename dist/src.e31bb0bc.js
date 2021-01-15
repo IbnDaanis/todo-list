@@ -1119,7 +1119,7 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-var DOM = function DOM() {
+var AppDOM = function () {
   var hide = function hide(element, closed) {
     console.log('Element Hidden: ', element);
     element.classList.add(closed ? closed : 'hide');
@@ -1142,15 +1142,35 @@ var DOM = function DOM() {
       var html = "<div>".concat(project.title, "</div>");
       var projectEl = (0, _stringToHTML.stringToHTML)("".concat(html), 'li');
 
+      projectEl.onclick = function () {
+        onclick = function onclick() {
+          return AppDOM.addTaskToDashboard(project);
+        };
+
+        console.log('Sidebar: ', project);
+      };
+
       _domNodes.sidebar.projectTitles.appendChild(projectEl);
     });
   };
 
-  var addTaskToDashboard = function addTaskToDashboard(curr) {
+  var activeProject = function activeProject(current) {
+    projectTitles.querySelectorAll('li').forEach(function (project) {
+      if (project.textContent === current.title) {
+        project.classList.add('active');
+      } else {
+        project.classList.remove('active');
+      }
+    });
+  };
+
+  var addTaskToDashboard = function addTaskToDashboard(current) {
     _domNodes.dashboard.project.innerHTML = '';
-    var projectEl = (0, _stringToHTML.stringToHTML)("<h1>".concat(curr.title, "</h1>"), 'div');
+    var projectEl = (0, _stringToHTML.stringToHTML)("<h1>".concat(current.title, "</h1>"), 'div');
 
     _domNodes.dashboard.project.appendChild(projectEl);
+
+    activeProject(current);
   };
 
   return {
@@ -1160,11 +1180,9 @@ var DOM = function DOM() {
     addProjectToSidebar: addProjectToSidebar,
     addTaskToDashboard: addTaskToDashboard
   };
-};
+}();
 
-var AppDOM = DOM();
-
-var Forms = function Forms() {
+var AppForms = function () {
   var createProjectForm = function createProjectForm() {
     _domNodes.addProjectForm.form.onsubmit = function (e) {
       e.preventDefault();
@@ -1181,6 +1199,8 @@ var Forms = function Forms() {
     _domNodes.addTaskForm.form.onsubmit = function (e) {
       e.preventDefault();
       console.log('Form createTaskForm');
+      var newTask = new Task();
+      AppDOM.addTaskToDashboard(newTask);
     };
   };
 
@@ -1188,9 +1208,8 @@ var Forms = function Forms() {
     createProjectForm: createProjectForm,
     createTaskForm: createTaskForm
   };
-};
+}();
 
-var AppForms = Forms();
 AppForms.createProjectForm();
 AppForms.createTaskForm();
 

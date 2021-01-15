@@ -10,7 +10,7 @@ import {
   addTaskForm,
 } from './helpers/domNodes'
 
-const DOM = () => {
+const AppDOM = (() => {
   const hide = (element, closed) => {
     console.log('Element Hidden: ', element)
     element.classList.add(closed ? closed : 'hide')
@@ -29,13 +29,28 @@ const DOM = () => {
     AppData.projects.forEach(project => {
       let html = `<div>${project.title}</div>`
       const projectEl = stringToHTML(`${html}`, 'li')
+      projectEl.onclick = () => {
+        onclick = () => AppDOM.addTaskToDashboard(project)
+        console.log('Sidebar: ', project)
+      }
       sidebar.projectTitles.appendChild(projectEl)
     })
   }
-  const addTaskToDashboard = curr => {
+
+  const activeProject = current => {
+    projectTitles.querySelectorAll('li').forEach(project => {
+      if (project.textContent === current.title) {
+        project.classList.add('active')
+      } else {
+        project.classList.remove('active')
+      }
+    })
+  }
+  const addTaskToDashboard = current => {
     dashboard.project.innerHTML = ''
-    const projectEl = stringToHTML(`<h1>${curr.title}</h1>`, 'div')
+    const projectEl = stringToHTML(`<h1>${current.title}</h1>`, 'div')
     dashboard.project.appendChild(projectEl)
+    activeProject(current)
   }
   return {
     hide,
@@ -44,11 +59,9 @@ const DOM = () => {
     addProjectToSidebar,
     addTaskToDashboard,
   }
-}
+})()
 
-const AppDOM = DOM()
-
-const Forms = () => {
+const AppForms = (() => {
   const createProjectForm = () => {
     addProjectForm.form.onsubmit = e => {
       e.preventDefault()
@@ -64,6 +77,8 @@ const Forms = () => {
     addTaskForm.form.onsubmit = e => {
       e.preventDefault()
       console.log('Form createTaskForm')
+      const newTask = new Task()
+      AppDOM.addTaskToDashboard(newTask)
     }
   }
 
@@ -71,9 +86,8 @@ const Forms = () => {
     createProjectForm,
     createTaskForm,
   }
-}
+})()
 
-const AppForms = Forms()
 AppForms.createProjectForm()
 AppForms.createTaskForm()
 
