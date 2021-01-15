@@ -30,6 +30,17 @@
           background-color: #363636;
           font-weight: 500;
         }
+        span {
+          width: 100px;
+        }
+        button {
+          color: red;
+          background: 0;
+          border: none;
+          outline: none;
+          margin-left: 1rem;
+          cursor: pointer;
+        }
       }
     }
     .add-new-project-form {

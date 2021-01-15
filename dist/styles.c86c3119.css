@@ -105,6 +105,17 @@ h4 {
   background-color: #363636;
   font-weight: 500;
 }
+.sidebar .container .project-titles li span {
+  width: 100px;
+}
+.sidebar .container .project-titles li button {
+  color: red;
+  background: 0;
+  border: none;
+  outline: none;
+  margin-left: 1rem;
+  cursor: pointer;
+}
 .sidebar .container .add-new-project-form input {
   background: none;
   outline: 0;
