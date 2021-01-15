@@ -1,6 +1,7 @@
 import './styles/styles.scss'
 import { v4 as uuidv4 } from 'uuid'
 import { stringToHTML } from './helpers/stringToHTML'
+import { taskForm } from './components/taskForm'
 
 import {
   header,

@@ -1062,7 +1062,23 @@ var stringToHTML = function stringToHTML(str, elementType) {
 };
 
 exports.stringToHTML = stringToHTML;
-},{}],"helpers/domNodes.js":[function(require,module,exports) {
+},{}],"components/taskForm.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.taskForm = void 0;
+
+var _stringToHTML = require("../helpers/stringToHTML");
+
+var taskForm = function taskForm(data) {
+  var form = (0, _stringToHTML.stringToHTML)(" <div class=\"add-task-form\" id=\"addTaskFormContainer\">\n  <form id=\"addTaskForm\" autocomplete=\"off\">\n    <div class=\"container\">\n      <div class=\"title\">\n        <label for=\"title\">Title: </label>\n        <input\n          name=\"title\"\n          id=\"title\"\n          placeholder=\"Enter the title\"\n          required\n        />\n      </div>\n      <div class=\"description\">\n        <label for=\"description\">Description: </label>\n        <input\n          name=\"description\"\n          id=\"description\"\n          placeholder=\"Enter the description\"\n        />\n      </div>\n      <div class=\"sub-options\">\n        <div class=\"priority\">\n          <label for=\"priority\">Priority: </label>\n          <select\n            name=\"priority\"\n            id=\"priority\"\n            class=\"priority-select\"\n          >\n            <option value=\"none\">None</option>\n            <option value=\"important\">Important</option>\n            <option value=\"urgent\">Urgent</option>\n          </select>\n        </div>\n        <div class=\"date\">\n          <label for=\"date\">Pick a date: </label>\n          <input type=\"date\" name=\"date\" id=\"date\" />\n        </div>\n        <div class=\"project-selection\">\n          <label for=\"project\">Project: </label>\n          <select name=\"project\" id=\"project\"></select>\n        </div>\n      </div>\n    </div>\n    <button class=\"add-task-button\" type=\"submit\">Add Task</button>\n    <button type=\"button\" class=\"cancel\" id=\"cancelAddTask\">\n      Cancel\n    </button>\n  </form>\n</div>");
+  return form;
+};
+
+exports.taskForm = taskForm;
+},{"../helpers/stringToHTML":"helpers/stringToHTML.js"}],"helpers/domNodes.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1110,6 +1126,8 @@ require("./styles/styles.scss");
 var _uuid = require("uuid");
 
 var _stringToHTML = require("./helpers/stringToHTML");
+
+var _taskForm = require("./components/taskForm");
 
 var _domNodes = require("./helpers/domNodes");
 
@@ -1316,7 +1334,7 @@ _domNodes.header.toggler.onclick = function () {
 };
 
 AppDOM.addProjectToSidebar();
-},{"./styles/styles.scss":"styles/styles.scss","uuid":"../node_modules/uuid/dist/esm-browser/index.js","./helpers/stringToHTML":"helpers/stringToHTML.js","./helpers/domNodes":"helpers/domNodes.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./styles/styles.scss":"styles/styles.scss","uuid":"../node_modules/uuid/dist/esm-browser/index.js","./helpers/stringToHTML":"helpers/stringToHTML.js","./components/taskForm":"components/taskForm.js","./helpers/domNodes":"helpers/domNodes.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -1344,7 +1362,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51186" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53711" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
