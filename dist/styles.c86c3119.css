@@ -341,6 +341,7 @@ main .dashboard .project-container h1 {
 
 .completed {
   opacity: 0.5;
+  text-decoration: line-through;
 }
 
 .no-select {

@@ -1109,7 +1109,7 @@ var _taskForm = require("./taskForm");
 
 var taskItem = function taskItem(data, DOM, currentProject, projects) {
   var task = data;
-  var element = (0, _stringToHTML.stringToHTML)(" <div><h3>".concat(task.title, "</h3><button id=\"toggleCompleted\">Toggle</button></div>"), 'li');
+  var element = (0, _stringToHTML.stringToHTML)(" <div><h3>".concat(task.title, "</h3><button id=\"toggleCompleted\">Toggle</button><button id=\"deleteTask\">Delete</button></div>"), 'li');
   element.appendChild((0, _taskForm.taskForm)({
     add: false,
     hide: true,
@@ -1130,6 +1130,11 @@ var taskItem = function taskItem(data, DOM, currentProject, projects) {
   element.querySelector('#toggleCompleted').onclick = function () {
     task.toggleComplete();
     element.classList.toggle('completed');
+  };
+
+  element.querySelector('#deleteTask').onclick = function () {
+    currentProject.removeTask(task);
+    DOM.addProjectToDashboard(currentProject);
   };
 
   return element;
