@@ -3,7 +3,10 @@ import { taskForm } from './taskForm'
 
 export const taskItem = (data, DOM, currentProject, projects) => {
   const task = data
-  const element = stringToHTML(` <div><h3>${task.title}</h3></div>`, 'li')
+  const element = stringToHTML(
+    ` <div><h3>${task.title}</h3><button id="toggleCompleted">Toggle</button></div>`,
+    'li'
+  )
   element.appendChild(
     taskForm({
       add: false,
@@ -19,6 +22,10 @@ export const taskItem = (data, DOM, currentProject, projects) => {
   }
   element.querySelector('.cancel').onclick = e => {
     DOM.hide(element.querySelector(`#addTaskFormContainer${data.id}`), 'hide')
+  }
+  element.querySelector('#toggleCompleted').onclick = () => {
+    task.toggleComplete()
+    element.classList.toggle('completed')
   }
   return element
 }

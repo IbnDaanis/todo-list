@@ -179,6 +179,9 @@ class Task {
     priority && (this.priority = priority)
     dueDate && (this.dueDate = dueDate)
   }
+  toggleComplete() {
+    this.completed = !this.completed
+  }
 }
 
 const firstList = new Project('First')

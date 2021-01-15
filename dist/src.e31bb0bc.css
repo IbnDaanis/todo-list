@@ -339,6 +339,10 @@ main .dashboard .project-container h1 {
   background: #303030;
 }
 
+.completed {
+  opacity: 0.5;
+}
+
 .no-select {
   -webkit-user-select: none;
   -moz-user-select: none;
