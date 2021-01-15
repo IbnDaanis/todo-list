@@ -2,6 +2,7 @@ import './styles/styles.scss'
 import { v4 as uuidv4 } from 'uuid'
 import { stringToHTML } from './helpers/stringToHTML'
 import { taskForm } from './components/taskForm'
+import { taskItem } from './components/taskItem'
 
 import {
   header,
@@ -57,9 +58,13 @@ const AppDOM = (() => {
   }
 
   const addTaskToDashboard = current => {
+    console.log('addTaskToDashboard')
     const currentTask = stringToHTML(`<ul></ul>`)
     current.tasks.forEach(task => {
-      currentTask.appendChild(stringToHTML(`<li>${task.title}</li>`, 'div'))
+      currentTask.appendChild(taskItem(task))
+      // taskItem.onclick = () => {
+      //   createEditForm()
+      // }
     })
     return currentTask
   }

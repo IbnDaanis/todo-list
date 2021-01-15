@@ -1073,12 +1073,45 @@ exports.taskForm = void 0;
 var _stringToHTML = require("../helpers/stringToHTML");
 
 var taskForm = function taskForm(data) {
-  var form = (0, _stringToHTML.stringToHTML)(" <div class=\"add-task-form\" id=\"addTaskFormContainer\">\n  <form id=\"addTaskForm\" autocomplete=\"off\">\n    <div class=\"container\">\n      <div class=\"title\">\n        <label for=\"title\">Title: </label>\n        <input\n          name=\"title\"\n          id=\"title\"\n          placeholder=\"Enter the title\"\n          required\n        />\n      </div>\n      <div class=\"description\">\n        <label for=\"description\">Description: </label>\n        <input\n          name=\"description\"\n          id=\"description\"\n          placeholder=\"Enter the description\"\n        />\n      </div>\n      <div class=\"sub-options\">\n        <div class=\"priority\">\n          <label for=\"priority\">Priority: </label>\n          <select\n            name=\"priority\"\n            id=\"priority\"\n            class=\"priority-select\"\n          >\n            <option value=\"none\">None</option>\n            <option value=\"important\">Important</option>\n            <option value=\"urgent\">Urgent</option>\n          </select>\n        </div>\n        <div class=\"date\">\n          <label for=\"date\">Pick a date: </label>\n          <input type=\"date\" name=\"date\" id=\"date\" />\n        </div>\n        <div class=\"project-selection\">\n          <label for=\"project\">Project: </label>\n          <select name=\"project\" id=\"project\"></select>\n        </div>\n      </div>\n    </div>\n    <button class=\"add-task-button\" type=\"submit\">Add Task</button>\n    <button type=\"button\" class=\"cancel\" id=\"cancelAddTask\">\n      Cancel\n    </button>\n  </form>\n</div>");
+  var add = data.add,
+      hide = data.hide,
+      id = data.id;
+  var form = (0, _stringToHTML.stringToHTML)(" <div\n    class=\"add-task-form ".concat(hide && 'hide', "\"\n    id=\"addTaskFormContainer").concat(id && id, "\"\n  >\n    <form id=\"addTaskForm\" autocomplete=\"off\">\n      <div class=\"container\">\n        <div class=\"title\">\n          <label for=\"title\">Title: </label>\n          <input\n            name=\"title\"\n            id=\"title\"\n            placeholder=\"Enter the title\"\n            required\n          />\n        </div>\n        <div class=\"description\">\n          <label for=\"description\">Description: </label>\n          <input\n            name=\"description\"\n            id=\"description\"\n            placeholder=\"Enter the description\"\n          />\n        </div>\n        <div class=\"sub-options\">\n          <div class=\"priority\">\n            <label for=\"priority\">Priority: </label>\n            <select name=\"priority\" id=\"priority\" class=\"priority-select\">\n              <option value=\"none\">None</option>\n              <option value=\"important\">Important</option>\n              <option value=\"urgent\">Urgent</option>\n            </select>\n          </div>\n          <div class=\"date\">\n            <label for=\"date\">Pick a date: </label>\n            <input type=\"date\" name=\"date\" id=\"date\" />\n          </div>\n          <div class=\"project-selection\">\n            <label for=\"project\">Project: </label>\n            <select name=\"project\" id=\"project\"></select>\n          </div>\n        </div>\n      </div>\n      <button class=\"add-task-button\" type=\"submit\">\n        ").concat(add ? 'Add Task' : 'Edit Task', "\n      </button>\n      <button type=\"button\" class=\"cancel\" id=\"cancelAddTask\">Cancel</button>\n    </form>\n  </div>"));
   return form;
 };
 
 exports.taskForm = taskForm;
-},{"../helpers/stringToHTML":"helpers/stringToHTML.js"}],"helpers/domNodes.js":[function(require,module,exports) {
+},{"../helpers/stringToHTML":"helpers/stringToHTML.js"}],"components/taskItem.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.taskItem = void 0;
+
+var _stringToHTML = require("../helpers/stringToHTML");
+
+var _taskForm = require("./taskForm");
+
+var taskItem = function taskItem(data) {
+  var task = data;
+  var element = (0, _stringToHTML.stringToHTML)(" <li><h3>".concat(task.title, "</h3></li>"));
+  element.appendChild((0, _taskForm.taskForm)({
+    add: false,
+    hide: true,
+    id: data.id
+  }));
+
+  element.querySelector('h3').onclick = function () {
+    console.log("Task Title ".concat(data.id.slice(0, 10)));
+    document.querySelector("#addTaskFormContainer".concat(data.id)).classList.remove('hide');
+  };
+
+  return element;
+};
+
+exports.taskItem = taskItem;
+},{"../helpers/stringToHTML":"helpers/stringToHTML.js","./taskForm":"components/taskForm.js"}],"helpers/domNodes.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1128,6 +1161,8 @@ var _uuid = require("uuid");
 var _stringToHTML = require("./helpers/stringToHTML");
 
 var _taskForm = require("./components/taskForm");
+
+var _taskItem = require("./components/taskItem");
 
 var _domNodes = require("./helpers/domNodes");
 
@@ -1195,9 +1230,12 @@ var AppDOM = function () {
   };
 
   var addTaskToDashboard = function addTaskToDashboard(current) {
+    console.log('addTaskToDashboard');
     var currentTask = (0, _stringToHTML.stringToHTML)("<ul></ul>");
     current.tasks.forEach(function (task) {
-      currentTask.appendChild((0, _stringToHTML.stringToHTML)("<li>".concat(task.title, "</li>"), 'div'));
+      currentTask.appendChild((0, _taskItem.taskItem)(task)); // taskItem.onclick = () => {
+      //   createEditForm()
+      // }
     });
     return currentTask;
   };
@@ -1344,7 +1382,7 @@ _domNodes.header.toggler.onclick = function () {
 };
 
 AppDOM.addProjectToSidebar();
-},{"./styles/styles.scss":"styles/styles.scss","uuid":"../node_modules/uuid/dist/esm-browser/index.js","./helpers/stringToHTML":"helpers/stringToHTML.js","./components/taskForm":"components/taskForm.js","./helpers/domNodes":"helpers/domNodes.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./styles/styles.scss":"styles/styles.scss","uuid":"../node_modules/uuid/dist/esm-browser/index.js","./helpers/stringToHTML":"helpers/stringToHTML.js","./components/taskForm":"components/taskForm.js","./components/taskItem":"components/taskItem.js","./helpers/domNodes":"helpers/domNodes.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
