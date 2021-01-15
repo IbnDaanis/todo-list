@@ -32,7 +32,7 @@ const AppDOM = (() => {
       let html = `<div>${project.title}</div>`
       const projectEl = stringToHTML(`${html}`, 'li')
       projectEl.onclick = () => {
-        onclick = () => AppDOM.addProjectToDashboard(project)
+        AppDOM.addProjectToDashboard(project)
         console.log('Sidebar: ', project)
       }
       sidebar.projectTitles.appendChild(projectEl)
@@ -61,7 +61,7 @@ const AppDOM = (() => {
     console.log('addTaskToDashboard')
     const currentTask = stringToHTML(`<ul></ul>`)
     current.tasks.forEach(task => {
-      currentTask.appendChild(taskItem(task))
+      currentTask.appendChild(taskItem(task, AppDOM))
       // taskItem.onclick = () => {
       //   createEditForm()
       // }
