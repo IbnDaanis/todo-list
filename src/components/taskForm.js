@@ -1,7 +1,15 @@
 import { stringToHTML } from '../helpers/stringToHTML'
 
 export const taskForm = data => {
-  const { add, hide, id } = data
+  const { add, hide, id, currentProject, projects } = data
+  console.log({ projects })
+  let projectSelection = ``
+  projects.forEach(project => {
+    projectSelection += `<option value="${project.title}" ${
+      currentProject.title === project.title && 'selected="selected"'
+    }>${project.title}</option>`
+  })
+
   const form = stringToHTML(` <div
     class="add-task-form ${hide && 'hide'}"
     id="addTaskFormContainer${id && id}"
@@ -40,7 +48,7 @@ export const taskForm = data => {
           </div>
           <div class="project-selection">
             <label for="project">Project: </label>
-            <select name="project" id="project"></select>
+            <select name="project" id="project">${projectSelection}</select>
           </div>
         </div>
       </div>

@@ -61,7 +61,7 @@ const AppDOM = (() => {
     console.log('addTaskToDashboard')
     const currentTask = stringToHTML(`<ul></ul>`)
     current.tasks.forEach(task => {
-      currentTask.appendChild(taskItem(task, AppDOM))
+      currentTask.appendChild(taskItem(task, AppDOM, current, AppData.projects))
       // taskItem.onclick = () => {
       //   createEditForm()
       // }
