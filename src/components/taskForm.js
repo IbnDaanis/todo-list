@@ -19,9 +19,9 @@ export const taskForm = data => {
 
   const form = stringToHTML(` <div
     class="add-task-form ${hide && 'hide'}"
-    id="addTaskFormContainer${id && id}"
+    id="addTaskFormContainer${id}"
   >
-    <form id="addTaskForm" autocomplete="off">
+    <form id="addTaskForm" autocomplete="off" data-id="${id}">
       <div class="container">
         <div class="title">
           <label for="title">Title: </label>

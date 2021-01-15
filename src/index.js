@@ -15,26 +15,26 @@ import {
 
 const AppDOM = (() => {
   const hide = (element, closed) => {
-    console.log('Element Hidden: ', element)
+    // console.log('Element Hidden: ', element)
     element.classList.add(closed ? closed : 'hide')
   }
   const unhide = (element, closed) => {
-    console.log('Element Unhidden: ', element)
+    // console.log('Element Unhidden: ', element)
     element.classList.remove(closed ? closed : 'hide')
   }
   const toggleHide = (element, closed) => {
-    console.log('Element Unhidden: ', element)
+    // console.log('Element Unhidden: ', element)
     element.classList.toggle(closed ? closed : 'hide')
   }
   const addProjectToSidebar = () => {
     sidebar.projectTitles.innerHTML = ''
-    console.log('App: ', AppData.projects)
+    // console.log('App: ', AppData.projects)
     AppData.projects.forEach(project => {
       let html = `<div>${project.title}</div>`
       const projectEl = stringToHTML(`${html}`, 'li')
       projectEl.onclick = () => {
         AppDOM.addProjectToDashboard(project)
-        console.log('Sidebar: ', project)
+        // console.log('Sidebar: ', project)
       }
       sidebar.projectTitles.appendChild(projectEl)
     })
@@ -59,13 +59,13 @@ const AppDOM = (() => {
   }
 
   const addTaskToDashboard = current => {
-    console.log('addTaskToDashboard')
+    console.log('addTaskToDashboard', current)
     const currentTask = stringToHTML(`<ul></ul>`)
     current.tasks.forEach(task => {
-      currentTask.appendChild(taskItem(task, AppDOM, current, AppData.projects))
-      // taskItem.onclick = () => {
-      //   createEditForm()
-      // }
+      const currentTaskItem = taskItem(task, AppDOM, current, AppData.projects)
+      currentTask.appendChild(currentTaskItem)
+      console.log(currentTaskItem)
+      AppForms.createTaskForm(currentTaskItem, task, current, 'edit')
     })
     return currentTask
   }
@@ -91,11 +91,27 @@ const AppForms = (() => {
       console.log('Form createProjectForm')
     }
   }
-  const createTaskForm = () => {
-    addTaskForm.form.onsubmit = e => {
+  const createTaskForm = (form, task, project, type) => {
+    form.onsubmit = e => {
       e.preventDefault()
-      console.log('Form createTaskForm')
-      const newTask = new Task()
+      console.log('Form createTaskForm', task)
+
+      const formInput = {
+        title: form.querySelector('#title'),
+        description: form.querySelector('#description'),
+        priority: form.querySelector('#priority'),
+        date: form.querySelector('#date'),
+        project: form.querySelector('#project'),
+      }
+      const { title, description, priority, date } = formInput
+
+      if (type === 'add') {
+        console.log('add')
+      } else if (type === 'edit') {
+        task.edit(title.value, description.value, priority.value, date.value)
+      }
+
+      AppDOM.addProjectToDashboard(project)
     }
   }
 
@@ -106,7 +122,6 @@ const AppForms = (() => {
 })()
 
 AppForms.createProjectForm()
-AppForms.createTaskForm()
 
 const Data = () => {
   let projects = []
@@ -158,10 +173,11 @@ class Task {
     this.dueDate = dueDate || format(new Date(), 'yyyy-MM-dd')
   }
 
-  edit(title, description, priority) {
+  edit(title, description, priority, dueDate) {
     title && (this.title = title)
     description && (this.description = description)
     priority && (this.priority = priority)
+    dueDate && (this.dueDate = dueDate)
   }
 }
 

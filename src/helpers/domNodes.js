@@ -26,7 +26,7 @@ export const addTaskForm = {
   cancel: document.querySelector('#cancelAddTask'),
   title: document.querySelector('#title'),
   description: document.querySelector('#description'),
-  urgency: document.querySelector('#urgency'),
+  priority: document.querySelector('#priority'),
   date: document.querySelector('#date'),
   project: document.querySelector('#project'),
 }
