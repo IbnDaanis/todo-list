@@ -5,7 +5,7 @@ export const taskItem = (data, DOM, currentProject, projects) => {
   // console.log({ data, currentProject })
   const task = data
   const element = stringToHTML(
-    ` <div><h3>${task.title}</h3><button id="toggleCompleted">Toggle</button><button id="deleteTask">Delete</button></div>`,
+    ` <div class='task-item'><h3>${task.title}</h3><button id="toggleCompleted" class='toggle-completed'>Complete</button><button id="deleteTask" class='delete-task'>Delete</button></div>`,
     'li'
   )
   data.isComplete && element.classList.add('completed')

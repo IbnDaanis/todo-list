@@ -268,7 +268,7 @@ var _taskForm = require("./taskForm");
 var taskItem = function taskItem(data, DOM, currentProject, projects) {
   // console.log({ data, currentProject })
   var task = data;
-  var element = (0, _stringToHTML.stringToHTML)(" <div><h3>".concat(task.title, "</h3><button id=\"toggleCompleted\">Toggle</button><button id=\"deleteTask\">Delete</button></div>"), 'li');
+  var element = (0, _stringToHTML.stringToHTML)(" <div class='task-item'><h3>".concat(task.title, "</h3><button id=\"toggleCompleted\" class='toggle-completed'>Complete</button><button id=\"deleteTask\" class='delete-task'>Delete</button></div>"), 'li');
   data.isComplete && element.classList.add('completed');
   element.appendChild((0, _taskForm.taskForm)({
     add: false,
@@ -19621,34 +19621,32 @@ var AppDOM = function () {
     _domNodes.dashboard.project.innerHTML = '';
     var projectEl = (0, _stringToHTML.stringToHTML)("<h1>".concat(current.title, "</h1>"), 'div');
     projectEl.classList.add("".concat(current.id));
+    projectEl.classList.add('project-items');
+    projectEl.appendChild(addTaskToDashboard(current));
 
     _domNodes.dashboard.project.appendChild(projectEl);
-
-    _domNodes.dashboard.project.appendChild(addTaskToDashboard(current));
 
     addProjectsToTaskForm(current);
     activeProject(current);
   };
 
   var addAllProjectsToDashboard = function addAllProjectsToDashboard() {
-    _domNodes.dashboard.project.innerHTML = '';
+    _domNodes.dashboard.project.innerHTML = '<h1>All Projects<h1>';
 
     _AppData.AppData.projects.forEach(function (project) {
       var projectEl = (0, _stringToHTML.stringToHTML)("<h2>".concat(project.title, "</h2>"), 'div');
-      projectEl.style.padding = "1rem 0";
+      projectEl.classList.add('all-project-items');
 
       if (project.tasks.length > 0) {
         projectEl.appendChild(addTaskToDashboard(project));
         projectEl.querySelectorAll('button').forEach(function (btn) {
           return btn.classList.add('hide');
         });
-
-        projectEl.querySelector('h3').onclick = function (e) {
-          toggleHide(projectEl.querySelector('.add-task-form'));
-        };
       } else {
         projectEl.appendChild((0, _stringToHTML.stringToHTML)("<h3>No tasks for this project</h3>", 'div'));
       }
+
+      console.log(projectEl);
 
       _domNodes.dashboard.project.appendChild(projectEl);
     });
@@ -19656,10 +19654,17 @@ var AppDOM = function () {
 
   var addTaskToDashboard = function addTaskToDashboard(current) {
     // console.log('addTaskToDashboard', current)
-    var currentTask = (0, _stringToHTML.stringToHTML)("<ul></ul>");
+    var currentTask = (0, _stringToHTML.stringToHTML)("", 'ul');
+    currentTask.classList.add('task-list');
+    console.log(currentTask);
     current.tasks.forEach(function (task) {
       var currentTaskItem = (0, _taskItem.taskItem)(task, AppDOM, current, _AppData.AppData.projects);
       currentTask.appendChild(currentTaskItem);
+
+      currentTaskItem.querySelector('h3').onclick = function () {
+        toggleHide(currentTaskItem.querySelector('.add-task-form'));
+      };
+
       AppForms.createTaskForm(currentTaskItem, task, current, 'edit');
     });
     return currentTask;
@@ -19756,6 +19761,8 @@ _domNodes.header.toggler.onclick = function () {
 _domNodes.header.home.onclick = function () {
   AppDOM.addAllProjectsToDashboard();
   AppDOM.activeProject();
+  AppDOM.unhide(_domNodes.addTaskForm.toggler);
+  AppDOM.hide(_domNodes.addTaskForm.container);
 };
 
 _domNodes.addTaskForm.toggler.onclick = function () {

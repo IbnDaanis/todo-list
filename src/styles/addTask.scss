@@ -16,11 +16,12 @@
     height: 20px;
     width: 20px;
     border-radius: 50%;
-    display: grid;
-    place-content: center;
     color: #de4c4a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     svg {
-      transform: translate(0, -1px);
+      transform: translate(-1px, -1px);
     }
   }
   .add-task-text {
@@ -28,6 +29,7 @@
     color: grey;
     font-size: 14px;
     font-weight: 300;
+    transform: translate(-1px, -1px);
   }
 }
 

@@ -16,10 +16,74 @@ main {
       width: 100%;
       max-width: 800px;
       margin: 0 auto;
-
       h1 {
-        margin-bottom: 2rem;
+        margin-bottom: 1.5rem;
       }
+    }
+  }
+}
+
+.all-project-items {
+  margin: 0 0 1rem;
+  border-bottom: 1px solid var(--dark-gray);
+  h2 {
+    font-size: 1.4rem;
+  }
+  .task-list {
+    li {
+      .add-task-form {
+      }
+    }
+  }
+}
+
+.project-items {
+  h1 {
+    margin-bottom: 1.5rem;
+  }
+  .task-list {
+    li {
+      .task-item {
+        display: flex;
+        align-items: center;
+        h3 {
+          flex: 1;
+        }
+        button {
+          margin-left: 0.5rem;
+          height: 32px;
+          width: 80px;
+          outline: none;
+          border: none;
+          border-radius: 3px;
+          color: white;
+          background: none;
+          &.toggle-completed {
+            background: rgb(3, 160, 24);
+          }
+          &.delete-task {
+            background: rgb(175, 13, 13);
+          }
+        }
+      }
+      .add-task-form {
+      }
+    }
+  }
+}
+
+.task-list {
+  margin: 0.5rem 0 0 2rem;
+
+  li {
+    color: rgb(195, 195, 195);
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+    .add-task-form {
+      margin-bottom: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--dark-gray);
     }
   }
 }

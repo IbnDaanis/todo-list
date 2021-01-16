@@ -84,41 +84,44 @@ const AppDOM = (() => {
     dashboard.project.innerHTML = ''
     const projectEl = stringToHTML(`<h1>${current.title}</h1>`, 'div')
     projectEl.classList.add(`${current.id}`)
+    projectEl.classList.add('project-items')
+    projectEl.appendChild(addTaskToDashboard(current))
     dashboard.project.appendChild(projectEl)
-    dashboard.project.appendChild(addTaskToDashboard(current))
     addProjectsToTaskForm(current)
     activeProject(current)
   }
 
   const addAllProjectsToDashboard = () => {
-    dashboard.project.innerHTML = ''
+    dashboard.project.innerHTML = '<h1>All Projects<h1>'
     AppData.projects.forEach(project => {
       const projectEl = stringToHTML(`<h2>${project.title}</h2>`, 'div')
-      projectEl.style.padding = `1rem 0`
+      projectEl.classList.add('all-project-items')
       if (project.tasks.length > 0) {
         projectEl.appendChild(addTaskToDashboard(project))
         projectEl
           .querySelectorAll('button')
           .forEach(btn => btn.classList.add('hide'))
-        projectEl.querySelector('h3').onclick = e => {
-          toggleHide(projectEl.querySelector('.add-task-form'))
-        }
       } else {
         projectEl.appendChild(
           stringToHTML(`<h3>No tasks for this project</h3>`, 'div')
         )
       }
-
+      console.log(projectEl)
       dashboard.project.appendChild(projectEl)
     })
   }
 
   const addTaskToDashboard = current => {
     // console.log('addTaskToDashboard', current)
-    const currentTask = stringToHTML(`<ul></ul>`)
+    const currentTask = stringToHTML(``, 'ul')
+    currentTask.classList.add('task-list')
+    console.log(currentTask)
     current.tasks.forEach(task => {
       const currentTaskItem = taskItem(task, AppDOM, current, AppData.projects)
       currentTask.appendChild(currentTaskItem)
+      currentTaskItem.querySelector('h3').onclick = () => {
+        toggleHide(currentTaskItem.querySelector('.add-task-form'))
+      }
       AppForms.createTaskForm(currentTaskItem, task, current, 'edit')
     })
     return currentTask
@@ -216,6 +219,8 @@ header.toggler.onclick = () => {
 header.home.onclick = () => {
   AppDOM.addAllProjectsToDashboard()
   AppDOM.activeProject()
+  AppDOM.unhide(addTaskForm.toggler)
+  AppDOM.hide(addTaskForm.container)
 }
 
 addTaskForm.toggler.onclick = () => {
