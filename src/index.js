@@ -16,15 +16,12 @@ import {
 
 const AppDOM = (() => {
   const hide = (element, closed) => {
-    // console.log('Element Hidden: ', element)
     element.classList.add(closed ? closed : 'hide')
   }
   const unhide = (element, closed) => {
-    // console.log('Element Unhidden: ', element)
     element.classList.remove(closed ? closed : 'hide')
   }
   const toggleHide = (element, closed) => {
-    // console.log('Element Unhidden: ', element)
     element.classList.toggle(closed ? closed : 'hide')
   }
 
@@ -51,6 +48,7 @@ const AppDOM = (() => {
       if (!AppData.projects.length) {
         console.log('Else')
         dashboard.project.innerHTML = `<h1 class='empty'>Add a project in the menu on the left!</h1>`
+        AppDOM.hide(addTaskForm.toggler)
       } else {
         console.log(AppData.projects.length)
         AppDOM.addProjectToDashboard(AppData.projects[0])
@@ -144,13 +142,11 @@ const AppForms = (() => {
   const createProjectForm = () => {
     addProjectForm.form.onsubmit = e => {
       e.preventDefault()
-      // console.log('PROJECT FORM: ', AppData.projects)
       const newProject = new Project(addProjectForm.input.value)
       newProject.create()
       AppDOM.addProjectToSidebar()
       AppDOM.addProjectToDashboard(newProject)
       addProjectForm.input.value = ''
-      // console.log('Form createProjectForm')
     }
   }
   const createTaskForm = (form, type, task, currProject) => {
@@ -170,7 +166,6 @@ const AppForms = (() => {
         const selectedProject = AppData.projects.filter(
           currItem => currItem.title === projects.value
         )
-        // console.log(selectedProject)
         selectedProject[0].addTask(
           new Task(title.value, description.value, priority.value, date.value)
         )

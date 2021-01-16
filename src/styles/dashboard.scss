@@ -12,8 +12,10 @@ main {
     }
 
     .project-container {
+      overflow-y: auto;
       padding: 30px 55px 0;
       width: 100%;
+      height: fit-content;
       max-width: 800px;
       margin: 0 auto;
       h1 {

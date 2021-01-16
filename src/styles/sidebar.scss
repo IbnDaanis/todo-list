@@ -23,8 +23,13 @@
         min-height: 24px;
         line-height: 24px;
         margin: 0 0 0.2rem;
+        display: flex;
+        align-items: center;
         &:hover {
           background-color: #363636;
+          button {
+            opacity: 1;
+          }
         }
         &.active {
           background-color: #363636;
@@ -32,14 +37,26 @@
         }
         span {
           width: 100px;
+          display: block;
+          flex: 1;
         }
         button {
-          color: red;
-          background: 0;
+          opacity: 0;
+          color: rgb(230, 230, 230);
+          background: rgb(172, 15, 15);
+          padding: 4px 7px;
           border: none;
+          border-radius: 2px;
           outline: none;
           margin-left: 1rem;
           cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: 0.2s ease-in-out;
+          &:hover {
+            filter: brightness(1.1);
+          }
         }
       }
     }

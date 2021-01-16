@@ -19546,17 +19546,14 @@ var _domNodes = require("./helpers/domNodes");
 
 var AppDOM = function () {
   var hide = function hide(element, closed) {
-    // console.log('Element Hidden: ', element)
     element.classList.add(closed ? closed : 'hide');
   };
 
   var unhide = function unhide(element, closed) {
-    // console.log('Element Unhidden: ', element)
     element.classList.remove(closed ? closed : 'hide');
   };
 
   var toggleHide = function toggleHide(element, closed) {
-    // console.log('Element Unhidden: ', element)
     element.classList.toggle(closed ? closed : 'hide');
   };
 
@@ -19589,6 +19586,7 @@ var AppDOM = function () {
       if (!_AppData.AppData.projects.length) {
         console.log('Else');
         _domNodes.dashboard.project.innerHTML = "<h1 class='empty'>Add a project in the menu on the left!</h1>";
+        AppDOM.hide(_domNodes.addTaskForm.toggler);
       } else {
         console.log(_AppData.AppData.projects.length);
         AppDOM.addProjectToDashboard(_AppData.AppData.projects[0]);
@@ -19687,13 +19685,12 @@ var AppDOM = function () {
 var AppForms = function () {
   var createProjectForm = function createProjectForm() {
     _domNodes.addProjectForm.form.onsubmit = function (e) {
-      e.preventDefault(); // console.log('PROJECT FORM: ', AppData.projects)
-
+      e.preventDefault();
       var newProject = new _Project.Project(_domNodes.addProjectForm.input.value);
       newProject.create();
       AppDOM.addProjectToSidebar();
       AppDOM.addProjectToDashboard(newProject);
-      _domNodes.addProjectForm.input.value = ''; // console.log('Form createProjectForm')
+      _domNodes.addProjectForm.input.value = '';
     };
   };
 
@@ -19718,8 +19715,7 @@ var AppForms = function () {
 
         var selectedProject = _AppData.AppData.projects.filter(function (currItem) {
           return currItem.title === projects.value;
-        }); // console.log(selectedProject)
-
+        });
 
         selectedProject[0].addTask(new _Task.Task(title.value, description.value, priority.value, date.value));
         title.value = '';

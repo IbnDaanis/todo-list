@@ -21,7 +21,7 @@ html {
 }
 
 body {
-  overflow-x: hidden;
+  overflow: hidden;
   background: var(--very-dark-gray);
   color: var(--text-white);
 }
@@ -96,9 +96,14 @@ h4 {
   min-height: 24px;
   line-height: 24px;
   margin: 0 0 0.2rem;
+  display: flex;
+  align-items: center;
 }
 .sidebar .container .project-titles li:hover {
   background-color: #363636;
+}
+.sidebar .container .project-titles li:hover button {
+  opacity: 1;
 }
 .sidebar .container .project-titles li.active {
   background-color: #363636;
@@ -106,14 +111,26 @@ h4 {
 }
 .sidebar .container .project-titles li span {
   width: 100px;
+  display: block;
+  flex: 1;
 }
 .sidebar .container .project-titles li button {
-  color: red;
-  background: 0;
+  opacity: 0;
+  color: #e6e6e6;
+  background: #ac0f0f;
+  padding: 4px 7px;
   border: none;
+  border-radius: 2px;
   outline: none;
   margin-left: 1rem;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.2s ease-in-out;
+}
+.sidebar .container .project-titles li button:hover {
+  filter: brightness(1.1);
 }
 .sidebar .container .add-new-project-form input {
   background: none;
@@ -161,8 +178,10 @@ main .dashboard.closed {
   margin-left: 0;
 }
 main .dashboard .project-container {
+  overflow-y: auto;
   padding: 30px 55px 0;
   width: 100%;
+  height: fit-content;
   max-width: 800px;
   margin: 0 auto;
 }
