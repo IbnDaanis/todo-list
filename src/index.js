@@ -46,12 +46,16 @@ const AppDOM = (() => {
         }
       }
       sidebar.projectTitles.appendChild(projectEl)
-      if (deleting) {
-        AppData.projects[0]
-          ? AppDOM.addProjectToDashboard(AppData.projects[0])
-          : (dashboard.dashboard.innerHTML = '')
-      }
     })
+    if (deleting) {
+      if (!AppData.projects.length) {
+        console.log('Else')
+        dashboard.project.innerHTML = `<h1 class='empty'>Add a project in the menu on the left!</h1>`
+      } else {
+        console.log(AppData.projects.length)
+        AppDOM.addProjectToDashboard(AppData.projects[0])
+      }
+    }
   }
 
   const addProjectsToTaskForm = currentProject => {
@@ -85,6 +89,7 @@ const AppDOM = (() => {
     const projectEl = stringToHTML(`<h1>${current.title}</h1>`, 'div')
     projectEl.classList.add(`${current.id}`)
     projectEl.classList.add('project-items')
+    unhide(addTaskForm.toggler)
     projectEl.appendChild(addTaskToDashboard(current))
     dashboard.project.appendChild(projectEl)
     addProjectsToTaskForm(current)
@@ -106,16 +111,13 @@ const AppDOM = (() => {
           stringToHTML(`<h3>No tasks for this project</h3>`, 'div')
         )
       }
-      console.log(projectEl)
       dashboard.project.appendChild(projectEl)
     })
   }
 
   const addTaskToDashboard = current => {
-    // console.log('addTaskToDashboard', current)
     const currentTask = stringToHTML(``, 'ul')
     currentTask.classList.add('task-list')
-    console.log(currentTask)
     current.tasks.forEach(task => {
       const currentTaskItem = taskItem(task, AppDOM, current, AppData.projects)
       currentTask.appendChild(currentTaskItem)
@@ -211,6 +213,13 @@ AppForms.createTaskForm(addTaskForm.form, 'add')
 //   firstList.removeTask(AppData.projects[0].tasks[0])
 // }, 3000)
 
+console.log(document.body.offsetWidth)
+
+if (document.body.offsetWidth < 800) {
+  AppDOM.hide(sidebar.sidebar, 'closed')
+  AppDOM.hide(dashboard.dashboard, 'closed')
+}
+
 header.toggler.onclick = () => {
   AppDOM.toggleHide(sidebar.sidebar, 'closed')
   AppDOM.toggleHide(dashboard.dashboard, 'closed')
@@ -237,4 +246,6 @@ addTaskForm.date.value = format(new Date(), 'yyyy-MM-dd')
 
 AppDOM.addProjectToSidebar()
 
-AppData.projects[0] && AppDOM.addAllProjectsToDashboard()
+AppData.projects[0]
+  ? AppDOM.addAllProjectsToDashboard()
+  : (dashboard.project.innerHTML = `<h1 class='empty'>Add a project in the menu on the left!</h1>`)

@@ -19583,11 +19583,17 @@ var AppDOM = function () {
       };
 
       _domNodes.sidebar.projectTitles.appendChild(projectEl);
-
-      if (deleting) {
-        _AppData.AppData.projects[0] ? AppDOM.addProjectToDashboard(_AppData.AppData.projects[0]) : _domNodes.dashboard.dashboard.innerHTML = '';
-      }
     });
+
+    if (deleting) {
+      if (!_AppData.AppData.projects.length) {
+        console.log('Else');
+        _domNodes.dashboard.project.innerHTML = "<h1 class='empty'>Add a project in the menu on the left!</h1>";
+      } else {
+        console.log(_AppData.AppData.projects.length);
+        AppDOM.addProjectToDashboard(_AppData.AppData.projects[0]);
+      }
+    }
   };
 
   var addProjectsToTaskForm = function addProjectsToTaskForm(currentProject) {
@@ -19622,6 +19628,7 @@ var AppDOM = function () {
     var projectEl = (0, _stringToHTML.stringToHTML)("<h1>".concat(current.title, "</h1>"), 'div');
     projectEl.classList.add("".concat(current.id));
     projectEl.classList.add('project-items');
+    unhide(_domNodes.addTaskForm.toggler);
     projectEl.appendChild(addTaskToDashboard(current));
 
     _domNodes.dashboard.project.appendChild(projectEl);
@@ -19646,17 +19653,13 @@ var AppDOM = function () {
         projectEl.appendChild((0, _stringToHTML.stringToHTML)("<h3>No tasks for this project</h3>", 'div'));
       }
 
-      console.log(projectEl);
-
       _domNodes.dashboard.project.appendChild(projectEl);
     });
   };
 
   var addTaskToDashboard = function addTaskToDashboard(current) {
-    // console.log('addTaskToDashboard', current)
     var currentTask = (0, _stringToHTML.stringToHTML)("", 'ul');
     currentTask.classList.add('task-list');
-    console.log(currentTask);
     current.tasks.forEach(function (task) {
       var currentTaskItem = (0, _taskItem.taskItem)(task, AppDOM, current, _AppData.AppData.projects);
       currentTask.appendChild(currentTaskItem);
@@ -19753,6 +19756,13 @@ AppForms.createTaskForm(_domNodes.addTaskForm.form, 'add'); // const firstList =
 //   firstList.removeTask(AppData.projects[0].tasks[0])
 // }, 3000)
 
+console.log(document.body.offsetWidth);
+
+if (document.body.offsetWidth < 800) {
+  AppDOM.hide(_domNodes.sidebar.sidebar, 'closed');
+  AppDOM.hide(_domNodes.dashboard.dashboard, 'closed');
+}
+
 _domNodes.header.toggler.onclick = function () {
   AppDOM.toggleHide(_domNodes.sidebar.sidebar, 'closed');
   AppDOM.toggleHide(_domNodes.dashboard.dashboard, 'closed');
@@ -19777,7 +19787,7 @@ _domNodes.addTaskForm.cancel.onclick = function () {
 
 _domNodes.addTaskForm.date.value = (0, _dateFns.format)(new Date(), 'yyyy-MM-dd');
 AppDOM.addProjectToSidebar();
-_AppData.AppData.projects[0] && AppDOM.addAllProjectsToDashboard();
+_AppData.AppData.projects[0] ? AppDOM.addAllProjectsToDashboard() : _domNodes.dashboard.project.innerHTML = "<h1 class='empty'>Add a project in the menu on the left!</h1>";
 },{"./styles/styles.scss":"styles/styles.scss","./helpers/stringToHTML":"helpers/stringToHTML.js","./components/taskItem":"components/taskItem.js","date-fns":"../node_modules/date-fns/esm/index.js","./AppData":"AppData.js","./Project":"Project.js","./Task":"Task.js","./helpers/domNodes":"helpers/domNodes.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';

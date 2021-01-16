@@ -25,9 +25,13 @@ main {
 
 .all-project-items {
   margin: 0 0 1rem;
+  padding-bottom: 1rem;
   border-bottom: 1px solid var(--dark-gray);
   h2 {
     font-size: 1.4rem;
+    padding-bottom: 0.5rem;
+  }
+  h3 {
   }
   .task-list {
     li {
@@ -86,4 +90,10 @@ main {
       border-bottom: 1px solid var(--dark-gray);
     }
   }
+}
+
+.empty {
+  text-align: center;
+  padding: 1rem;
+  font-size: 1.5rem;
 }
