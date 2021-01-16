@@ -24,40 +24,42 @@ export const taskForm = data => {
     <form id="addTaskForm" autocomplete="off" data-id="${id}">
       <div class="container">
         <div class="title">
-          <label for="title">Title: </label>
+          <label for="title${id}">Title: </label>
           <input
             name="title"
-            id="title"
+            id="title${id}"
             placeholder="Enter the title"
             value="${task.title}"
             required
           />
         </div>
         <div class="description">
-          <label for="description">Description: </label>
+          <label for="description${id}">Description: </label>
           <input
             name="description"
-            id="description"
+            id="description${id}"
             placeholder="Enter the description"
             value="${task.description}"
           />
         </div>
         <div class="sub-options">
           <div class="priority">
-            <label for="priority">Priority: </label>
-            <select name="priority" id="priority" class="priority-select" selected="${
-              task.priority
-            }">
+            <label for="priority${id}">Priority: </label>
+            <select name="priority" id="priority${id}" class="priority-select" selected="${
+    task.priority
+  }">
             ${prioritySelection}
             </select>
           </div>
           <div class="date">
-            <label for="date">Due date: </label>
-            <input type="date" name="date" id="date" value="${task.dueDate}"/>
+            <label for="date${id}">Due date: </label>
+            <input type="date" name="date" id="date${id}" value="${
+    task.dueDate
+  }"/>
           </div>
           <div class="project-selection">
-            <label for="project">Project: </label>
-            <select name="project" id="project">${projectSelection}</select>
+            <label for="project${id}">Project: </label>
+            <select name="project" id="project${id}">${projectSelection}</select>
           </div>
         </div>
       </div>

@@ -8,6 +8,7 @@ main {
     transition: 0.3s ease-in-out;
     height: calc(100vh - 43px);
     overflow-y: auto;
+    overflow-x: hidden;
     padding-bottom: 4rem;
     &::-webkit-scrollbar {
       width: 10px;
