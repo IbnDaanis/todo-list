@@ -61,7 +61,9 @@ export const taskForm = data => {
           </div>
         </div>
       </div>
-      <button class="add-task-button" type="submit">
+      <button class="add-task-button" type="submit" ${
+        !add && `style='background: #0d4398'`
+      }>
         ${add ? 'Add Task' : 'Edit Task'}
       </button>
       <button type="button" class="cancel" id="cancelAddTask${id}">Cancel</button>

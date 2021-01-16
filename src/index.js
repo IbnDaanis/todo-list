@@ -34,6 +34,7 @@ const AppDOM = (() => {
     AppData.projects.forEach(project => {
       let html = `<span id=title${project.id}>${project.title}</span><button id=delete${project.id}>X</button>`
       const projectEl = stringToHTML(`${html}`, 'li')
+
       projectEl.onclick = e => {
         if (e.target.id === `title${project.id}`) {
           console.log('AppDOM: ', project.id)
@@ -46,6 +47,17 @@ const AppDOM = (() => {
       }
       sidebar.projectTitles.appendChild(projectEl)
     })
+  }
+
+  const addProjectsToTaskForm = currentProject => {
+    let projectSelection = ``
+    AppData.projects.forEach(project => {
+      projectSelection += `<option value="${project.title}"
+      ${currentProject.title === project.title && 'selected="selected"'}
+      >${project.title}</option>`
+    })
+
+    addTaskForm.projects.innerHTML = projectSelection
   }
 
   const activeProject = current => {
@@ -63,6 +75,7 @@ const AppDOM = (() => {
     projectEl.classList.add(`${current.id}`)
     dashboard.project.appendChild(projectEl)
     dashboard.project.appendChild(addTaskToDashboard(current))
+    addProjectsToTaskForm(current)
     activeProject(current)
   }
 
@@ -100,27 +113,37 @@ const AppForms = (() => {
       console.log('Form createProjectForm')
     }
   }
-  const createTaskForm = (form, task, project, type) => {
+  const createTaskForm = (form, type, task, currProject) => {
+    console.log(form.querySelector('#title'))
     form.onsubmit = e => {
       e.preventDefault()
-      console.log('Form createTaskForm', task)
-
+      // console.log('Form createTaskForm', task)
       const formInput = {
         title: form.querySelector('#title'),
         description: form.querySelector('#description'),
         priority: form.querySelector('#priority'),
         date: form.querySelector('#date'),
-        project: form.querySelector('#project'),
+        projects: form.querySelector('#projects'),
       }
-      const { title, description, priority, date } = formInput
+      const { title, description, priority, date, projects } = formInput
 
       if (type === 'add') {
         console.log('add')
+        const selectedProject = AppData.projects.filter(
+          currItem => currItem.title === projects.value
+        )
+        console.log(selectedProject)
+        selectedProject[0].addTask(
+          new Task(title.value, description.value, priority.value, date.value)
+        )
+        title.value = ''
+        description.value = ''
+        date.value = format(new Date(), 'yyyy-MM-dd')
+        AppDOM.addProjectToDashboard(selectedProject[0])
       } else if (type === 'edit') {
         task.edit(title.value, description.value, priority.value, date.value)
+        AppDOM.addProjectToDashboard(currProject)
       }
-
-      AppDOM.addProjectToDashboard(project)
     }
   }
 
@@ -129,8 +152,9 @@ const AppForms = (() => {
     createTaskForm,
   }
 })()
-
 AppForms.createProjectForm()
+
+AppForms.createTaskForm(addTaskForm.form, 'add')
 
 // const firstList = new Project('First')
 // firstList.create()
@@ -153,6 +177,16 @@ AppForms.createProjectForm()
 header.toggler.onclick = () => {
   AppDOM.toggleHide(sidebar.sidebar, 'closed')
   AppDOM.toggleHide(dashboard.dashboard, 'closed')
+}
+
+addTaskForm.toggler.onclick = () => {
+  AppDOM.unhide(addTaskForm.container)
+  AppDOM.hide(addTaskForm.toggler)
+}
+
+addTaskForm.cancel.onclick = () => {
+  AppDOM.unhide(addTaskForm.toggler)
+  AppDOM.hide(addTaskForm.container)
 }
 
 AppDOM.addProjectToSidebar()

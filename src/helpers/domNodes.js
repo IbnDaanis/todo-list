@@ -28,5 +28,5 @@ export const addTaskForm = {
   description: document.querySelector('#description'),
   priority: document.querySelector('#priority'),
   date: document.querySelector('#date'),
-  project: document.querySelector('#project'),
+  projects: document.querySelector('#projects'),
 }
