@@ -40,6 +40,7 @@ export const taskForm = data => {
             id="description${id}"
             placeholder="Enter the description"
             value="${task.description}"
+            required
           />
         </div>
         <div class="sub-options">

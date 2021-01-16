@@ -214,26 +214,6 @@ AppForms.createProjectForm()
 
 AppForms.createTaskForm(addTaskForm.form, 'add')
 
-// const firstList = new Project('First')
-// firstList.create()
-// firstList.addTask(new Task('First 1', 'Description', 'Important'))
-// firstList.addTask(new Task('First 2', 'Write it', 'None'))
-
-// const secondList = new Project('Second')
-// secondList.create()
-// secondList.addTask(new Task('Second 1', 'Description', 'Urgent'))
-// secondList.addTask(new Task('Second 2', 'Description', 'Important'))
-
-// setTimeout(() => {
-//   AppData.removeProject(secondList)
-// }, 2000)
-
-// setTimeout(() => {
-//   firstList.removeTask(AppData.projects[0].tasks[0])
-// }, 3000)
-
-// console.log(document.body.offsetWidth)
-
 if (document.body.offsetWidth < 800) {
   AppDOM.hide(sidebar.sidebar, 'closed')
   AppDOM.hide(dashboard.dashboard, 'closed')
@@ -262,6 +242,24 @@ addTaskForm.cancel.onclick = () => {
 
 addTaskForm.date.value = dateToday
 addTaskForm.date.min = dateToday
+
+if (!localStorage.getItem('AppData')) {
+  const firstList = new Project('Web Development')
+  firstList.create()
+  firstList.addTask(new Task('Clone repo', 'Clone project repo', 'Important'))
+  firstList.addTask(
+    new Task('Commit changes', 'Commit changes for project', 'None')
+  )
+
+  const secondList = new Project('House Chores')
+  secondList.create()
+  secondList.addTask(
+    new Task('Take out trash', 'Clean out the trash', 'Urgent')
+  )
+  secondList.addTask(
+    new Task('Vacuum the living room', 'Living room is not clean', 'Important')
+  )
+}
 
 AppDOM.addProjectToSidebar()
 

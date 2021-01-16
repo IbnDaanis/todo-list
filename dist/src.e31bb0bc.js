@@ -18432,7 +18432,7 @@ var taskForm = function taskForm(data) {
   ['None', 'Important', 'Urgent'].forEach(function (priority) {
     prioritySelection += "<option value=\"".concat(priority, "\" ").concat(task.priority === priority && "selected=\"selected\"", ">").concat(priority, "</option>");
   });
-  var form = (0, _stringToHTML.stringToHTML)(" <div\n    class=\"add-task-form ".concat(hide && 'hide', "\"\n    id=\"addTaskFormContainer").concat(id, "\"\n  >\n    <form id=\"addTaskForm\" autocomplete=\"off\" data-id=\"").concat(id, "\">\n      <div class=\"container\">\n        <div class=\"title\">\n          <label for=\"title").concat(id, "\">Title: </label>\n          <input\n            name=\"title\"\n            id=\"title").concat(id, "\"\n            placeholder=\"Enter the title\"\n            value=\"").concat(task.title, "\"\n            required\n          />\n        </div>\n        <div class=\"description\">\n          <label for=\"description").concat(id, "\">Description: </label>\n          <input\n            name=\"description\"\n            id=\"description").concat(id, "\"\n            placeholder=\"Enter the description\"\n            value=\"").concat(task.description, "\"\n          />\n        </div>\n        <div class=\"sub-options\">\n          <div class=\"priority\">\n            <label for=\"priority").concat(id, "\">Priority: </label>\n            <select name=\"priority\" id=\"priority").concat(id, "\" class=\"priority-select\" selected=\"").concat(task.priority, "\">\n            ").concat(prioritySelection, "\n            </select>\n          </div>\n          <div class=\"date\">\n            <label for=\"date").concat(id, "\">Due date: </label>\n            <input type=\"date\" name=\"date\" min=").concat(_dateToday.dateToday, " id=\"date").concat(id, "\" value=\"").concat(task.dueDate, "\"/>\n          </div>\n          <div class=\"project-selection\">\n            <label for=\"project").concat(id, "\">Project: </label>\n            <select name=\"project\" id=\"project").concat(id, "\">").concat(projectSelection, "</select>\n          </div>\n        </div>\n      </div>\n      <button class=\"add-task-button\" type=\"submit\" ").concat(!add && "style='background: #0d4398'", ">\n        ").concat(add ? 'Add Task' : 'Edit Task', "\n      </button>\n      <button type=\"button\" class=\"cancel\" id=\"cancelAddTask").concat(id, "\">Cancel</button>\n    </form>\n  </div>"));
+  var form = (0, _stringToHTML.stringToHTML)(" <div\n    class=\"add-task-form ".concat(hide && 'hide', "\"\n    id=\"addTaskFormContainer").concat(id, "\"\n  >\n    <form id=\"addTaskForm\" autocomplete=\"off\" data-id=\"").concat(id, "\">\n      <div class=\"container\">\n        <div class=\"title\">\n          <label for=\"title").concat(id, "\">Title: </label>\n          <input\n            name=\"title\"\n            id=\"title").concat(id, "\"\n            placeholder=\"Enter the title\"\n            value=\"").concat(task.title, "\"\n            required\n          />\n        </div>\n        <div class=\"description\">\n          <label for=\"description").concat(id, "\">Description: </label>\n          <input\n            name=\"description\"\n            id=\"description").concat(id, "\"\n            placeholder=\"Enter the description\"\n            value=\"").concat(task.description, "\"\n            required\n          />\n        </div>\n        <div class=\"sub-options\">\n          <div class=\"priority\">\n            <label for=\"priority").concat(id, "\">Priority: </label>\n            <select name=\"priority\" id=\"priority").concat(id, "\" class=\"priority-select\" selected=\"").concat(task.priority, "\">\n            ").concat(prioritySelection, "\n            </select>\n          </div>\n          <div class=\"date\">\n            <label for=\"date").concat(id, "\">Due date: </label>\n            <input type=\"date\" name=\"date\" min=").concat(_dateToday.dateToday, " id=\"date").concat(id, "\" value=\"").concat(task.dueDate, "\"/>\n          </div>\n          <div class=\"project-selection\">\n            <label for=\"project").concat(id, "\">Project: </label>\n            <select name=\"project\" id=\"project").concat(id, "\">").concat(projectSelection, "</select>\n          </div>\n        </div>\n      </div>\n      <button class=\"add-task-button\" type=\"submit\" ").concat(!add && "style='background: #0d4398'", ">\n        ").concat(add ? 'Add Task' : 'Edit Task', "\n      </button>\n      <button type=\"button\" class=\"cancel\" id=\"cancelAddTask").concat(id, "\">Cancel</button>\n    </form>\n  </div>"));
   return form;
 };
 
@@ -19458,6 +19458,7 @@ var AppData = function () {
 
   var JSONtoClasses = function () {
     var local = JSON.parse(localStorage.getItem('AppData'));
+    console.log(local);
     local && local.forEach(function (project) {
       var tasks = [];
       project.tasks.forEach(function (task) {
@@ -19782,21 +19783,7 @@ var AppForms = function () {
 }();
 
 AppForms.createProjectForm();
-AppForms.createTaskForm(_domNodes.addTaskForm.form, 'add'); // const firstList = new Project('First')
-// firstList.create()
-// firstList.addTask(new Task('First 1', 'Description', 'Important'))
-// firstList.addTask(new Task('First 2', 'Write it', 'None'))
-// const secondList = new Project('Second')
-// secondList.create()
-// secondList.addTask(new Task('Second 1', 'Description', 'Urgent'))
-// secondList.addTask(new Task('Second 2', 'Description', 'Important'))
-// setTimeout(() => {
-//   AppData.removeProject(secondList)
-// }, 2000)
-// setTimeout(() => {
-//   firstList.removeTask(AppData.projects[0].tasks[0])
-// }, 3000)
-// console.log(document.body.offsetWidth)
+AppForms.createTaskForm(_domNodes.addTaskForm.form, 'add');
 
 if (document.body.offsetWidth < 800) {
   AppDOM.hide(_domNodes.sidebar.sidebar, 'closed');
@@ -19826,6 +19813,18 @@ _domNodes.addTaskForm.cancel.onclick = function () {
 
 _domNodes.addTaskForm.date.value = _dateToday.dateToday;
 _domNodes.addTaskForm.date.min = _dateToday.dateToday;
+
+if (!localStorage.getItem('AppData')) {
+  var firstList = new _Project.Project('Web Development');
+  firstList.create();
+  firstList.addTask(new _Task.Task('Clone repo', 'Clone project repo', 'Important'));
+  firstList.addTask(new _Task.Task('Commit changes', 'Commit changes for project', 'None'));
+  var secondList = new _Project.Project('House Chores');
+  secondList.create();
+  secondList.addTask(new _Task.Task('Take out trash', 'Clean out the trash', 'Urgent'));
+  secondList.addTask(new _Task.Task('Vacuum the living room', 'Living room is not clean', 'Important'));
+}
+
 AppDOM.addProjectToSidebar();
 _AppData.AppData.projects[0] ? AppDOM.addAllProjectsToDashboard() : _domNodes.dashboard.project.innerHTML = "<h1 class='empty'>Add a project in the menu on the left!</h1>";
 },{"./styles/styles.scss":"styles/styles.scss","./helpers/stringToHTML":"helpers/stringToHTML.js","./helpers/dateToday":"helpers/dateToday.js","./components/taskItem":"components/taskItem.js","date-fns":"../node_modules/date-fns/esm/index.js","./AppData":"AppData.js","./Project":"Project.js","./Task":"Task.js","./helpers/domNodes":"helpers/domNodes.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {

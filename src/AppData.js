@@ -1,10 +1,13 @@
 import { Task } from './Task'
 import { Project } from './Project'
+
 export const AppData = (() => {
   let projects = []
 
   const JSONtoClasses = (() => {
     const local = JSON.parse(localStorage.getItem('AppData'))
+    console.log(local)
+
     local &&
       local.forEach(project => {
         const tasks = []
