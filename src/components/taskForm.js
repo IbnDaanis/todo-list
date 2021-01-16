@@ -1,4 +1,5 @@
 import { stringToHTML } from '../helpers/stringToHTML'
+import { dateToday } from '../helpers/dateToday'
 
 export const taskForm = data => {
   const { add, hide, task, id, currentProject, projects } = data
@@ -16,7 +17,6 @@ export const taskForm = data => {
       task.priority === priority && `selected="selected"`
     }>${priority}</option>`
   })
-
   const form = stringToHTML(` <div
     class="add-task-form ${hide && 'hide'}"
     id="addTaskFormContainer${id}"
@@ -53,7 +53,7 @@ export const taskForm = data => {
           </div>
           <div class="date">
             <label for="date${id}">Due date: </label>
-            <input type="date" name="date" id="date${id}" value="${
+            <input type="date" name="date" min=${dateToday} id="date${id}" value="${
     task.dueDate
   }"/>
           </div>

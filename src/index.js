@@ -1,5 +1,6 @@
 import './styles/styles.scss'
 import { stringToHTML } from './helpers/stringToHTML'
+import { dateToday } from './helpers/dateToday'
 import { taskItem } from './components/taskItem'
 import { format } from 'date-fns'
 import { AppData } from './AppData'
@@ -257,7 +258,8 @@ addTaskForm.cancel.onclick = () => {
   AppDOM.hide(addTaskForm.container)
 }
 
-addTaskForm.date.value = format(new Date(), 'yyyy-MM-dd')
+addTaskForm.date.value = dateToday
+addTaskForm.date.min = dateToday
 
 AppDOM.addProjectToSidebar()
 
