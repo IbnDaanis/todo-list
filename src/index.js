@@ -84,6 +84,10 @@ const AppDOM = (() => {
     })
   }
   const addProjectToDashboard = current => {
+    if (document.body.offsetWidth < 800) {
+      AppDOM.hide(sidebar.sidebar, 'closed')
+      AppDOM.hide(dashboard.dashboard, 'closed')
+    }
     dashboard.project.innerHTML = ''
     const projectEl = stringToHTML(`<h1>${current.title}</h1>`, 'div')
     projectEl.classList.add(`${current.id}`)
@@ -243,8 +247,6 @@ header.toggler.onclick = () => {
 header.home.onclick = () => {
   AppDOM.addAllProjectsToDashboard()
   AppDOM.activeProject()
-  AppDOM.unhide(addTaskForm.toggler)
-  AppDOM.hide(addTaskForm.container)
 }
 
 addTaskForm.toggler.onclick = () => {

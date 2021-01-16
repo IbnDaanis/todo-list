@@ -19638,6 +19638,11 @@ var AppDOM = function () {
   };
 
   var addProjectToDashboard = function addProjectToDashboard(current) {
+    if (document.body.offsetWidth < 800) {
+      AppDOM.hide(_domNodes.sidebar.sidebar, 'closed');
+      AppDOM.hide(_domNodes.dashboard.dashboard, 'closed');
+    }
+
     _domNodes.dashboard.project.innerHTML = '';
     var projectEl = (0, _stringToHTML.stringToHTML)("<h1>".concat(current.title, "</h1>"), 'div');
     projectEl.classList.add("".concat(current.id));
@@ -19806,8 +19811,6 @@ _domNodes.header.toggler.onclick = function () {
 _domNodes.header.home.onclick = function () {
   AppDOM.addAllProjectsToDashboard();
   AppDOM.activeProject();
-  AppDOM.unhide(_domNodes.addTaskForm.toggler);
-  AppDOM.hide(_domNodes.addTaskForm.container);
 };
 
 _domNodes.addTaskForm.toggler.onclick = function () {
