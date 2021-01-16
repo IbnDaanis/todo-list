@@ -1,4 +1,3 @@
-import './styles/styles.scss'
 import { stringToHTML } from './helpers/stringToHTML'
 import { dateToday } from './helpers/dateToday'
 import { taskItem } from './components/taskItem'
@@ -6,6 +5,7 @@ import { format } from 'date-fns'
 import { AppData } from './AppData'
 import { Project } from './Project'
 import { Task } from './Task'
+import './styles/styles.scss'
 
 import {
   header,

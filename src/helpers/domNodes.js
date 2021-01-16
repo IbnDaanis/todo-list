@@ -1,6 +1,6 @@
 export const header = {
-  toggler: document.querySelector('#menuToggler'),
-  home: document.querySelector('#home'),
+  toggler: document.querySelector('.menu-toggler'),
+  home: document.querySelector('.home'),
 }
 
 export const sidebar = {
