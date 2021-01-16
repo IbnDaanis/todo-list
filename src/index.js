@@ -85,7 +85,7 @@ const AppDOM = (() => {
     current.tasks.forEach(task => {
       const currentTaskItem = taskItem(task, AppDOM, current, AppData.projects)
       currentTask.appendChild(currentTaskItem)
-      console.log(currentTaskItem)
+      // console.log(currentTaskItem)
       AppForms.createTaskForm(currentTaskItem, task, current, 'edit')
     })
     return currentTask
@@ -104,20 +104,18 @@ const AppForms = (() => {
   const createProjectForm = () => {
     addProjectForm.form.onsubmit = e => {
       e.preventDefault()
-      console.log('PROJECT FORM: ', AppData.projects)
+      // console.log('PROJECT FORM: ', AppData.projects)
       const newProject = new Project(addProjectForm.input.value)
       newProject.create()
       AppDOM.addProjectToSidebar()
       AppDOM.addProjectToDashboard(newProject)
       addProjectForm.input.value = ''
-      console.log('Form createProjectForm')
+      // console.log('Form createProjectForm')
     }
   }
   const createTaskForm = (form, type, task, currProject) => {
-    console.log(form.querySelector('#title'))
     form.onsubmit = e => {
       e.preventDefault()
-      // console.log('Form createTaskForm', task)
       const formInput = {
         title: form.querySelector('#title'),
         description: form.querySelector('#description'),
@@ -132,12 +130,13 @@ const AppForms = (() => {
         const selectedProject = AppData.projects.filter(
           currItem => currItem.title === projects.value
         )
-        console.log(selectedProject)
+        // console.log(selectedProject)
         selectedProject[0].addTask(
           new Task(title.value, description.value, priority.value, date.value)
         )
         title.value = ''
         description.value = ''
+        priority.firstChild.nextSibling.selected = true
         date.value = format(new Date(), 'yyyy-MM-dd')
         AppDOM.addProjectToDashboard(selectedProject[0])
       } else if (type === 'edit') {
@@ -189,6 +188,8 @@ addTaskForm.cancel.onclick = () => {
   AppDOM.hide(addTaskForm.container)
 }
 
+addTaskForm.date.value = format(new Date(), 'yyyy-MM-dd')
+
 AppDOM.addProjectToSidebar()
 
-// projects.splice(projects.indexOf(), 1)
+AppDOM.addProjectToDashboard(AppData.projects[0])

@@ -238,10 +238,8 @@ var taskForm = function taskForm(data) {
       task = data.task,
       id = data.id,
       currentProject = data.currentProject,
-      projects = data.projects;
-  console.log({
-    projects: projects
-  });
+      projects = data.projects; // console.log({ projects })
+
   var projectSelection = "";
   projects.forEach(function (project) {
     projectSelection += "<option value=\"".concat(project.title, "\" ").concat(currentProject.title === project.title && 'selected="selected"', ">").concat(project.title, "</option>");
@@ -268,10 +266,7 @@ var _stringToHTML = require("../helpers/stringToHTML");
 var _taskForm = require("./taskForm");
 
 var taskItem = function taskItem(data, DOM, currentProject, projects) {
-  console.log({
-    data: data,
-    currentProject: currentProject
-  });
+  // console.log({ data, currentProject })
   var task = data;
   var element = (0, _stringToHTML.stringToHTML)(" <div><h3>".concat(task.title, "</h3><button id=\"toggleCompleted\">Toggle</button><button id=\"deleteTask\">Delete</button></div>"), 'li');
   data.isComplete && element.classList.add('completed');
@@ -19628,8 +19623,8 @@ var AppDOM = function () {
     var currentTask = (0, _stringToHTML.stringToHTML)("<ul></ul>");
     current.tasks.forEach(function (task) {
       var currentTaskItem = (0, _taskItem.taskItem)(task, AppDOM, current, _AppData.AppData.projects);
-      currentTask.appendChild(currentTaskItem);
-      console.log(currentTaskItem);
+      currentTask.appendChild(currentTaskItem); // console.log(currentTaskItem)
+
       AppForms.createTaskForm(currentTaskItem, task, current, 'edit');
     });
     return currentTask;
@@ -19647,23 +19642,19 @@ var AppDOM = function () {
 var AppForms = function () {
   var createProjectForm = function createProjectForm() {
     _domNodes.addProjectForm.form.onsubmit = function (e) {
-      e.preventDefault();
-      console.log('PROJECT FORM: ', _AppData.AppData.projects);
+      e.preventDefault(); // console.log('PROJECT FORM: ', AppData.projects)
+
       var newProject = new _Project.Project(_domNodes.addProjectForm.input.value);
       newProject.create();
       AppDOM.addProjectToSidebar();
       AppDOM.addProjectToDashboard(newProject);
-      _domNodes.addProjectForm.input.value = '';
-      console.log('Form createProjectForm');
+      _domNodes.addProjectForm.input.value = ''; // console.log('Form createProjectForm')
     };
   };
 
   var createTaskForm = function createTaskForm(form, type, task, currProject) {
-    console.log(form.querySelector('#title'));
-
     form.onsubmit = function (e) {
-      e.preventDefault(); // console.log('Form createTaskForm', task)
-
+      e.preventDefault();
       var formInput = {
         title: form.querySelector('#title'),
         description: form.querySelector('#description'),
@@ -19682,12 +19673,13 @@ var AppForms = function () {
 
         var selectedProject = _AppData.AppData.projects.filter(function (currItem) {
           return currItem.title === projects.value;
-        });
+        }); // console.log(selectedProject)
 
-        console.log(selectedProject);
+
         selectedProject[0].addTask(new _Task.Task(title.value, description.value, priority.value, date.value));
         title.value = '';
         description.value = '';
+        priority.firstChild.nextSibling.selected = true;
         date.value = (0, _dateFns.format)(new Date(), 'yyyy-MM-dd');
         AppDOM.addProjectToDashboard(selectedProject[0]);
       } else if (type === 'edit') {
@@ -19734,7 +19726,9 @@ _domNodes.addTaskForm.cancel.onclick = function () {
   AppDOM.hide(_domNodes.addTaskForm.container);
 };
 
-AppDOM.addProjectToSidebar(); // projects.splice(projects.indexOf(), 1)
+_domNodes.addTaskForm.date.value = (0, _dateFns.format)(new Date(), 'yyyy-MM-dd');
+AppDOM.addProjectToSidebar();
+AppDOM.addProjectToDashboard(_AppData.AppData.projects[0]);
 },{"./styles/styles.scss":"styles/styles.scss","./helpers/stringToHTML":"helpers/stringToHTML.js","./components/taskItem":"components/taskItem.js","date-fns":"../node_modules/date-fns/esm/index.js","./AppData":"AppData.js","./Project":"Project.js","./Task":"Task.js","./helpers/domNodes":"helpers/domNodes.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';

@@ -2,7 +2,7 @@ import { stringToHTML } from '../helpers/stringToHTML'
 
 export const taskForm = data => {
   const { add, hide, task, id, currentProject, projects } = data
-  console.log({ projects })
+  // console.log({ projects })
   let projectSelection = ``
   projects.forEach(project => {
     projectSelection += `<option value="${project.title}" ${
