@@ -127,11 +127,16 @@ const AppDOM = (() => {
     return currentTask
   }
 
+  const scrollToBottom = (more = 0) => {
+    dashboard.dashboard.scrollTop = dashboard.dashboard.scrollHeight + more
+  }
+
   return {
     hide,
     unhide,
     toggleHide,
     activeProject,
+    scrollToBottom,
     addProjectToSidebar,
     addProjectToDashboard,
     addAllProjectsToDashboard,
@@ -152,6 +157,7 @@ const AppForms = (() => {
   const createTaskForm = (form, type, task, currProject) => {
     form.onsubmit = e => {
       e.preventDefault()
+
       const formInput = {
         title: form.querySelector('#title'),
         description: form.querySelector('#description'),
@@ -178,6 +184,7 @@ const AppForms = (() => {
         task.edit(title.value, description.value, priority.value, date.value)
         AppDOM.addProjectToDashboard(currProject)
       }
+      AppDOM.scrollToBottom()
     }
   }
 
@@ -208,7 +215,7 @@ AppForms.createTaskForm(addTaskForm.form, 'add')
 //   firstList.removeTask(AppData.projects[0].tasks[0])
 // }, 3000)
 
-console.log(document.body.offsetWidth)
+// console.log(document.body.offsetWidth)
 
 if (document.body.offsetWidth < 800) {
   AppDOM.hide(sidebar.sidebar, 'closed')
@@ -229,6 +236,7 @@ header.home.onclick = () => {
 
 addTaskForm.toggler.onclick = () => {
   AppDOM.unhide(addTaskForm.container)
+  AppDOM.scrollToBottom()
   AppDOM.hide(addTaskForm.toggler)
 }
 

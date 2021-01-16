@@ -19671,11 +19671,17 @@ var AppDOM = function () {
     return currentTask;
   };
 
+  var scrollToBottom = function scrollToBottom() {
+    var more = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+    _domNodes.dashboard.dashboard.scrollTop = _domNodes.dashboard.dashboard.scrollHeight + more;
+  };
+
   return {
     hide: hide,
     unhide: unhide,
     toggleHide: toggleHide,
     activeProject: activeProject,
+    scrollToBottom: scrollToBottom,
     addProjectToSidebar: addProjectToSidebar,
     addProjectToDashboard: addProjectToDashboard,
     addAllProjectsToDashboard: addAllProjectsToDashboard
@@ -19727,6 +19733,8 @@ var AppForms = function () {
         task.edit(title.value, description.value, priority.value, date.value);
         AppDOM.addProjectToDashboard(currProject);
       }
+
+      AppDOM.scrollToBottom();
     };
   };
 
@@ -19751,8 +19759,7 @@ AppForms.createTaskForm(_domNodes.addTaskForm.form, 'add'); // const firstList =
 // setTimeout(() => {
 //   firstList.removeTask(AppData.projects[0].tasks[0])
 // }, 3000)
-
-console.log(document.body.offsetWidth);
+// console.log(document.body.offsetWidth)
 
 if (document.body.offsetWidth < 800) {
   AppDOM.hide(_domNodes.sidebar.sidebar, 'closed');
@@ -19773,6 +19780,7 @@ _domNodes.header.home.onclick = function () {
 
 _domNodes.addTaskForm.toggler.onclick = function () {
   AppDOM.unhide(_domNodes.addTaskForm.container);
+  AppDOM.scrollToBottom();
   AppDOM.hide(_domNodes.addTaskForm.toggler);
 };
 
