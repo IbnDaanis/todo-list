@@ -28,7 +28,7 @@ const AppDOM = (() => {
     element.classList.toggle(closed ? closed : 'hide')
   }
 
-  const addProjectToSidebar = () => {
+  const addProjectToSidebar = (deleting = false) => {
     sidebar.projectTitles.innerHTML = ''
     console.log('AppData.projects: ', AppData.projects)
     AppData.projects.forEach(project => {
@@ -42,13 +42,15 @@ const AppDOM = (() => {
         } else if (e.target.id === `delete${project.id}`) {
           console.log('DELETE: ', project.id)
           AppData.removeProject(project)
-          addProjectToSidebar()
-          AppData.projects[0]
-            ? AppDOM.addProjectToDashboard(AppData.projects[0])
-            : (dashboard.dashboard.innerHTML = '')
+          addProjectToSidebar(true)
         }
       }
       sidebar.projectTitles.appendChild(projectEl)
+      if (deleting) {
+        AppData.projects[0]
+          ? AppDOM.addProjectToDashboard(AppData.projects[0])
+          : (dashboard.dashboard.innerHTML = '')
+      }
     })
   }
 

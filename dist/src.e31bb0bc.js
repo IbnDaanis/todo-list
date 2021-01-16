@@ -19561,6 +19561,7 @@ var AppDOM = function () {
   };
 
   var addProjectToSidebar = function addProjectToSidebar() {
+    var deleting = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
     _domNodes.sidebar.projectTitles.innerHTML = '';
     console.log('AppData.projects: ', _AppData.AppData.projects);
 
@@ -19577,12 +19578,15 @@ var AppDOM = function () {
 
           _AppData.AppData.removeProject(project);
 
-          addProjectToSidebar();
-          _AppData.AppData.projects[0] ? AppDOM.addProjectToDashboard(_AppData.AppData.projects[0]) : _domNodes.dashboard.dashboard.innerHTML = '';
+          addProjectToSidebar(true);
         }
       };
 
       _domNodes.sidebar.projectTitles.appendChild(projectEl);
+
+      if (deleting) {
+        _AppData.AppData.projects[0] ? AppDOM.addProjectToDashboard(_AppData.AppData.projects[0]) : _domNodes.dashboard.dashboard.innerHTML = '';
+      }
     });
   };
 
