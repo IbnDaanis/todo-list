@@ -19578,6 +19578,7 @@ var AppDOM = function () {
           _AppData.AppData.removeProject(project);
 
           addProjectToSidebar();
+          _AppData.AppData.projects[0] ? AppDOM.addProjectToDashboard(_AppData.AppData.projects[0]) : _domNodes.dashboard.dashboard.innerHTML = '';
         }
       };
 
@@ -19728,7 +19729,7 @@ _domNodes.addTaskForm.cancel.onclick = function () {
 
 _domNodes.addTaskForm.date.value = (0, _dateFns.format)(new Date(), 'yyyy-MM-dd');
 AppDOM.addProjectToSidebar();
-AppDOM.addProjectToDashboard(_AppData.AppData.projects[0]);
+_AppData.AppData.projects[0] && AppDOM.addProjectToDashboard(_AppData.AppData.projects[0]);
 },{"./styles/styles.scss":"styles/styles.scss","./helpers/stringToHTML":"helpers/stringToHTML.js","./components/taskItem":"components/taskItem.js","date-fns":"../node_modules/date-fns/esm/index.js","./AppData":"AppData.js","./Project":"Project.js","./Task":"Task.js","./helpers/domNodes":"helpers/domNodes.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';

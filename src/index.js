@@ -43,6 +43,9 @@ const AppDOM = (() => {
           console.log('DELETE: ', project.id)
           AppData.removeProject(project)
           addProjectToSidebar()
+          AppData.projects[0]
+            ? AppDOM.addProjectToDashboard(AppData.projects[0])
+            : (dashboard.dashboard.innerHTML = '')
         }
       }
       sidebar.projectTitles.appendChild(projectEl)
@@ -192,4 +195,4 @@ addTaskForm.date.value = format(new Date(), 'yyyy-MM-dd')
 
 AppDOM.addProjectToSidebar()
 
-AppDOM.addProjectToDashboard(AppData.projects[0])
+AppData.projects[0] && AppDOM.addProjectToDashboard(AppData.projects[0])
