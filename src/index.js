@@ -66,6 +66,12 @@ const AppDOM = (() => {
   }
 
   const activeProject = current => {
+    if (!current) {
+      projectTitles
+        .querySelectorAll('li')
+        .forEach(project => project.classList.remove('active'))
+      return
+    }
     projectTitles.querySelectorAll('li').forEach(project => {
       if (project.firstChild.id.slice(5) === current.id) {
         project.classList.add('active')
@@ -84,13 +90,35 @@ const AppDOM = (() => {
     activeProject(current)
   }
 
+  const addAllProjectsToDashboard = () => {
+    dashboard.project.innerHTML = ''
+    AppData.projects.forEach(project => {
+      const projectEl = stringToHTML(`<h2>${project.title}</h2>`, 'div')
+      projectEl.style.padding = `1rem 0`
+      if (project.tasks.length > 0) {
+        projectEl.appendChild(addTaskToDashboard(project))
+        projectEl
+          .querySelectorAll('button')
+          .forEach(btn => btn.classList.add('hide'))
+        projectEl.querySelector('h3').onclick = e => {
+          toggleHide(projectEl.querySelector('.add-task-form'))
+        }
+      } else {
+        projectEl.appendChild(
+          stringToHTML(`<h3>No tasks for this project</h3>`, 'div')
+        )
+      }
+
+      dashboard.project.appendChild(projectEl)
+    })
+  }
+
   const addTaskToDashboard = current => {
-    console.log('addTaskToDashboard', current)
+    // console.log('addTaskToDashboard', current)
     const currentTask = stringToHTML(`<ul></ul>`)
     current.tasks.forEach(task => {
       const currentTaskItem = taskItem(task, AppDOM, current, AppData.projects)
       currentTask.appendChild(currentTaskItem)
-      // console.log(currentTaskItem)
       AppForms.createTaskForm(currentTaskItem, task, current, 'edit')
     })
     return currentTask
@@ -100,8 +128,10 @@ const AppDOM = (() => {
     hide,
     unhide,
     toggleHide,
+    activeProject,
     addProjectToSidebar,
     addProjectToDashboard,
+    addAllProjectsToDashboard,
   }
 })()
 
@@ -183,6 +213,11 @@ header.toggler.onclick = () => {
   AppDOM.toggleHide(dashboard.dashboard, 'closed')
 }
 
+header.home.onclick = () => {
+  AppDOM.addAllProjectsToDashboard()
+  AppDOM.activeProject()
+}
+
 addTaskForm.toggler.onclick = () => {
   AppDOM.unhide(addTaskForm.container)
   AppDOM.hide(addTaskForm.toggler)
@@ -197,4 +232,4 @@ addTaskForm.date.value = format(new Date(), 'yyyy-MM-dd')
 
 AppDOM.addProjectToSidebar()
 
-AppData.projects[0] && AppDOM.addProjectToDashboard(AppData.projects[0])
+AppData.projects[0] && AppDOM.addAllProjectsToDashboard()

@@ -52,7 +52,7 @@ export const taskForm = data => {
             </select>
           </div>
           <div class="date">
-            <label for="date">Pick a date: </label>
+            <label for="date">Due date: </label>
             <input type="date" name="date" id="date" value="${task.dueDate}"/>
           </div>
           <div class="project-selection">
