@@ -6,6 +6,7 @@
   background: var(--dark-gray);
   width: 305px;
   transition: transform 0.3s ease-in-out;
+  z-index: 100;
   .container {
     padding: 2rem 0 0 42px;
     .project-titles {
