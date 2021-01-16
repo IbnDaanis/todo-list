@@ -12,4 +12,4 @@
 
 ## Preview:
 
-![Preview](./dist/images/preview.png)
+![Preview](./src/images/preview.png)
