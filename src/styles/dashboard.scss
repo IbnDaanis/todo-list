@@ -5,6 +5,7 @@ main {
     display: flex;
     flex-grow: 1;
     flex-direction: column;
+    min-width: 400px;
     transition: 0.3s ease-in-out;
     height: calc(100vh - 43px);
     overflow-y: auto;

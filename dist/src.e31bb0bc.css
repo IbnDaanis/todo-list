@@ -172,6 +172,7 @@ main .dashboard {
   display: flex;
   flex-grow: 1;
   flex-direction: column;
+  min-width: 400px;
   transition: 0.3s ease-in-out;
   height: calc(100vh - 43px);
   overflow-y: auto;
@@ -298,6 +299,16 @@ main .dashboard .project-container h1 {
 .add-task-form {
   margin-top: 1rem;
 }
+@media (max-width: 1100px) {
+  .add-task-form {
+    min-width: 580px;
+  }
+}
+@media (max-width: 750px) {
+  .add-task-form {
+    min-width: unset;
+  }
+}
 .add-task-form .container {
   background: var(--light-black);
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -332,48 +343,47 @@ main .dashboard .project-container h1 {
   margin-bottom: 0.2rem;
   transform: translateY(1.3px);
 }
-.add-task-form .container .sub-options .priority {
-  align-items: center;
+@media (max-width: 750px) {
+  .add-task-form .container .sub-options {
+    flex-direction: column;
+  }
 }
-.add-task-form .container .sub-options .priority .priority-select {
-  margin-left: 0.5rem;
+@media (max-width: 750px) {
+  .add-task-form .container .sub-options div {
+    margin: 0 0 0.2rem 0 !important;
+  }
+}
+.add-task-form .container .sub-options div input,
+.add-task-form .container .sub-options div select {
   background: var(--dark-gray);
   color: var(--text-white);
   border-radius: 3px;
   outline: none;
   border: 1px solid rgba(255, 255, 255, 0.1);
   height: 32px;
-  padding: 2px 3px;
-  transform: translateY(1.8px);
+  padding: 2px 10px;
 }
-.add-task-form .container .sub-options .priority .priority-select:hover {
+.add-task-form .container .sub-options div input:hover,
+.add-task-form .container .sub-options div select:hover {
   border: 1px solid #555;
 }
-.add-task-form .container .sub-options .priority .priority-select:focus {
+.add-task-form .container .sub-options div input:focus,
+.add-task-form .container .sub-options div select:focus {
   border: 1px solid #555;
+}
+.add-task-form .container .sub-options .priority {
+  align-items: center;
+}
+.add-task-form .container .sub-options .priority .priority-select {
+  margin-left: 0.5rem;
 }
 .add-task-form .container .sub-options .date {
   margin-left: 1.5rem;
   align-items: center;
 }
-.add-task-form .container .sub-options .date label {
-  width: 110px;
-}
 .add-task-form .container .sub-options .date input {
   margin-left: 0.5rem;
-  background: var(--dark-gray);
-  color: var(--text-white);
-  border-radius: 3px;
-  outline: none;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 2px 3px;
-  transform: translateY(1.8px);
-}
-.add-task-form .container .sub-options .date input:hover {
-  border: 1px solid #555;
-}
-.add-task-form .container .sub-options .date input:focus {
-  border: 1px solid #555;
+  width: 140px;
 }
 .add-task-form .container .sub-options .project-selection {
   margin-left: 1.5rem;
@@ -381,20 +391,6 @@ main .dashboard .project-container h1 {
 }
 .add-task-form .container .sub-options .project-selection select {
   margin-left: 0.5rem;
-  background: var(--dark-gray);
-  color: var(--text-white);
-  border-radius: 3px;
-  outline: none;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 2px 3px;
-  transform: translateY(1.8px);
-  height: 32px;
-}
-.add-task-form .container .sub-options .project-selection select:hover {
-  border: 1px solid #555;
-}
-.add-task-form .container .sub-options .project-selection select:focus {
-  border: 1px solid #555;
 }
 .add-task-form .add-task-button {
   cursor: pointer;
