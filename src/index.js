@@ -228,6 +228,8 @@ header.toggler.onclick = () => {
 header.home.onclick = () => {
   AppDOM.addAllProjectsToDashboard()
   AppDOM.activeProject()
+  AppDOM.hide(addTaskForm.toggler)
+  AppDOM.hide(addTaskForm.container)
 }
 
 addTaskForm.toggler.onclick = () => {
