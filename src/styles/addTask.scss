@@ -44,9 +44,6 @@
   @media (max-width: 750px) {
     min-width: unset;
   }
-  @media (max-width: 550px) {
-    transform: translateX(-0.5rem);
-  }
   .container {
     background: var(--light-black);
     border: 1px solid hsla(0, 0%, 100%, 0.1);
@@ -79,18 +76,19 @@
         resize: none;
         height: 32px;
         margin-bottom: 0.2rem;
-        transform: translateY(1.3px);
       }
     }
     .sub-options {
-      @media (max-width: 750px) {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      @media (max-width: 800px) {
         flex-direction: column;
+        align-items: flex-start;
       }
       div {
-        @media (max-width: 750px) {
+        @media (max-width: 810px) {
           margin: 0 0 0.2rem 0 !important;
-        }
-        label {
         }
         input,
         select {
@@ -118,15 +116,12 @@
         }
       }
       .date {
-        margin-left: 1.5rem;
-        align-items: center;
         input {
-          margin-left: 0.5rem;
+          margin: 0 0 0 0.5rem;
           width: 160px;
         }
       }
       .project-selection {
-        margin-left: 1.5rem;
         align-items: center;
         select {
           margin-left: 0.5rem;
