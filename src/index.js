@@ -46,7 +46,12 @@ const AppDOM = (() => {
     if (deleting) {
       if (!AppData.projects.length) {
         console.log('Else')
-        dashboard.project.innerHTML = `<h1 class='empty'>Add a project in the menu on the left!</h1>`
+        dashboard.project.innerHTML = ''
+        dashboard.project.appendChild(
+          stringToHTML(
+            `<h1 class='empty'>Add a project in the menu on the left!</h1>`
+          )
+        )
         AppDOM.hide(addTaskForm.toggler)
       } else {
         console.log(AppData.projects.length)
@@ -252,7 +257,6 @@ if (!localStorage.getItem('AppData')) {
   firstList.addTask(
     new Task('Commit changes', 'Commit changes for project', 'None')
   )
-
   const secondList = new Project('House Chores')
   secondList.create()
   secondList.addTask(
@@ -267,4 +271,8 @@ AppDOM.addProjectToSidebar()
 
 AppData.projects[0]
   ? AppDOM.addAllProjectsToDashboard()
-  : (dashboard.project.innerHTML = `<h1 class='empty'>Add a project in the menu on the left!</h1>`)
+  : dashboard.project.appendChild(
+      stringToHTML(
+        `<h1 class='empty'>Add a project in the menu on the left!</h1>`
+      )
+    )
