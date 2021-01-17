@@ -127,7 +127,7 @@ const AppDOM = (() => {
       currentTaskItem.querySelector('h3').onclick = () => {
         toggleHide(currentTaskItem.querySelector('.add-task-form'))
       }
-      AppForms.createTaskForm(currentTaskItem, task, current, 'edit')
+      AppForms.createTaskForm(currentTaskItem, 'edit',task, current, )
     })
     return currentTask
   }
@@ -159,11 +159,12 @@ const AppForms = (() => {
       addProjectForm.input.value = ''
     }
   }
-  const createTaskForm = (form, task, currProject, type) => {
+  const createTaskForm = (form, type,task, currProject, ) => {
     form.onsubmit = e => {
       e.preventDefault()
-      console.log('CREATE')
+      console.log('CREATE', {type, task, currProject,  })
       if (type === 'add') {
+        console.log('EDIT')
         const formInput = {
           title: form.querySelector(`#title`),
           description: form.querySelector(`#description`),
