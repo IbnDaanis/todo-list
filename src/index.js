@@ -35,10 +35,8 @@ const AppDOM = (() => {
 
       projectEl.onclick = e => {
         if (e.target.id === `title${project.id}`) {
-          console.log('AppDOM: ', project.id)
           AppDOM.addProjectToDashboard(project)
         } else if (e.target.id === `delete${project.id}`) {
-          console.log('DELETE: ', project.id)
           AppData.removeProject(project)
           addProjectToSidebar(true)
         }
@@ -64,7 +62,6 @@ const AppDOM = (() => {
       ${currentProject.title === project.title && 'selected="selected"'}
       >${project.title}</option>`
     })
-
     addTaskForm.projects.innerHTML = projectSelection
   }
 
@@ -109,6 +106,8 @@ const AppDOM = (() => {
         projectEl
           .querySelectorAll('button')
           .forEach(btn => btn.classList.add('hide'))
+        const taskForm = projectEl.querySelector('.add-task-form')
+        taskForm.classList.add('no-cursor')
       } else {
         projectEl.appendChild(
           stringToHTML(`<h3>No tasks for this project</h3>`, 'div')
@@ -147,11 +146,6 @@ const AppDOM = (() => {
     addAllProjectsToDashboard,
   }
 })()
-
-if (document.body.offsetWidth > 800) {
-  AppDOM.unhide(sidebar.sidebar, 'closed')
-  AppDOM.unhide(dashboard.dashboard, 'closed')
-}
 
 const AppForms = (() => {
   const createProjectForm = () => {
@@ -219,6 +213,11 @@ const AppForms = (() => {
 AppForms.createProjectForm()
 
 AppForms.createTaskForm(addTaskForm.form, 'add')
+
+if (document.body.offsetWidth > 900) {
+  AppDOM.unhide(sidebar.sidebar, 'closed')
+  AppDOM.unhide(dashboard.dashboard, 'closed')
+}
 
 header.toggler.onclick = () => {
   AppDOM.toggleHide(sidebar.sidebar, 'closed')

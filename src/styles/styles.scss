@@ -26,6 +26,13 @@ body {
   color: var(--text-white);
 }
 
+.no-cursor {
+  input,
+  select {
+    pointer-events: none !important;
+  }
+}
+
 a {
   text-decoration: none;
   color: unset;

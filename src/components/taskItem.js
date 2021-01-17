@@ -2,7 +2,6 @@ import { stringToHTML } from '../helpers/stringToHTML'
 import { taskForm } from './taskForm'
 
 export const taskItem = (data, DOM, currentProject, projects) => {
-  // console.log({ data, currentProject })
   const task = data
   const element = stringToHTML(
     ` <div class='task-item'><h3>${task.title}</h3><button id="toggleCompleted${task.id}" class='toggle-completed'>Complete</button><button id="deleteTask${task.id}" class='delete-task'>Delete</button></div>`,
