@@ -44,16 +44,24 @@
         button {
           color: rgb(230, 230, 230);
           background: rgb(172, 15, 15);
-          padding: 4px 7px;
+          padding: 4px 7px 4px 6px;
           border: none;
           border-radius: 2px;
           outline: none;
           margin-left: 1rem;
           cursor: pointer;
-          display: flex;
+          display: grid;
+          grid-template-columns: 16px;
+          grid-template-rows: 16px;
           align-items: center;
           justify-content: center;
           transition: 0.2s ease-in-out;
+          span {
+            height: 16px;
+            width: 16px;
+            font-size: 14px;
+            line-height: 15px;
+          }
           &:hover {
             @media (min-width: 600px) {
               filter: brightness(1.1);

@@ -30,7 +30,7 @@ const AppDOM = (() => {
     sidebar.projectTitles.innerHTML = ''
     console.log('AppData.projects: ', AppData.projects)
     AppData.projects.forEach(project => {
-      let html = `<span id=title${project.id}>${project.title}</span><button id=delete${project.id}>X</button>`
+      let html = `<span id=title${project.id}>${project.title}</span><button id=delete${project.id}><span>X</span></button>`
       const projectEl = stringToHTML(`${html}`, 'li')
 
       projectEl.onclick = e => {
