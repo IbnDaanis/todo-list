@@ -15,6 +15,11 @@ import {
   addTaskForm,
 } from './helpers/domNodes'
 
+const emptyDashboard = stringToHTML(
+  `<h1 class="empty">Add a project in the menu on the left!</h1>`,
+  'div'
+)
+
 const AppDOM = (() => {
   const hide = (element, closed) => {
     element.classList.add(closed ? closed : 'hide')
@@ -33,25 +38,29 @@ const AppDOM = (() => {
       let html = `<span id=title${project.id}>${project.title}</span><button id=delete${project.id}><span>X</span></button>`
       const projectEl = stringToHTML(`${html}`, 'li')
 
-      projectEl.onclick = e => {
-        if (e.target.id === `title${project.id}`) {
-          AppDOM.addProjectToDashboard(project)
-        } else if (e.target.id === `delete${project.id}`) {
-          AppData.removeProject(project)
-          addProjectToSidebar(true)
-        }
+      // projectEl.onclick = e => {
+      //   if (e.target.id === `title${project.id}`) {
+      //     AppDOM.addProjectToDashboard(project)
+      //   } else if (e.target.id === `delete${project.id}`) {
+      //     AppData.removeProject(project)
+      //     addProjectToSidebar(true)
+      //   }
+      // }
+
+      projectEl.querySelector(`#title${project.id}`).onclick = () => {
+        AppDOM.addProjectToDashboard(project)
+      }
+      projectEl.querySelector(`#delete${project.id}`).onclick = () => {
+        AppData.removeProject(project)
+        addProjectToSidebar(true)
       }
       sidebar.projectTitles.appendChild(projectEl)
     })
     if (deleting) {
       if (!AppData.projects.length) {
-        console.log('Else')
+        console.log('Else', emptyDashboard.innerHTML)
         dashboard.project.innerHTML = ''
-        dashboard.project.appendChild(
-          stringToHTML(
-            `<h1 class='empty'>Add a project in the menu on the left!</h1>`
-          )
-        )
+        dashboard.project.appendChild(emptyDashboard)
         AppDOM.hide(addTaskForm.toggler)
       } else {
         console.log(AppData.projects.length)
@@ -271,8 +280,4 @@ AppDOM.addProjectToSidebar()
 
 AppData.projects[0]
   ? AppDOM.addAllProjectsToDashboard()
-  : dashboard.project.appendChild(
-      stringToHTML(
-        `<h1 class='empty'>Add a project in the menu on the left!</h1>`
-      )
-    )
+  : dashboard.project.appendChild(emptyDashboard)
