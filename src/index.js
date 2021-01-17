@@ -127,7 +127,7 @@ const AppDOM = (() => {
       currentTaskItem.querySelector('h3').onclick = () => {
         toggleHide(currentTaskItem.querySelector('.add-task-form'))
       }
-      AppForms.createTaskForm(currentTaskItem, 'edit',task, current, )
+      AppForms.createTaskForm(currentTaskItem, 'edit', task, current)
     })
     return currentTask
   }
@@ -148,6 +148,11 @@ const AppDOM = (() => {
   }
 })()
 
+if (document.body.offsetWidth > 800) {
+  AppDOM.unhide(sidebar.sidebar, 'closed')
+  AppDOM.unhide(dashboard.dashboard, 'closed')
+}
+
 const AppForms = (() => {
   const createProjectForm = () => {
     addProjectForm.form.onsubmit = e => {
@@ -159,10 +164,10 @@ const AppForms = (() => {
       addProjectForm.input.value = ''
     }
   }
-  const createTaskForm = (form, type,task, currProject, ) => {
+  const createTaskForm = (form, type, task, currProject) => {
     form.onsubmit = e => {
       e.preventDefault()
-      console.log('CREATE', {type, task, currProject,  })
+      console.log('CREATE', { type, task, currProject })
       if (type === 'add') {
         console.log('EDIT')
         const formInput = {
@@ -214,11 +219,6 @@ const AppForms = (() => {
 AppForms.createProjectForm()
 
 AppForms.createTaskForm(addTaskForm.form, 'add')
-
-if (document.body.offsetWidth < 800) {
-  AppDOM.hide(sidebar.sidebar, 'closed')
-  AppDOM.hide(dashboard.dashboard, 'closed')
-}
 
 header.toggler.onclick = () => {
   AppDOM.toggleHide(sidebar.sidebar, 'closed')

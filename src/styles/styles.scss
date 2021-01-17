@@ -8,6 +8,7 @@
   -moz-appearance: none;
   appearance: none;
 }
+
 :root {
   --dark-gray: #282828;
   --very-dark-gray: #1f1f1f;
@@ -36,6 +37,15 @@ h3,
 h4 {
   font-weight: 500;
 }
+
+input {
+  -webkit-border-radius: 0;
+  font-size: 16px;
+}
+label {
+  font-size: 16px;
+}
+
 @import './navbar.scss';
 @import './sidebar.scss';
 @import './dashboard.scss';

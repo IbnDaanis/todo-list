@@ -13,7 +13,7 @@
       width: 255px;
       li {
         min-height: 24px;
-        font-size: 14px;
+        font-size: 16px;
         font-weight: 400;
         list-style: none;
         cursor: pointer;
@@ -42,7 +42,6 @@
           flex: 1;
         }
         button {
-          opacity: 0;
           color: rgb(230, 230, 230);
           background: rgb(172, 15, 15);
           padding: 4px 7px;
@@ -56,7 +55,12 @@
           justify-content: center;
           transition: 0.2s ease-in-out;
           &:hover {
-            filter: brightness(1.1);
+            @media (min-width: 600px) {
+              filter: brightness(1.1);
+            }
+          }
+          @media (min-width: 600px) {
+            opacity: 0;
           }
         }
       }
@@ -74,7 +78,9 @@
           border-bottom: 2px solid var(--light-red);
         }
         &:hover {
-          border-bottom: 2px solid var(--light-red);
+          @media (min-width: 600px) {
+            border-bottom: 2px solid var(--light-red);
+          }
         }
       }
       button {
@@ -87,7 +93,9 @@
         transform: translateY(2px);
         transition: 0.2s ease-in-out;
         &:hover {
-          color: var(--light-red);
+          @media (min-width: 600px) {
+            color: var(--light-red);
+          }
         }
       }
     }
