@@ -21,7 +21,6 @@
         border-radius: 3px;
         transition: color 0.1s ease-in, background-color 0.1s ease-in;
         color: var(--text-white);
-        min-height: 24px;
         line-height: 24px;
         margin: 0 0 0.2rem;
         display: flex;
@@ -35,7 +34,6 @@
           &:hover {
             button {
               opacity: 1;
-              pointer-events: all;
               cursor: pointer;
               display: inline;
               pointer-events: initial;
@@ -48,7 +46,6 @@
           flex: 1;
         }
         button {
-          display: none;
           pointer-events: none;
           color: rgb(230, 230, 230);
           background: rgb(172, 15, 15);
@@ -57,7 +54,6 @@
           border-radius: 2px;
           outline: none;
           margin-left: 1rem;
-          pointer-events: none;
           display: grid;
           grid-template-columns: 16px;
           grid-template-rows: 16px;
