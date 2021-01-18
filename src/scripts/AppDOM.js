@@ -17,10 +17,12 @@ export const AppDOM = (() => {
   }
 
   const addProjectToSidebar = (deleting = false) => {
+    AppDOM.hide(addTaskForm.toggler)
+    AppDOM.hide(addTaskForm.container)
     sidebar.projectTitles.innerHTML = ''
     console.log('AppData.projects: ', AppData.projects)
     AppData.projects.forEach(project => {
-      let html = `<span id=title${project.id}>${project.title}</span><button id=delete${project.id}><span>X</span></button>`
+      let html = `<span id=title${project.id}>${project.title}</span><button id=delete${project.id} title="Delete project"><span>X</span></button>`
       const projectEl = stringToHTML(`${html}`, 'li')
       projectEl.querySelector(`#title${project.id}`).onclick = () => {
         AppDOM.addProjectToDashboard(project)
@@ -36,7 +38,6 @@ export const AppDOM = (() => {
         console.log('Else', emptyDashboard.innerHTML)
         dashboard.project.innerHTML = ''
         dashboard.project.appendChild(emptyDashboard)
-        AppDOM.hide(addTaskForm.toggler)
       } else {
         console.log(AppData.projects.length)
         AppDOM.addProjectToDashboard(AppData.projects[0])
