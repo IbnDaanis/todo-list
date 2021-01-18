@@ -24,12 +24,14 @@ export const AppDOM = (() => {
     AppData.projects.forEach(project => {
       let html = `<span id=title${project.id}>${project.title}</span><button id=delete${project.id} title="Delete project"><span>X</span></button>`
       const projectEl = stringToHTML(`${html}`, 'li')
-      projectEl.querySelector(`#title${project.id}`).onclick = () => {
+      projectEl.onclick = () => {
         AppDOM.addProjectToDashboard(project)
       }
       projectEl.querySelector(`#delete${project.id}`).onclick = () => {
-        AppData.removeProject(project)
-        addProjectToSidebar(true)
+        if (projectEl.classList.contains('active')) {
+          AppData.removeProject(project)
+          addProjectToSidebar(true)
+        }
       }
       sidebar.projectTitles.appendChild(projectEl)
     })
