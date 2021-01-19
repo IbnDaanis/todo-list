@@ -21,22 +21,21 @@ export const AppDOM = (() => {
     AppDOM.hide(addTaskForm.container)
     sidebar.projectTitles.innerHTML = ''
     console.log('AppData.projects: ', AppData.projects)
-    !deleting &&
-      AppData.projects.forEach(project => {
-        let html = `<span id=title${project.id}>${project.title}</span><button id=delete${project.id} title="Delete project" class='delete-btn'><span class='delete-btn'>X</span></button>`
-        const projectEl = stringToHTML(`${html}`, 'li')
-        projectEl.onclick = e => {
-          if (e.target.classList.contains('delete-btn')) return
-          AppDOM.addProjectToDashboard(project)
+    AppData.projects.forEach(project => {
+      let html = `<span id=title${project.id}>${project.title}</span><button id=delete${project.id} title="Delete project" class='delete-btn'><span class='delete-btn'>X</span></button>`
+      const projectEl = stringToHTML(`${html}`, 'li')
+      projectEl.onclick = e => {
+        if (e.target.classList.contains('delete-btn')) return
+        AppDOM.addProjectToDashboard(project)
+      }
+      projectEl.querySelector(`#delete${project.id}`).onclick = () => {
+        if (projectEl.classList.contains('active')) {
+          AppData.removeProject(project)
+          addProjectToSidebar(true)
         }
-        projectEl.querySelector(`#delete${project.id}`).onclick = () => {
-          if (projectEl.classList.contains('active')) {
-            AppData.removeProject(project)
-            addProjectToSidebar(true)
-          }
-        }
-        sidebar.projectTitles.appendChild(projectEl)
-      })
+      }
+      sidebar.projectTitles.appendChild(projectEl)
+    })
     if (deleting) {
       console.log('Deleting: ', deleting)
       if (!AppData.projects.length) {
